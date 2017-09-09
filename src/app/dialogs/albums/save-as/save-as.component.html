@@ -1,0 +1,50 @@
+<div class="">
+
+  <div md-dialog-title>
+
+    <h3 class="header-text">Farklı Kaydet</h3>
+
+  </div>
+
+
+  <md-dialog-content>
+
+    <form #f="ngForm" (ngSubmit)="updateImage(f)">
+
+      <div class="form-group">
+        <md-input-container>
+          <input mdInput type="text" placeholder="Fotoğraf İsmi" ngModel name="name">
+        </md-input-container>
+      </div>
+
+      <div class="form-group">
+        <md-input-container>
+          <input mdInput type="text" placeholder="Fotoğraf Alt" ngModel name="alt">
+        </md-input-container>
+      </div>
+
+      <div class="form-group">
+        <md-checkbox
+            name="public"
+            ngModel>
+            Public
+        </md-checkbox>
+      </div>
+
+      <button type="submit" #submit style="display: none"></button>
+
+    </form>
+
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+
+    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+
+    <button md-raised-button (click)="submit.click()">Kaydet</button>
+
+  </md-dialog-actions>
+
+</div>

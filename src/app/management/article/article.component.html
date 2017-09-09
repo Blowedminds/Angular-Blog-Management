@@ -1,0 +1,91 @@
+<md-spinner *ngIf="!articles || !properties || !user_info" class="loading"></md-spinner>
+
+<div class="article" *ngIf="articles && properties && user_info">
+
+  <div class="cs-container">
+
+    <div class="">
+      {{user_info.name}}-{{user_info.user_id}}-{{user_info.role_id}}
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-3" *ngFor="let one of articles.data; let i = index">
+
+        <md-card>
+
+          <button *ngIf="properties.languages.length > one.contents.length" md-mini-fab (click)="openAddLanguage(i)" id="language-add">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+
+          <button md-mini-fab (click)="openEditMainDialog(i)" id="language-edit">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </button>
+
+          <div class="group-container">
+            <p><strong>Yazar </strong>{{one.author.name}}</p>
+          </div>
+
+
+
+          <div class="group-container">
+            <p><strong>Slug </strong>{{one.slug}}</p>
+          </div>
+
+
+
+          <div class="group-container">
+            <p><strong>View Time </strong>{{one.views}}</p>
+          </div>
+
+
+
+          <div class="group-container">
+            <p><strong>Category </strong><span *ngFor="let category of one.categories">{{category.name}}, </span></p>
+          </div>
+
+
+
+          <md-tab-group>
+            <md-tab [label]="properties.languages[one.contents[k].language - 1].name" *ngFor="let article_content of one.contents; let k = index">
+
+              <h3 class="header-text article-header">{{article_content.title}}</h3>
+
+
+              <hr>
+
+
+              <div class="group-container">
+                <p><strong>Yayınlanma</strong>
+                  <i class="fa fa-check" aria-hidden="true" *ngIf="article_content.published == 1"></i>
+                  <i class="fa fa-times" aria-hidden="true" *ngIf="article_content.published == 0"></i>
+                </p>
+              </div>
+
+
+
+              <div class="group-container">
+                <p><strong>Sürüm</strong> {{article_content.version}}</p>
+              </div>
+
+
+
+              <div class="centered">
+
+                <button md-raised-button (click)="openEditDialog(article_content)">Düzenle</button>
+
+              </div>
+
+            </md-tab>
+          </md-tab-group>
+
+        </md-card>
+      </div>
+    </div>
+  </div>
+
+  <button md-fab class="add-btn" (click)="openDialog()">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+  </button>
+
+</div>

@@ -1,0 +1,142 @@
+@import themes/dark/dark.sass
+
+h1, h2, h3, h4, h5, h6, p, li, span, a
+  font-weight: 300
+
+::-webkit-scrollbar
+    background: rgba(66,66,66,.27)
+    width: 6px
+
+::-webkit-scrollbar-thumb
+  border-radius: 2px
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.1)
+  background: hsla(0,0%,100%,.41)
+
+::-webkit-scrollbar-track
+  -webkit-box-shadow: inset 0 0 6px hsla(0,0%,100%,.3)
+  border-radius: 2px
+
+html
+  width: 100%
+  height: 100%
+body
+  width: 100%
+  height: 100%
+  margin: 0
+  font-family: 'Open Sans', sans-serif
+  background-color: $body-background-color
+
+a
+  color: $menu-a-color
+a:hover
+  color: orange
+
+.loading
+  position: absolute !important
+  top: 40%
+  left: 45%
+.header-text
+  text-align: center
+  width: 100%
+.cs-container
+  padding: 2em
+#main-sidenav-container
+  width: 100%
+  height: 100%
+#main-sidenav
+  width: 350px
+  background: green
+#main-menu
+  a
+    color: $menu-a-color
+  a:hover
+    text-decoration: none
+  md-toolbar-row
+    justify-content: flex-end
+
+.mat-sidenav-container, .mat-sidenav-content
+    transform: none !important
+
+.mat-dialog-title
+  margin: -24px -24px 15px -24px !important
+  padding: 15px
+  background: rgba(0, 0, 0, 0.34)
+  h3
+    margin: 0
+md-dialog-content
+md-dialog-actions
+  display: flex
+  justify-content: center
+  align-items: center
+  margin: 15px -24px -24px -24px
+  padding: 15px
+  background: rgba(0, 0, 0, 0.34)
+
+  button
+    margin: 0 1em !important
+
+.one-page
+  color: white
+  width: 100%
+  height: 100%
+
+  .cs-container
+    display: flex
+    justify-content: center
+    align-items: center
+
+    .one-page-form
+      width: 30%
+
+      h2
+        text-align: center
+
+      .form-group, md-card
+        width: 100%
+        margin: 2em 0
+
+        md-input-container
+          display: block
+
+        md-select
+          display: block
+      button
+        display: block
+        margin: auto
+/*BUTTON*/
+.add-btn
+  position: fixed !important
+  right: 3%
+  bottom: 5%
+
+.group-container
+  width: 100%
+
+.centered
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 3px
+  margin: 3px
+/*FORM*/
+.form-group
+  padding: .5em 0
+  width: 100%
+  height: auto
+  margin: 1em 0
+  display: block
+/*ALBUMS*/
+.image-col
+  width: 180px
+  height: 130px
+  display: block
+  float: left
+  margin: .5em
+
+  md-card
+    padding: 15px
+    height: 100%
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center

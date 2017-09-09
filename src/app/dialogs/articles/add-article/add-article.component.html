@@ -1,0 +1,113 @@
+
+<div *ngIf="properties">
+  <div md-dialog-title>
+    <h3 class="header-text">Yeni Makale Ekle</h3>
+  </div>
+
+  <md-dialog-content>
+
+    <form #f="ngForm" (ngSubmit)="addArticle(f)">
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input mdInput placeholder="Makale Başlığı" ngModel name="title">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input  mdInput placeholder="Makale Alt Başlığı" ngModel name="sub_title">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container class="textarea-body">
+          <textarea  mdInput ngModel name="body" id="tinymce-textarea"></textarea>
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input  mdInput placeholder="Etiketler" ngModel name="keywords">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input  mdInput placeholder="Slug" ngModel name="slug">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-select placeholder="Dil" ngModel name="language">
+          <md-option *ngFor="let one of properties.languages" [value]="one.id">
+            {{ one.name }}
+          </md-option>
+        </md-select>
+
+      </div>
+
+      <div class="form-group">
+        <h5>Kategoriler</h5>
+
+        <ul>
+          <li *ngFor="let category_item of categories; let i = index">{{category_item.name}} <span class="" (click)="deleteCategory(i)">X</span></li>
+        </ul>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-select placeholder="Eklenecek Kategori" #addcategory>
+          <md-option *ngFor="let one of properties.categories" [value]="one.id">
+            {{ one.name }}
+          </md-option>
+        </md-select>
+
+        <button md-raised-button (click)="addCategory(addcategory)" type="button">Ekle</button>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-checkbox [(ngModel)]="published" name="published">Yayımla</md-checkbox>
+
+      </div>
+
+      <div class="form-group">
+
+        <img src="" id="img">
+
+        <!--<input id="file-input" #fileInput type="file" (change)="showImage('img')" placeholder="Ürünün Resmi" name="image" ngModel style="display:none">
+!-->
+
+        <button md-raised-button type="button" (click)="openImageSelect()">Resim Seç</button>
+
+      </div>
+
+      <button #submit type="submit" style="display:none"></button>
+
+    </form>
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+
+    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+
+    <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+
+  </md-dialog-actions>
+
+</div>

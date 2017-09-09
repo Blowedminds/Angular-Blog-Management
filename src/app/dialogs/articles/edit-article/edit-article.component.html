@@ -1,0 +1,81 @@
+<div class="edit-main-dialog" *ngIf="article_data && add_categories">
+
+  <div md-dialog-title>
+    <h3 class="header-text">Makale Özellikleri</h3>
+  </div>
+
+  <md-dialog-content>
+
+    <form #f="ngForm" (ngSubmit)="editArticle(f)">
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input mdInput placeholder="Yazar" [ngModel]="article_data.author.name" name="title" disabled>
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input mdInput placeholder="Slug" [ngModel]="article_data.slug" name="slug">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <img src="{{API_URL + THUMB_URL + article_data.image +'?token=' + getToken()}}" id="img">
+
+
+        <button md-raised-button type="button" (click)="openImageSelect()">Resim Seç</button>
+
+      </div>
+
+
+      <div class="form-group">
+        <h5>Kategoriler</h5>
+
+        <ul>
+          <li *ngFor="let category_item of categories; let i = index">{{category_item.name}} <span class="" (click)="deleteCategory(i)">X</span></li>
+        </ul>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-select placeholder="Eklenecek Kategori" #addcategory>
+          <md-option *ngFor="let category of add_categories" [value]="category.id">
+            {{ category.name }}
+          </md-option>
+        </md-select>
+
+        <button md-raised-button (click)="addCategory(addcategory)" type="button">Ekle</button>
+
+      </div>
+
+      <button #submit type="submit" style="display:none"></button>
+
+    </form>
+
+    <div class="form-group" *ngIf="user.user_id == article_data.author.user_id || user.role_id == 1">
+      <button (click)="openManagePermission()" md-raised-button>İzinleri Yönet</button>
+    </div>
+
+    <div class="form-group">
+      <button (click)="deleteArticle()" md-raised-button>Çöpe taşı</button>
+    </div>
+
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+
+    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+
+    <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+
+  </md-dialog-actions>
+
+</div>

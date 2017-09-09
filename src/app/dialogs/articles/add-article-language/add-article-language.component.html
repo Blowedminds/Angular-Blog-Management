@@ -1,0 +1,73 @@
+<div *ngIf="properties && id">
+
+  <div md-dialog-title>
+    <h3 class="header-text">Yeni Bir Dil Ekle</h3>
+  </div>
+
+  <md-dialog-content>
+
+    <form #f="ngForm" (ngSubmit)="addLanguageArticle(f)">
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input mdInput placeholder="Makale Başlığı" ngModel name="title">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input  mdInput placeholder="Makale Alt Başlığı" ngModel name="sub_title">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container class="textarea-body">
+          <textarea  mdInput ngModel name="body" id="tinymce-textarea"></textarea>
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-input-container>
+          <input  mdInput placeholder="Etiketler" ngModel name="keywords">
+        </md-input-container>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-select placeholder="Dil" ngModel name="language">
+          <md-option *ngFor="let one of properties" [value]="one.id">
+            {{ one.name }}
+          </md-option>
+        </md-select>
+
+      </div>
+
+      <div class="form-group">
+
+        <md-checkbox [(ngModel)]="published" name="published">Yayımla</md-checkbox>
+
+      </div>
+
+      <button #submit type="submit" style="display:none"></button>
+
+    </form>
+
+  </md-dialog-content>
+
+  <md-dialog-actions>
+
+    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+
+    <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+
+  </md-dialog-actions>
+
+</div>

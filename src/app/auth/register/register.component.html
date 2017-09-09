@@ -1,0 +1,31 @@
+<div class="register auth one-page">
+  <div class="cs-container">
+    <form (ngSubmit)="register(f)" #f="ngForm" class="register-form form one-page-form">
+
+      <h2>Kullanıcı Kayıt</h2>
+
+      <md-card class="form-error" *ngIf="error">
+        <p>{{errorText}}</p>
+      </md-card>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text"placeholder="İsim" ngModel name="name" required autofocus>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="email"placeholder="E-posta" ngModel name="email" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="password"placeholder="Şifre" ngModel name="password" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="password"placeholder="Şifre Onay" ngModel name="password_confirmation" required>
+      </md-input-container>
+
+      <button md-button type="submit" [disabled]="!f.valid">Kayıt Ol</button>
+
+    </form>
+  </div>
+</div>
