@@ -5,8 +5,6 @@ import { AuthRequestService }     from '../../request-services/auth-request.serv
 import { ApiService }             from '../../api.service'
 import { UserService }             from '../../system-services/user.service'
 
-import { Subscription } from 'rxjs/Subscription'
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,8 +18,6 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  sub = new Subscription()
-
   error: boolean = false;
 
   errorText: string = "Kullanıcı adı veya şifre yanlış";
@@ -31,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   login(f: NgForm)
   {
-    this.sub.add(this.authService.login({
+    let rq1 = this.authService.login({
       email: f.value.email,
       password: f.value.password
     })
@@ -42,19 +38,19 @@ export class LoginComponent implements OnInit {
     })
     .catch(error => this.loginErrorHandler(error))
     .subscribe((response) => {
-      this.sub.add(this.userService.getUser().subscribe(response => {
+      let rq2 = this.userService.getUser().subscribe(response => {
 
         this.userService.updateUser(response)
 
         this.api.navigate(['management/dashboard']);
-      }))
 
-    }));
-  }
+        rq1.unsubscribe()
+        rq2.unsubscribe()
 
-  ngOnDestroy()
-  {
-    this.sub.unsubscribe()
+        rq1 = rq2 = null
+      })
+
+    });
   }
 
   private loginErrorHandler(error: any, router: any = null): Promise<any>

@@ -23,7 +23,11 @@ export class UserService {
     private api: ApiService
   )
   {
-    this.getUser().subscribe(response => this.updateUser(response))
+    let rq1 = this.getUser().subscribe(response => {
+      this.updateUser(response)
+      rq1.unsubscribe()
+      rq1 = null
+    })
   }
 
   getUser(): Observable<any>

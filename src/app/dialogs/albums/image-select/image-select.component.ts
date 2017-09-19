@@ -32,7 +32,7 @@ export class ImageSelectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.imageRequest.getImages().subscribe(response => this.images = response)
+    let rq1 = this.imageRequest.getImages().subscribe(response => {this.images = response; rq1.unsubscribe(); rq1 = null})
   }
 
   getToken()
@@ -40,8 +40,15 @@ export class ImageSelectComponent implements OnInit {
     return this.api.getToken()
   }
 
-  selectImage(u_id: string)
+  selectImage(image: any)
   {
-    this.dialogRef.close({thumb_url:this.API_URL + this.THUMB_URL + u_id +'?token=' + this.getToken(), u_id: u_id, image_url: this.API_URL + this.IMAGE_URL + u_id +'?token=' + this.getToken()});
+    this.dialogRef.close({
+      thumb_url:this.API_URL + this.THUMB_URL + image.u_id +'?token=' + this.getToken(),
+      u_id: image.u_id,
+      image_url: this.API_URL + this.IMAGE_URL + image.u_id +'?token=' + this.getToken(),
+      alt: image.alt,
+      width: image.width,
+      height: image.height
+    });
   }
 }

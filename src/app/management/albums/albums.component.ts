@@ -35,7 +35,11 @@ export class AlbumsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.imageRequest.getImages().subscribe(response => this.images = response)
+    let rq1 = this.imageRequest.getImages().subscribe(response => {
+      this.images = response
+      rq1.unsubscribe()
+      rq1 = null
+    })
   }
 
   getToken()
@@ -49,12 +53,19 @@ export class AlbumsComponent implements OnInit {
       disableClose: true
     })
 
-    dialogRef.afterClosed().subscribe( result => {
+    let rq2 = dialogRef.afterClosed().subscribe( result => {
       if(!result) return
 
       this.images = null
 
-      this.imageRequest.getImages().subscribe(response => this.images = response)
+      let rq3 = this.imageRequest.getImages().subscribe(response => {
+        this.images = response
+        rq3.unsubscribe()
+        rq3 = null
+      })
+
+      rq2.unsubscribe()
+      rq2 = null
     })
   }
 

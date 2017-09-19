@@ -55,7 +55,7 @@ export class ImageAddComponent implements OnInit {
   {
     let image_public = (f.value.public) ? 1 : 0;
 
-    this.imageRequest.postImage({name: f.value.name, public: image_public, alt: f.value.alt}, this.file.nativeElement.files.item(0)).subscribe(response => {
+    let rq1 = this.imageRequest.postImage({name: f.value.name, public: image_public, alt: f.value.alt}, this.file.nativeElement.files.item(0)).subscribe(response => {
 
       this.uploading = true
 
@@ -71,8 +71,9 @@ export class ImageAddComponent implements OnInit {
 
         this.showSwal(response)
 
+        rq1.unsubscribe()
+        rq1 = null
       }
-
     })
   }
 

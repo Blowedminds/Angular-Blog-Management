@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms'
 
 import { ArticleRequestService }  from '../../../request-services/article-request.service'
 
+import { ImageSelectComponent } from '../../albums/image-select/image-select.component'
+
 declare var swal: any
 
 declare var tinymce: any
@@ -28,7 +30,8 @@ export class AddArticleLanguageComponent implements OnInit, AfterViewInit, OnDes
     constructor(
       public dialogRef: MdDialogRef<AddArticleLanguageComponent>,
       @Inject(MD_DIALOG_DATA) private data: any,
-      private article: ArticleRequestService
+      private article: ArticleRequestService,
+      public dialog: MdDialog
     )
     {
         let item = data.properties.languages
@@ -48,17 +51,35 @@ export class AddArticleLanguageComponent implements OnInit, AfterViewInit, OnDes
     ngAfterViewInit() {
       tinymce.init({
         selector: '#' + this.elementId,
-        plugins: ['link', 'paste', 'table'],
+        plugins: ['link', 'paste', 'table', 'image'],
+        toolbar: 'image',
         skin_url: '/assets/skins/lightgray',
         setup: editor => {
 
-          this.editor = editor;
+          let dialog = this.dialog
 
           editor.on('keyup', () => {
 
             const content = editor.getContent();
             this.onEditorKeyup.emit(content);
           });
+
+          editor.addMenuItem('myitem', {
+                text: 'Add Image',
+                context: 'tools',
+                onclick: function() {
+                  let ImageSelectDialog = dialog.open(ImageSelectComponent)
+
+                  let rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
+                    editor.insertContent(`<img src="${response.image_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`)
+
+                    rq1.unsubscribe()
+                    rq1 = null
+                  })
+                }
+              });
+
+          this.editor = editor;
         },
       });
     }
@@ -70,7 +91,7 @@ export class AddArticleLanguageComponent implements OnInit, AfterViewInit, OnDes
 
     addLanguageArticle(f: NgForm)
     {
-      this.article.postContent({
+      let rq1 = this.article.postContent({
         id: this.id,
         title: f.value.title,
         sub_title: f.value.sub_title,
@@ -81,7 +102,8 @@ export class AddArticleLanguageComponent implements OnInit, AfterViewInit, OnDes
       }).subscribe( (response) => {
 
         this.dialogRef.close(response.message);
-
+        rq1.unsubscribe()
+        rq1 = null
         //swal(response.header, response.message, response.state)
       })
     }

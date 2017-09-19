@@ -91,7 +91,7 @@ export class EditArticleComponent implements OnInit {
     for(let one of this.categories)
       categories.push(one.id)
 
-    this.article.putArticle({
+    let rq1 = this.article.putArticle({
       id: this.article_data.id,
       slug: f.value.slug,
       categories: categories,
@@ -99,15 +99,19 @@ export class EditArticleComponent implements OnInit {
     }).subscribe(response => {
 
       this.dialogRef.close(response.message);
+
+      rq1.unsubscribe()
+      rq1 = null
     })
   }
 
   deleteArticle()
   {
-    this.article.deleteArticle(this.article_data.id).subscribe(response => {
+    let rq2 = this.article.deleteArticle(this.article_data.id).subscribe(response => {
 
       this.dialogRef.close(response.message);
-
+      rq2.unsubscribe()
+      rq2 = null
       //swal(response.header, response.message, response.state)
     } )
   }
@@ -116,13 +120,16 @@ export class EditArticleComponent implements OnInit {
   {
     let dialogRef = this.dialog.open(ImageSelectComponent)
 
-    dialogRef.afterClosed().subscribe( response => {
+    let rq3 = dialogRef.afterClosed().subscribe( response => {
 
       let test = document.getElementById('img')
 
       test.setAttribute('src', response.thumb_url)
 
       this.image_name = response.u_id
+
+      rq3.unsubscribe()
+      rq3 = null
     })
   }
 
@@ -134,8 +141,9 @@ export class EditArticleComponent implements OnInit {
       }
     })
 
-    dialogRef.afterClosed().subscribe( response => {
-
+    let rq4 = dialogRef.afterClosed().subscribe( response => {
+      rq4.unsubscribe()
+      rq4 = null
     })
   }
 

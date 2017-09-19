@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms'
 
 import { ArticleRequestService }  from '../../../request-services/article-request.service'
 
+import { ImageSelectComponent } from '../../albums/image-select/image-select.component'
+
 declare var swal: any
 
 declare var tinymce: any;
@@ -30,7 +32,8 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
     constructor(
       public dialogRef: MdDialogRef<EditArticleLanguageComponent>,
       @Inject(MD_DIALOG_DATA) private data: any,
-      private article: ArticleRequestService
+      private article: ArticleRequestService,
+      public dialog: MdDialog,
     )
     {
       this.properties = data.properties
@@ -47,17 +50,35 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
     ngAfterViewInit() {
       tinymce.init({
         selector: '#' + this.elementId,
-        plugins: ['link', 'paste', 'table'],
+        plugins: ['link', 'paste', 'table', 'image'],
+        toolbar: 'image',
         skin_url: '/assets/skins/lightgray',
         setup: editor => {
 
-          this.editor = editor;
+          let dialog = this.dialog
 
           editor.on('keyup', () => {
 
             const content = editor.getContent();
             this.onEditorKeyup.emit(content);
           });
+
+          editor.addMenuItem('myitem', {
+                text: 'Add Image',
+                context: 'tools',
+                onclick: function() {
+                  let ImageSelectDialog = dialog.open(ImageSelectComponent)
+
+                  let rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
+                    editor.insertContent(`<img src="${response.image_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`)
+
+                    rq1.unsubscribe()
+                    rq1 = null
+                  })
+                }
+              });
+
+          this.editor = editor;
         },
       });
 
@@ -70,7 +91,7 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
 
     editArticle(f: NgForm)
     {
-      this.article.putContent({
+      let rq2 = this.article.putContent({
         id: this.article_content.article_id,
         title: f.value.title,
         sub_title: f.value.sub_title,
@@ -81,7 +102,8 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
       }).subscribe(response => {
 
         this.dialogRef.close(response.message);
-
+        rq2.unsubscribe()
+        rq2 = null
         //swal(response.header, response.message, response.state)
       })
     }

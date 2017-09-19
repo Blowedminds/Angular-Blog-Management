@@ -137,16 +137,23 @@ export class ImageEditComponent implements OnInit {
       }
     }
 
-    this.imageRequest.putEdit(data).subscribe(response => swal(response.header, response.message, response.state))
+    let rq1 = this.imageRequest.putEdit(data).subscribe(response => {
+      swal(response.header, response.message, response.state)
+      rq1.unsubscribe()
+      rq1 = null
+    })
   }
 
   deleteImage()
   {
-    this.imageRequest.deleteImage(this.u_id).subscribe(response => {
+    let rq2 = this.imageRequest.deleteImage(this.u_id).subscribe(response => {
 
       swal(response.header, response.message, response.state)
 
       this.api.navigate(['/management/albums'])
+
+      rq2.unsubscribe()
+      rq2 = null
     })
   }
 
@@ -163,10 +170,13 @@ export class ImageEditComponent implements OnInit {
       disableClose: true
     })
 
-    dialogRef.afterClosed().subscribe( result => {
+    let rq3 = dialogRef.afterClosed().subscribe( result => {
       if(!result) return
 
       this.saveAndUpdateImage(result, true)
+
+      rq3.unsubscribe()
+      rq3 = null
     })
   }
 }

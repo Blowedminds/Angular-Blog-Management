@@ -19,10 +19,12 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.logout().subscribe(response => {
+    let rq1 = this.authService.logout().subscribe(response => {
       localStorage.removeItem('token')
       this.api.navigate(['/auth/login']);
       this.userService.deleteUser()
+      rq1.unsubscribe()
+      rq1 = null
     })
   }
 

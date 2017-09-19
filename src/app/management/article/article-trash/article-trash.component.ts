@@ -41,13 +41,16 @@ export class ArticleTrashComponent implements OnInit {
       cancelButtonText: "Hayır",
       confirmButtonText: 'Evet, Geri Döndür'
     }).then( () => {
-      this.article.postRestore(article_id).subscribe(response => {
+      let rq1 = this.article.postRestore(article_id).subscribe(response => {
 
         let test = new DataBase(this.article)
 
         this.data = new DataSourceCode(test)
 
         swal(response.header, response.message, response.state)
+
+        rq1.unsubscribe()
+        rq1 = null
       })
     })
   }
@@ -67,13 +70,16 @@ export class ArticleTrashComponent implements OnInit {
 
       let complete = (response) ? 1 : 0
 
-      this.article.postForceDelete(article_id, complete).subscribe(response => {
+      let rq2 = this.article.postForceDelete(article_id, complete).subscribe(response => {
 
         let test = new DataBase(this.article)
 
         this.data = new DataSourceCode(test)
 
         swal(response.header, response.message, response.state)
+
+        rq2.unsubscribe()
+        rq2 = null
       })
     })
   }
@@ -96,10 +102,11 @@ export class DataBase {
 
   constructor(private article: ArticleRequestService) {
 
-    this.article.getTrash().subscribe(response => {
+    let rq3 = this.article.getTrash().subscribe(response => {
       for(let one of response.data)
         this.addContent(one)
-
+      rq3.unsubscribe()
+      rq3 = null
     })
   }
 

@@ -19,7 +19,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.adminRequestService.dashboard().subscribe(response => this.dashboard = response)
+    let rq1 = this.adminRequestService.dashboard().subscribe(response => {
+      this.dashboard = response
+      rq1.unsubscribe()
+      rq1 = null
+    })
   }
 
 }

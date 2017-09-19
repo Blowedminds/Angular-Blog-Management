@@ -66,7 +66,7 @@ export class ArticleComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    let rq1 = dialogRef.afterClosed().subscribe(result => {
       if(!result) return
 
       this.snackBar.open(result, 'Tamam',{
@@ -76,9 +76,20 @@ export class ArticleComponent implements OnInit {
       this.articles = null
       this.properties = null
 
-      this.article.getArticles().subscribe(response => this.articles = response)
+      let rq7 = this.article.getArticles().subscribe(response => {
+        this.articles = response
+        rq7.unsubscribe()
+        rq7 = null
+      })
 
-      this.article.getProperties().subscribe(response => this.properties = response)
+      let rq8 = this.article.getProperties().subscribe(response => {
+        this.properties = response
+        rq8.unsubscribe()
+        rq8 = null
+      })
+
+      rq1.unsubscribe()
+      rq1 = null
     })
   }
 
@@ -92,7 +103,7 @@ export class ArticleComponent implements OnInit {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
+    let rq2 = dialogRef.afterClosed().subscribe(result => {
       if(!result) return
 
       this.snackBar.open(result, 'Tamam',{
@@ -101,7 +112,14 @@ export class ArticleComponent implements OnInit {
 
       this.articles = null
 
-      this.article.getArticles().subscribe(response => this.articles = response)
+      let rq6 = this.article.getArticles().subscribe(response => {
+        this.articles = response
+        rq6.unsubscribe()
+        rq6 = null
+      })
+
+      rq2.unsubscribe()
+      rq2 = null
     })
   }
 
@@ -116,7 +134,7 @@ export class ArticleComponent implements OnInit {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
+    let rq3 = dialogRef.afterClosed().subscribe(result => {
       if(!result) return
 
       this.snackBar.open(result, 'Tamam',{
@@ -125,7 +143,14 @@ export class ArticleComponent implements OnInit {
 
       this.articles = null
 
-      this.article.getArticles().subscribe(response => this.articles = response)
+      let rq5 = this.article.getArticles().subscribe(response => {
+        this.articles = response
+        rq5.unsubscribe()
+        rq5 = null
+      })
+
+      rq3.unsubscribe()
+      rq3 = null
     })
   }
 
@@ -139,7 +164,7 @@ export class ArticleComponent implements OnInit {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
+    let rq4 = dialogRef.afterClosed().subscribe(result => {
       if(!result) return
 
       this.snackBar.open(result, 'Tamam',{
@@ -149,6 +174,9 @@ export class ArticleComponent implements OnInit {
       this.articles = null
 
       this.article.getArticles().subscribe(response => this.articles = response)
+
+      rq4.unsubscribe()
+      rq4 = null
     })
   }
 }

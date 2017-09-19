@@ -29,7 +29,7 @@ export class ManagePermissionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.articleRequest.getPermission(this.dialog_data.id).subscribe(response => {
+    let rq1 = this.articleRequest.getPermission(this.dialog_data.id).subscribe(response => {
 
       this.have_permission = response.users.filter( obj => {
         for( let one of response.permission){
@@ -45,6 +45,9 @@ export class ManagePermissionComponent implements OnInit {
       }
 
       this.not_have_permission = response.users
+
+      rq1.unsubscribe()
+      rq1 = null
     })
   }
 
@@ -105,10 +108,13 @@ export class ManagePermissionComponent implements OnInit {
       return
     }
 
-    this.articleRequest.putPermission(this.dialog_data.id, this.change_have_permission, this.change_not_have_permission).subscribe(response => {
+    let rq2 = this.articleRequest.putPermission(this.dialog_data.id, this.change_have_permission, this.change_not_have_permission).subscribe(response => {
       this.dialogRef.close()
 
       swal(response.header, response.message, response.state)
+
+      rq2.unsubscribe()
+      rq2 = null
     })
   }
 

@@ -22,12 +22,15 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.checkAuthenticated().subscribe(response => response)
+    let rq1 = this.authService.checkAuthenticated().subscribe(response => {
+      rq1.unsubscribe()
+      rq1 = null
+    })
   }
 
   register(f: NgForm)
   {
-    this.authService.register({
+    let rq2 = this.authService.register({
       name: f.value.name,
       email: f.value.email,
       password: f.value.password,
@@ -39,7 +42,10 @@ export class RegisterComponent implements OnInit {
       this.api.navigate(['/management']);
     })
     .catch(error => this.registerErrorHandle(error))
-    .subscribe(response => console.log(response))
+    .subscribe(response => {
+      rq2.unsubscribe()
+      rq2 = null
+    })
   }
 
   private registerErrorHandle(error: any, route: any = null): Promise<any>
