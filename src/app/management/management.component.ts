@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 
-import { AdminRequestService } from '../request-services/admin-request.service'
+import { UserRequestService } from '../request-services/user-request.service'
 import { UserService }  from '../system-services/user.service'
 
 @Component({
@@ -18,7 +18,7 @@ export class ManagementComponent implements OnInit {
   subscriptions = new Subscription()
 
   constructor(
-    private adminRequestService: AdminRequestService,
+    private UserRequestService: UserRequestService,
     private userService: UserService
   ) {
     }
@@ -27,7 +27,7 @@ export class ManagementComponent implements OnInit {
 
     this.subscriptions.add(this.userService.userObs.subscribe(response => this.user = response));
 
-    this.subscriptions.add(this.adminRequestService.getMenus().subscribe(response => this.menus = response));
+    this.subscriptions.add(this.UserRequestService.getMenus().subscribe(response => this.menus = response));
   }
 
   ngOnDestroy()

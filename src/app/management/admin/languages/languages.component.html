@@ -1,0 +1,53 @@
+<div class="" *ngIf="languages">
+
+  <div class="col-md-2">
+
+    <ul>
+      <li *ngFor="let one of languages; let i = index" (click)="selectPan(i)">{{one.name}}</li>
+      <li (click)="create_new = !create_new">+++</li>
+    </ul>
+
+  </div>
+
+  <div class="col-md-4" *ngIf="open_form">
+
+    <h3>Düzenle</h3>
+
+    <form (ngSubmit)="updateLanguage(f)" #f="ngForm">
+
+      <input type="hidden" name="id" [ngModel]="selected_one.id" name="id" required>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="İsim" [ngModel]="selected_one.name" name="name" required autofocus>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Slug" [ngModel]="selected_one.slug" name="slug" required>
+      </md-input-container>
+
+      <button md-button type="button" (click)="deleteLanguage(selected_one.id)">Sil</button>
+
+      <button md-button type="submit">Güncelle</button>
+
+    </form>
+  </div>
+
+  <div class="col-md-4" *ngIf="create_new">
+
+    <h3>Ekle</h3>
+
+    <form (ngSubmit)="createLanguage(g)" #g="ngForm">
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="İsim" ngModel name="name" required autofocus>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Slug" ngModel name="slug" required>
+      </md-input-container>
+
+      <button md-button type="submit">Yeni Oluştur</button>
+
+    </form>
+  </div>
+</div>

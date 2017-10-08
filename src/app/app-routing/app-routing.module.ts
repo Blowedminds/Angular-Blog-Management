@@ -11,6 +11,10 @@ import { ArticleComponent }     from '../management/article/article.component'
 import { ArticleTrashComponent }from '../management/article/article-trash/article-trash.component'
 import { AlbumsComponent }      from '../management/albums/albums.component'
 import { ImageEditComponent } from '../management/albums/image-edit/image-edit.component'
+import { AdminPanelComponent }  from '../management/admin/admin-panel/admin-panel.component'
+import { CategoriesComponent }  from '../management/admin/categories/categories.component'
+import { MenusComponent }  from '../management/admin/menus/menus.component'
+import { LanguagesComponent } from '../management/admin/languages/languages.component'
 
 import { AdminRouteGuard }  from '../admin-route.guard'
 import { GuestRouteGuard }  from '../guest-route.guard'
@@ -30,7 +34,12 @@ const routes: Routes = [
       { path: "articles", component: ArticleComponent },
       { path: "trash" , component: ArticleTrashComponent },
       { path: "albums", component: AlbumsComponent },
-      { path: "albums/edit/:image", component: ImageEditComponent }
+      { path: "albums/edit/:image", component: ImageEditComponent },
+      { path: "admin", component: AdminPanelComponent, children: [
+        { path: "categories", component: CategoriesComponent, outlet: "settings"},
+        { path: "menus", component: MenusComponent, outlet: "settings"},
+        { path: "languages", component: LanguagesComponent, outlet: "settings"}
+      ]}
     ]
   },
 ];

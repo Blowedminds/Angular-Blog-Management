@@ -3,7 +3,7 @@ import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdSnackBar } from '@angular/mate
 import { Subscription } from 'rxjs/Subscription';
 
 import { ArticleRequestService }  from '../../request-services/article-request.service'
-import { AdminRequestService }  from '../../request-services/admin-request.service'
+import { UserRequestService }  from '../../request-services/user-request.service'
 import { UserService }  from '../../system-services/user.service'
 
 import { AddArticleComponent } from '../../dialogs/articles/add-article/add-article.component'
@@ -31,7 +31,7 @@ export class ArticleComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     private article: ArticleRequestService,
-    private admin: AdminRequestService,
+    private admin: UserRequestService,
     private userService: UserService,
     private snackBar: MdSnackBar
   ) {

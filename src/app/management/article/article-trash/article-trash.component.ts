@@ -15,7 +15,6 @@ declare var swal: any;
 })
 export class ArticleTrashComponent implements OnInit {
 
-
   data: any
 
   displayedColumns: Array<string> = ['Author', 'Title', 'Deleted_At', 'ArticleId']
@@ -30,6 +29,7 @@ export class ArticleTrashComponent implements OnInit {
 
     this.data = new DataSourceCode(this.dataBase)
   }
+
 
   restoreArticle(article_id: number)
   {

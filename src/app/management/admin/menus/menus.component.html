@@ -1,0 +1,104 @@
+<div class="" *ngIf="menus">
+  <div class="col-md-3">
+    <ul>
+      <li *ngFor="let one of menus;let i = index">
+        <span (click)="selectPan(i)">{{one.menu_name}}</span>
+        <ul>
+          <li *ngFor="let role of one.menu_roles">{{role}}</li>
+        </ul>
+      </li>
+      <li (click)="createNew()">+++</li>
+    </ul>
+  </div>
+
+  <div class="col-md-4" *ngIf="open_form">
+
+    <h3>Düzenle</h3>
+
+    <form (ngSubmit)="updateMenu(f)" #f="ngForm">
+
+      <input type="hidden" name="id" [ngModel]="selected_one.id" name="id" required>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="İsim" [ngModel]="selected_one.menu_name" name="menu_name" required autofocus>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Tooltip" [ngModel]="selected_one.menu_tooltip" name="menu_tooltip" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Url" [ngModel]="selected_one.menu_url" name="menu_url" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Weight" [ngModel]="selected_one.menu_weight" name="menu_weight" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Parent" [ngModel]="selected_one.menu_parent" name="menu_parent" required>
+      </md-input-container>
+
+      <ul>
+        <li *ngFor="let one_role of filtered_role; let i = index">{{one_role.role_name}} <span (click)="deleteRole(i)">X</span></li>
+      </ul>
+
+      <md-select placeholder="Eklenecek Kategori" #addrole>
+        <md-option *ngFor="let role of filtered_not_role" [value]="role.id">
+          {{ role.role_name }}
+        </md-option>
+      </md-select>
+
+      <button md-button type="button" (click)="addRole(addrole)">Role Ekle</button>
+
+      <button md-button type="button" (click)="deleteMenu(selected_one.id)">Sil</button>
+
+      <button md-button type="submit">Güncelle</button>
+
+    </form>
+  </div>
+
+  <div class="col-md-4" *ngIf="create_new">
+
+    <h3>Ekle</h3>
+
+    <form (ngSubmit)="createMenu(g)" #g="ngForm">
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="İsim" ngModel name="menu_name" required autofocus>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Tooltip" ngModel name="menu_tooltip" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Url" ngModel name="menu_url" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Weight" ngModel name="menu_weight" required>
+      </md-input-container>
+
+      <md-input-container class="form-group">
+        <input mdInput type="text" placeholder="Parent" ngModel name="menu_parent" required>
+      </md-input-container>
+
+      <ul>
+        <li *ngFor="let one_role of create_new_filtered_role; let i = index">{{one_role.role_name}} <span (click)="deleteNewRole(i)">X</span></li>
+      </ul>
+
+      <md-select placeholder="Eklenecek Kategori" #addrole>
+        <md-option *ngFor="let role of create_new_filtered_not_role" [value]="role.id">
+          {{ role.role_name }}
+        </md-option>
+      </md-select>
+
+      <button md-button type="button" (click)="addNewRole(addrole)">Role Ekle</button>
+
+      <button md-button type="submit">Yeni Oluştur</button>
+
+    </form>
+  </div>
+
+</div>

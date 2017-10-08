@@ -26,34 +26,24 @@
             <p><strong>Yazar </strong>{{one.author.name}}</p>
           </div>
 
-
-
           <div class="group-container">
             <p><strong>Slug </strong>{{one.slug}}</p>
           </div>
-
-
 
           <div class="group-container">
             <p><strong>View Time </strong>{{one.views}}</p>
           </div>
 
-
-
           <div class="group-container">
             <p><strong>Category </strong><span *ngFor="let category of one.categories">{{category.name}}, </span></p>
           </div>
 
-
-
           <md-tab-group>
             <md-tab [label]="properties.languages[one.contents[k].language - 1].name" *ngFor="let article_content of one.contents; let k = index">
 
-              <h3 class="header-text article-header">{{article_content.title}}</h3>
-
+              <h3 class="header-text article-header">{{article_content.title.slice(0, 20)}}</h3>
 
               <hr>
-
 
               <div class="group-container">
                 <p><strong>Yayınlanma</strong>
@@ -62,13 +52,9 @@
                 </p>
               </div>
 
-
-
               <div class="group-container">
                 <p><strong>Sürüm</strong> {{article_content.version}}</p>
               </div>
-
-
 
               <div class="centered">
 

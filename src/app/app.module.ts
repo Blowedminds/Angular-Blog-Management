@@ -33,7 +33,7 @@ import { CdkTableModule } from "@angular/cdk/table"
 
 import { AppComponent } from './app.component';
 
-import { AdminRequestService }  from './request-services/admin-request.service';
+import { UserRequestService }  from './request-services/user-request.service';
 import { MainRequestService }   from './request-services/main-request.service';
 import { AuthRequestService }   from './request-services/auth-request.service';
 import { ArticleRequestService }  from './request-services/article-request.service'
@@ -42,6 +42,7 @@ import { AdminRouteGuard }  from './admin-route.guard'
 import { GuestRouteGuard }  from './guest-route.guard'
 import { ImageRequestService }  from "./request-services/image-request.service"
 import { UserService }  from './system-services/user.service'
+import { AdminRequestService }  from './request-services/admin-request.service'
 
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -61,7 +62,11 @@ import { AddArticleLanguageComponent } from './dialogs/articles/add-article-lang
 import { EditArticleLanguageComponent } from './dialogs/articles/edit-article-language/edit-article-language.component';
 import { EditArticleComponent } from './dialogs/articles/edit-article/edit-article.component';
 import { ManagePermissionComponent } from './dialogs/articles/manage-permission/manage-permission.component';
-import { SaveAsComponent } from './dialogs/albums/save-as/save-as.component'
+import { SaveAsComponent } from './dialogs/albums/save-as/save-as.component';
+import { AdminPanelComponent } from './management/admin/admin-panel/admin-panel.component';
+import { CategoriesComponent } from './management/admin/categories/categories.component';
+import { MenusComponent } from './management/admin/menus/menus.component';
+import { LanguagesComponent } from './management/admin/languages/languages.component'
 
 @NgModule({
   declarations: [
@@ -83,7 +88,11 @@ import { SaveAsComponent } from './dialogs/albums/save-as/save-as.component'
     EditArticleLanguageComponent,
     EditArticleComponent,
     ManagePermissionComponent,
-    SaveAsComponent
+    SaveAsComponent,
+    AdminPanelComponent,
+    CategoriesComponent,
+    MenusComponent,
+    LanguagesComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +124,7 @@ import { SaveAsComponent } from './dialogs/albums/save-as/save-as.component'
   ],
 
   providers: [
-    AdminRequestService,
+    UserRequestService,
     MainRequestService,
     AuthRequestService,
     ApiService,
@@ -123,7 +132,8 @@ import { SaveAsComponent } from './dialogs/albums/save-as/save-as.component'
     AdminRouteGuard,
     GuestRouteGuard,
     ImageRequestService,
-    UserService
+    UserService,
+    AdminRequestService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

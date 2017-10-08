@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { NgForm } from '@angular/forms'
 
-import { AdminRequestService }  from '../../request-services/admin-request.service'
+import { UserRequestService }  from '../../request-services/user-request.service'
 import { ImageRequestService }  from '../../request-services/image-request.service'
 
 import { ImageAddComponent }  from '../../dialogs/albums/image-add/image-add.component'
@@ -24,7 +24,7 @@ export class AlbumsComponent implements OnInit {
 
   constructor(
     private imageRequest: ImageRequestService,
-    private adminRequest: AdminRequestService,
+    private adminRequest: UserRequestService,
     public dialog: MdDialog,
     private api: ApiService
   ) {
