@@ -62,26 +62,28 @@ export class MenusComponent implements OnInit {
 
     this.selected_one = this.menus[i]
 
-    this.filtered_not_role =  this.filterRole(this.selected_one.id, true)
+    this.filtered_not_role =  this.filterRole(i, true)
 
-    this.filtered_role =  this.filterRole(this.selected_one.id, false)
+    this.filtered_role =  this.filterRole(i, false)
 
     this.open_form = true
   }
 
-  filterRole(id: number, bool: boolean)
+  filterRole(i: number, bool: boolean)
   {
     if(bool){
       let array = this.roles
 
-      for(let one of this.menus.find( obj => obj.id === id).menu_roles)
-        array = array.filter( obj => obj.id !== one)
+      if(typeof this.menus[i].menu_roles !== "undefined")
+        for(let one of this.menus[i].menu_roles)
+          array = array.filter( obj => obj.id !== one)
 
       return array
     }else{
       let array = []
-      for(let one of this.selected_one.menu_roles)
-        array.push(this.roles.find( obj => obj.id === one))
+      if(typeof this.menus[i].menu_roles !== "undefined")
+        for(let one of this.menus[i].menu_roles)
+          array.push(this.roles.find( obj => obj.id === one))
 
       return array
     }

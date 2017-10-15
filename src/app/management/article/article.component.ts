@@ -41,7 +41,7 @@ export class ArticleComponent implements OnInit {
 
     /*let sub1 = this.article.getArticles().subscribe(response => this.articles = response)
 
-    let sub2 = this.article.getProperties().subscribe(response => this.properties = response)
+    let sub2 = this.artic le.getProperties().subscribe(response => this.properties = response)
 
     let sub3 = this.user.userObs.subscribe( user => this.user_info = user)*/
     this.subscriptions.add(this.article.getArticles().subscribe(response => this.articles = response))
@@ -55,6 +55,15 @@ export class ArticleComponent implements OnInit {
   ngOnDestroy()
   {
     this.subscriptions.unsubscribe()
+  }
+
+  findLanguage(id: number)
+  {
+    let lang = this.properties.languages.find( obj => obj.id === id)
+    if( lang)
+      return lang.name
+
+    return "NullLanguage"
   }
 
   openDialog()
@@ -74,22 +83,20 @@ export class ArticleComponent implements OnInit {
       })
 
       this.articles = null
-      this.properties = null
+      //this.properties = null
 
       let rq7 = this.article.getArticles().subscribe(response => {
         this.articles = response
         rq7.unsubscribe()
-        rq7 = null
       })
-
+      /*
       let rq8 = this.article.getProperties().subscribe(response => {
         this.properties = response
         rq8.unsubscribe()
         rq8 = null
       })
-
+*/
       rq1.unsubscribe()
-      rq1 = null
     })
   }
 
@@ -115,11 +122,9 @@ export class ArticleComponent implements OnInit {
       let rq6 = this.article.getArticles().subscribe(response => {
         this.articles = response
         rq6.unsubscribe()
-        rq6 = null
       })
 
       rq2.unsubscribe()
-      rq2 = null
     })
   }
 
@@ -146,11 +151,9 @@ export class ArticleComponent implements OnInit {
       let rq5 = this.article.getArticles().subscribe(response => {
         this.articles = response
         rq5.unsubscribe()
-        rq5 = null
       })
 
       rq3.unsubscribe()
-      rq3 = null
     })
   }
 
@@ -176,7 +179,6 @@ export class ArticleComponent implements OnInit {
       this.article.getArticles().subscribe(response => this.articles = response)
 
       rq4.unsubscribe()
-      rq4 = null
     })
   }
 }

@@ -40,8 +40,14 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
 
       this.article_content = data.data
 
-      this.language = data.properties.languages.find( (obj) =>
-        obj.id === data.data.language)
+      let lang =  data.properties.languages.find( (obj) =>
+          obj.id === data.data.language)
+
+      if(lang){
+        this.language = lang
+      }else{
+        this.language = {name: "NullLanguage", id: 0}
+      }
     }
 
     ngOnInit()  {
@@ -50,8 +56,8 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
     ngAfterViewInit() {
       tinymce.init({
         selector: '#' + this.elementId,
-        plugins: ['link', 'paste', 'table', 'image'],
-        toolbar: 'image',
+        plugins: ['link', 'paste', 'table', 'image', 'fullscreen'],
+        toolbar: 'image | fullscreen',
         skin_url: '/assets/skins/lightgray',
         setup: editor => {
 

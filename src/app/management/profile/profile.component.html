@@ -1,0 +1,36 @@
+<md-spinner *ngIf="!profile" class="loading"></md-spinner>
+
+<div class="" *ngIf="profile">
+  <div class="">
+    {{profile.user_id}}<br>
+
+    <form #f="ngForm" (ngSubmit)="updateProfile(f)">
+
+      <md-input-container>
+        <input mdInput placeholder="İsim" [ngModel]="profile.name" name="name" [disabled]="!edit_bio">
+      </md-input-container>
+
+      <md-input-container class="textarea-body">
+        <textarea mdInput [ngModel]="profile.bio" [disabled]="!edit_bio" name="bio"></textarea>
+      </md-input-container>
+
+      <button md-button type="submit" [disabled]="!edit_bio">Güncelleştir</button>
+
+    </form>
+
+    <span (click)="edit_bio = !edit_bio">{{!edit_bio ? "Düzenle" : "Kapat"}}</span><br>
+
+    <input type="file" #file name="file"style="display: none" (change)="showImage('img')">
+
+    <div class="" (click)="file.click()">
+
+      <img src="{{AUTHOR_IMAGE_URL + profile.profile_image}}" alt="" id="img">
+
+    </div>
+
+    {{profile.name}}<br>
+    {{profile.bio}}<br>
+    {{profile.role_id}}<br>
+    {{profile.role_name}}
+  </div>
+</div>

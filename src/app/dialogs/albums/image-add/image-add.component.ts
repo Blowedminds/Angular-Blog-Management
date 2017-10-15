@@ -37,6 +37,7 @@ export class ImageAddComponent implements OnInit {
   showImage(img: string)
   {
     var reader = new FileReader();
+    
     let input = this.file.nativeElement
 
     let item = document.getElementById(img)

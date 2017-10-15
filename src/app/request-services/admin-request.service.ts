@@ -27,7 +27,7 @@ export class AdminRequestService {
 
   public getMenus():Observable<any>
   {
-    const url = this.makeRequest("menus")
+    const url = this.makeRequestUrl("menus")
 
     return this.http
                   .get(url, {headers: this.headers })
@@ -36,7 +36,7 @@ export class AdminRequestService {
 
   public getCategories():Observable<any>
   {
-    const url = this.makeRequest("categories")
+    const url = this.makeRequestUrl("categories")
 
     return this.http
                   .get(url, {headers: this.headers })
@@ -45,7 +45,7 @@ export class AdminRequestService {
 
   public getLanguages():Observable<any>
   {
-    const url = this.makeRequest("languages")
+    const url = this.makeRequestUrl("languages")
 
     return this.http
                     .get(url, { headers: this.headers })
@@ -54,7 +54,7 @@ export class AdminRequestService {
 
   public postLanguage(data: any):Observable<any>
   {
-    const url = this.makeRequest("languages")
+    const url = this.makeRequestUrl("languages")
 
     return this.http
                     .post(url, JSON.stringify(data), { headers: this.headers })
@@ -63,7 +63,7 @@ export class AdminRequestService {
 
   public putLanguage(data: any):Observable<any>
   {
-    const url = this.makeRequest("languages")
+    const url = this.makeRequestUrl("languages")
 
     return this.http
                     .put(url, JSON.stringify(data), { headers: this.headers })
@@ -72,7 +72,7 @@ export class AdminRequestService {
 
   public deleteLanguage(id: number):Observable<any>
   {
-    const url = this.makeRequest("languages/" + id)
+    const url = this.makeRequestUrl("languages/" + id)
 
     return this.http
                     .delete(url, { headers: this.headers })
@@ -81,7 +81,7 @@ export class AdminRequestService {
 
   public postCategory(data: any):Observable<any>
   {
-    const url = this.makeRequest("categories")
+    const url = this.makeRequestUrl("categories")
 
     return this.http
                     .post(url, JSON.stringify(data), { headers: this.headers })
@@ -90,7 +90,7 @@ export class AdminRequestService {
 
   public putCategory(data: any):Observable<any>
   {
-    const url = this.makeRequest("categories")
+    const url = this.makeRequestUrl("categories")
 
     return this.http
                     .put(url, JSON.stringify(data), { headers: this.headers })
@@ -99,7 +99,7 @@ export class AdminRequestService {
 
   public deleteCategory(id: number):Observable<any>
   {
-    const url = this.makeRequest("categories/" + id)
+    const url = this.makeRequestUrl("categories/" + id)
 
     return this.http
                     .delete(url, { headers: this.headers })
@@ -108,7 +108,7 @@ export class AdminRequestService {
 
   public postMenu(data: any):Observable<any>
   {
-    const url = this.makeRequest("menus")
+    const url = this.makeRequestUrl("menus")
 
     return this.http
                     .post(url, JSON.stringify(data), { headers: this.headers })
@@ -117,7 +117,7 @@ export class AdminRequestService {
 
   public putMenu(data: any):Observable<any>
   {
-    const url = this.makeRequest("menus")
+    const url = this.makeRequestUrl("menus")
 
     return this.http
                     .put(url, JSON.stringify(data), { headers: this.headers })
@@ -126,14 +126,14 @@ export class AdminRequestService {
 
   public deleteMenu(id: number):Observable<any>
   {
-    const url = this.makeRequest("menus/" + id)
+    const url = this.makeRequestUrl("menus/" + id)
 
     return this.http
                     .delete(url, { headers: this.headers })
                     .catch(error => this.main.handleError(error))
   }
 
-  private makeRequest(url: string)
+  private makeRequestUrl(url: string)
   {
     return this.API_URL + url + "?token=" + this.api.getToken()
   }

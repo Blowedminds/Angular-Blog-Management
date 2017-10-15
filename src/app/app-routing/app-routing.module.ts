@@ -15,6 +15,7 @@ import { AdminPanelComponent }  from '../management/admin/admin-panel/admin-pane
 import { CategoriesComponent }  from '../management/admin/categories/categories.component'
 import { MenusComponent }  from '../management/admin/menus/menus.component'
 import { LanguagesComponent } from '../management/admin/languages/languages.component'
+import { ProfileComponent } from '../management/profile/profile.component'
 
 import { AdminRouteGuard }  from '../admin-route.guard'
 import { GuestRouteGuard }  from '../guest-route.guard'
@@ -31,9 +32,10 @@ const routes: Routes = [
   },
   { path: "management", component: ManagementComponent, canActivateChild: [AdminRouteGuard], children: [
       { path: "dashboard", component: DashboardComponent },
-      { path: "articles", component: ArticleComponent },
-      { path: "trash" , component: ArticleTrashComponent },
+      { path: "articles", component: ArticleComponent},
+      { path: "articles/trash" , component: ArticleTrashComponent },
       { path: "albums", component: AlbumsComponent },
+      { path: "profile", component: ProfileComponent },
       { path: "albums/edit/:image", component: ImageEditComponent },
       { path: "admin", component: AdminPanelComponent, children: [
         { path: "categories", component: CategoriesComponent, outlet: "settings"},

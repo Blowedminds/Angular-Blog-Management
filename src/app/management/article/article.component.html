@@ -5,7 +5,7 @@
   <div class="cs-container">
 
     <div class="">
-      {{user_info.name}}-{{user_info.user_id}}-{{user_info.role_id}}
+      <a routerLink="trash"><button md-button>Çöplük</button></a>
     </div>
 
     <div class="row">
@@ -39,7 +39,9 @@
           </div>
 
           <md-tab-group>
-            <md-tab [label]="properties.languages[one.contents[k].language - 1].name" *ngFor="let article_content of one.contents; let k = index">
+
+            <!-- [label]="properties.languages[one.contents[k].language - 1].name"!-->
+            <md-tab [label]="findLanguage(article_content.language)" *ngFor="let article_content of one.contents; let k = index">
 
               <h3 class="header-text article-header">{{article_content.title.slice(0, 20)}}</h3>
 

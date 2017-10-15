@@ -66,7 +66,8 @@ import { SaveAsComponent } from './dialogs/albums/save-as/save-as.component';
 import { AdminPanelComponent } from './management/admin/admin-panel/admin-panel.component';
 import { CategoriesComponent } from './management/admin/categories/categories.component';
 import { MenusComponent } from './management/admin/menus/menus.component';
-import { LanguagesComponent } from './management/admin/languages/languages.component'
+import { LanguagesComponent } from './management/admin/languages/languages.component';
+import { ProfileComponent } from './management/profile/profile.component'
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { LanguagesComponent } from './management/admin/languages/languages.compo
     AdminPanelComponent,
     CategoriesComponent,
     MenusComponent,
-    LanguagesComponent
+    LanguagesComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
