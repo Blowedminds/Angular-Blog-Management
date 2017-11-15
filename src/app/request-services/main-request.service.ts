@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders }    from '@angular/common/http';
+
 import { ApiService } from '../api.service'
 
 declare var swal: any;
@@ -7,7 +8,9 @@ declare var swal: any;
 @Injectable()
 export class MainRequestService {
 
-  constructor(private api: ApiService) { }
+  constructor(
+    private api: ApiService,
+  ) { }
 
   public mainDomain: string = "http://localhost:8000/";
 
@@ -18,11 +21,11 @@ export class MainRequestService {
     'X-Requested-With': 'XMLHttpRequest'
   });
 
+
   public handleError(error: any, router: any = null): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
 
-
-    let jsError = error.error
+    let jsError =  error
 
     switch (error.status){
       case 202:
@@ -32,8 +35,7 @@ export class MainRequestService {
 
         break;
       case 401:
-
-        switch (jsError.error){
+        switch (jsError.statusText){
           case 'token_expired':
             this.api.navigate(['auth/login']);
             break;
@@ -44,6 +46,7 @@ export class MainRequestService {
             this.api.navigate(['auth/login']);
             break;
           case 'Unauthorized':
+            console.log('TEST2')
             this.api.navigate(['auth/login']);
             break;
         }

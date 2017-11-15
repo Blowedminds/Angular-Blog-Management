@@ -1,4 +1,4 @@
-<md-spinner *ngIf="!images || !API_URL" class="loading"></md-spinner>
+<mat-spinner *ngIf="!images || !API_URL" class="loading"></mat-spinner>
 
 <div class="cs-container" *ngIf="images && API_URL">
 
@@ -27,7 +27,7 @@
   </div>
 
 
-  <button md-fab class="add-btn" (click)="openImageUploader()">
+  <button mat-fab class="add-btn" (click)="openImageUploader()">
     <i class="fa fa-plus" aria-hidden="true"></i>
   </button>
 

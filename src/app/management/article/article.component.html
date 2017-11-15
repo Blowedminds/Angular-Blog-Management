@@ -1,24 +1,24 @@
-<md-spinner *ngIf="!articles || !properties || !user_info" class="loading"></md-spinner>
+<mat-spinner *ngIf="!articles || !properties || !user_info" class="loading"></mat-spinner>
 
 <div class="article" *ngIf="articles && properties && user_info">
 
   <div class="cs-container">
 
     <div class="">
-      <a routerLink="trash"><button md-button>Çöplük</button></a>
+      <a routerLink="trash"><button mat-button>Çöplük</button></a>
     </div>
 
     <div class="row">
 
       <div class="col-md-3" *ngFor="let one of articles.data; let i = index">
 
-        <md-card>
+        <mat-card>
 
-          <button *ngIf="properties.languages.length > one.contents.length" md-mini-fab (click)="openAddLanguage(i)" id="language-add">
+          <button *ngIf="properties.languages.length > one.contents.length" mat-mini-fab (click)="openAddLanguage(i)" id="language-add">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </button>
 
-          <button md-mini-fab (click)="openEditMainDialog(i)" id="language-edit">
+          <button mat-mini-fab (click)="openEditMainDialog(i)" id="language-edit">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           </button>
 
@@ -38,10 +38,10 @@
             <p><strong>Category </strong><span *ngFor="let category of one.categories">{{category.name}}, </span></p>
           </div>
 
-          <md-tab-group>
+          <mat-tab-group>
 
             <!-- [label]="properties.languages[one.contents[k].language - 1].name"!-->
-            <md-tab [label]="findLanguage(article_content.language)" *ngFor="let article_content of one.contents; let k = index">
+            <mat-tab [label]="findLanguage(article_content.language)" *ngFor="let article_content of one.contents; let k = index">
 
               <h3 class="header-text article-header">{{article_content.title.slice(0, 20)}}</h3>
 
@@ -60,19 +60,19 @@
 
               <div class="centered">
 
-                <button md-raised-button (click)="openEditDialog(article_content)">Düzenle</button>
+                <button mat-raised-button (click)="openEditDialog(article_content)">Düzenle</button>
 
               </div>
 
-            </md-tab>
-          </md-tab-group>
+            </mat-tab>
+          </mat-tab-group>
 
-        </md-card>
+        </mat-card>
       </div>
     </div>
   </div>
 
-  <button md-fab class="add-btn" (click)="openDialog()">
+  <button mat-fab class="add-btn" (click)="openDialog()">
     <i class="fa fa-plus" aria-hidden="true"></i>
   </button>
 

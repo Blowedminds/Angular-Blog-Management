@@ -1,34 +1,34 @@
 <div class="">
 
-  <div md-dialog-title>
+  <div mat-dialog-title>
 
     <h3 class="header-text">Farklı Kaydet</h3>
 
   </div>
 
 
-  <md-dialog-content>
+  <mat-dialog-content>
 
     <form #f="ngForm" (ngSubmit)="updateImage(f)">
 
       <div class="form-group">
-        <md-input-container>
-          <input mdInput type="text" placeholder="Fotoğraf İsmi" ngModel name="name">
-        </md-input-container>
+        <mat-input-container>
+          <input matInput type="text" placeholder="Fotoğraf İsmi" ngModel name="name">
+        </mat-input-container>
       </div>
 
       <div class="form-group">
-        <md-input-container>
-          <input mdInput type="text" placeholder="Fotoğraf Alt" ngModel name="alt">
-        </md-input-container>
+        <mat-input-container>
+          <input matInput type="text" placeholder="Fotoğraf Alt" ngModel name="alt">
+        </mat-input-container>
       </div>
 
       <div class="form-group">
-        <md-checkbox
+        <mat-checkbox
             name="public"
             ngModel>
             Public
-        </md-checkbox>
+        </mat-checkbox>
       </div>
 
       <button type="submit" #submit style="display: none"></button>
@@ -37,14 +37,14 @@
 
 
 
-  </md-dialog-content>
+  </mat-dialog-content>
 
-  <md-dialog-actions>
+  <mat-dialog-actions>
 
-    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+    <button mat-raised-button color="warn" mat-dialog-close>İptal</button>
 
-    <button md-raised-button (click)="submit.click()">Kaydet</button>
+    <button mat-raised-button (click)="submit.click()">Kaydet</button>
 
-  </md-dialog-actions>
+  </mat-dialog-actions>
 
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { NgForm } from '@angular/forms'
 
 import { UserRequestService }  from '../../request-services/user-request.service'
@@ -25,7 +25,7 @@ export class AlbumsComponent implements OnInit {
   constructor(
     private imageRequest: ImageRequestService,
     private adminRequest: UserRequestService,
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     private api: ApiService
   ) {
     this.API_URL = this.imageRequest.API_URL

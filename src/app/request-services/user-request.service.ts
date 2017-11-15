@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
-import { Router }            from '@angular/router';
 import { Observable }     from 'rxjs';
-import 'rxjs/Rx';
 
 import { MainRequestService }   from './main-request.service'
 import { ApiService }           from '../api.service'
@@ -13,7 +11,6 @@ export class UserRequestService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     public main: MainRequestService,
     private api: ApiService
   )
@@ -53,8 +50,11 @@ export class UserRequestService {
     formData.append('file', file)
 
     return this.http
-                    .post( url, formData, { headers: new HttpHeaders({ "enctype": "multipart/form-data", 'X-Requested-With': 'XMLHttpRequest'})})
-                    .catch(error => this.main.handleError(error))
+                    .post( url, formData, { headers: new HttpHeaders({
+                        "enctype": "multipart/form-data",
+                        'X-Requested-With': 'XMLHttpRequest'
+                      })}
+                    ).catch(error => this.main.handleError(error))
   }
 
   adminPanel(): Observable<any>{
@@ -81,6 +81,16 @@ export class UserRequestService {
 
     return this.http
                     .get(url, { headers: this.headers})
+                    .catch(error => this.main.handleError(error))
+  }
+
+
+  getGlobalData(): Observable<any>
+  {
+    const url = this.main.mainDomain + this.main.apiDomain + "global-data?token=" + this.api.getToken()
+
+    return this.http
+                    .get(url, {headers: this.headers})
                     .catch(error => this.main.handleError(error))
   }
 

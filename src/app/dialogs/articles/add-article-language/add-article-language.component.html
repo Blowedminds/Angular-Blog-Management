@@ -1,58 +1,58 @@
 <div *ngIf="properties && id">
 
-  <div md-dialog-title>
+  <div mat-dialog-title>
     <h3 class="header-text">Yeni Bir Dil Ekle</h3>
   </div>
 
-  <md-dialog-content>
+  <mat-dialog-content>
 
     <form #f="ngForm" (ngSubmit)="addLanguageArticle(f)">
 
       <div class="form-group">
 
-        <md-input-container>
-          <input mdInput placeholder="Makale Başlığı" ngModel name="title">
-        </md-input-container>
+        <mat-input-container>
+          <input matInput placeholder="Makale Başlığı" ngModel name="title">
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container>
-          <input  mdInput placeholder="Makale Alt Başlığı" ngModel name="sub_title">
-        </md-input-container>
+        <mat-input-container>
+          <input  matInput placeholder="Makale Alt Başlığı" ngModel name="sub_title">
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container class="textarea-body">
-          <textarea  mdInput ngModel name="body" id="tinymce-textarea"></textarea>
-        </md-input-container>
+        <mat-input-container class="textarea-body">
+          <textarea  matInput ngModel name="body" id="tinymce-textarea"></textarea>
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container>
-          <input  mdInput placeholder="Etiketler" ngModel name="keywords">
-        </md-input-container>
+        <mat-input-container>
+          <input  matInput placeholder="Etiketler" ngModel name="keywords">
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-select placeholder="Dil" ngModel name="language">
-          <md-option *ngFor="let one of properties" [value]="one.id">
+        <mat-select placeholder="Dil" ngModel name="language">
+          <mat-option *ngFor="let one of properties" [value]="one.id">
             {{ one.name }}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
 
       </div>
 
       <div class="form-group">
 
-        <md-checkbox [(ngModel)]="published" name="published">Yayımla</md-checkbox>
+        <mat-checkbox [(ngModel)]="published" name="published">Yayımla</mat-checkbox>
 
       </div>
 
@@ -60,14 +60,14 @@
 
     </form>
 
-  </md-dialog-content>
+  </mat-dialog-content>
 
-  <md-dialog-actions>
+  <mat-dialog-actions>
 
-    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+    <button mat-raised-button color="warn" mat-dialog-close>İptal</button>
 
-    <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+    <button mat-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
 
-  </md-dialog-actions>
+  </mat-dialog-actions>
 
 </div>

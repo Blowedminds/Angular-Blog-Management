@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 import { ImageRequestService }  from '../../../request-services/image-request.service'
 import { ApiService } from '../../../api.service'
@@ -22,7 +22,7 @@ export class ImageSelectComponent implements OnInit {
   constructor(
     private api: ApiService,
     private imageRequest: ImageRequestService,
-    private dialogRef: MdDialogRef<ImageSelectComponent>,
+    private dialogRef: MatDialogRef<ImageSelectComponent>,
   ) {
     this.API_URL = this.imageRequest.API_URL
 

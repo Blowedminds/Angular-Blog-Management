@@ -4,27 +4,27 @@
 
       <h2>Kullanıcı Kayıt</h2>
 
-      <md-card class="form-error" *ngIf="error">
+      <mat-card class="form-error" *ngIf="error">
         <p>{{errorText}}</p>
-      </md-card>
+      </mat-card>
 
-      <md-input-container class="form-group">
-        <input mdInput type="text"placeholder="İsim" ngModel name="name" required autofocus>
-      </md-input-container>
+      <mat-input-container class="form-group">
+        <input matInput type="text"placeholder="İsim" ngModel name="name" required autofocus>
+      </mat-input-container>
 
-      <md-input-container class="form-group">
-        <input mdInput type="email"placeholder="E-posta" ngModel name="email" required>
-      </md-input-container>
+      <mat-input-container class="form-group">
+        <input matInput type="email"placeholder="E-posta" ngModel name="email" required>
+      </mat-input-container>
 
-      <md-input-container class="form-group">
-        <input mdInput type="password"placeholder="Şifre" ngModel name="password" required>
-      </md-input-container>
+      <mat-input-container class="form-group">
+        <input matInput type="password"placeholder="Şifre" ngModel name="password" required>
+      </mat-input-container>
 
-      <md-input-container class="form-group">
-        <input mdInput type="password"placeholder="Şifre Onay" ngModel name="password_confirmation" required>
-      </md-input-container>
+      <mat-input-container class="form-group">
+        <input matInput type="password"placeholder="Şifre Onay" ngModel name="password_confirmation" required>
+      </mat-input-container>
 
-      <button md-button type="submit" [disabled]="!f.valid">Kayıt Ol</button>
+      <button mat-button type="submit" [disabled]="!f.valid">Kayıt Ol</button>
 
     </form>
   </div>

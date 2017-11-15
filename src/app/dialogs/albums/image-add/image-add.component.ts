@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms'
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 import { HttpEventType, HttpResponse, HttpRequest }  from '@angular/common/http'
 
@@ -17,7 +17,7 @@ export class ImageAddComponent implements OnInit {
 
   constructor(
     private imageRequest: ImageRequestService,
-    public dialogRef: MdDialogRef<ImageAddComponent>,
+    public dialogRef: MatDialogRef<ImageAddComponent>,
   ){ }
 
   length: number = 0
@@ -37,7 +37,7 @@ export class ImageAddComponent implements OnInit {
   showImage(img: string)
   {
     var reader = new FileReader();
-    
+
     let input = this.file.nativeElement
 
     let item = document.getElementById(img)

@@ -1,0 +1,2 @@
+/*FEATURE*/
+*When auth time has finished, show a login dialog to prevent losing work

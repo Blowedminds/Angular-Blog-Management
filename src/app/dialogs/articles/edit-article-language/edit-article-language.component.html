@@ -1,58 +1,58 @@
 <div *ngIf="properties">
 
-  <div md-dialog-title>
+  <div mat-dialog-title>
     <h3 class="header-text">{{article_content.title}} / {{language.name}}</h3>
   </div>
 
-  <md-dialog-content>
+  <mat-dialog-content>
 
     <form #f="ngForm" (ngSubmit)="editArticle(f)">
 
       <div class="form-group">
 
-        <md-input-container>
-          <input mdInput placeholder="Makale Başlığı" [ngModel]="article_content.title" name="title">
-        </md-input-container>
+        <mat-input-container>
+          <input matInput placeholder="Makale Başlığı" [ngModel]="article_content.title" name="title">
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container>
-          <input  mdInput placeholder="Makale Alt Başlığı" [ngModel]="article_content.sub_title" name="sub_title">
-        </md-input-container>
+        <mat-input-container>
+          <input  matInput placeholder="Makale Alt Başlığı" [ngModel]="article_content.sub_title" name="sub_title">
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container class="textarea-body">
-          <textarea mdInput [ngModel]="article_content.body" name="body" id="tinymce-textarea"></textarea>
-        </md-input-container>
+        <mat-input-container class="textarea-body">
+          <textarea matInput [ngModel]="article_content.body" name="body" id="tinymce-textarea"></textarea>
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container>
-          <input  mdInput placeholder="Etiketler" [ngModel]="article_content.keywords" name="keywords">
-        </md-input-container>
+        <mat-input-container>
+          <input  matInput placeholder="Etiketler" [ngModel]="article_content.keywords" name="keywords">
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-select placeholder="Dil" [ngModel]="language.id" name="language" disabled>
-          <md-option *ngFor="let one of properties.languages" [value]="one.id">
+        <mat-select placeholder="Dil" [ngModel]="language.id" name="language" disabled>
+          <mat-option *ngFor="let one of properties.languages" [value]="one.id">
             {{ one.name }}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
 
       </div>
 
       <div class="form-group">
 
-        <md-checkbox [ngModel]="article_content.published" name="published">Yayımla</md-checkbox>
+        <mat-checkbox [ngModel]="article_content.published" name="published">Yayımla</mat-checkbox>
 
       </div>
 
@@ -60,14 +60,14 @@
 
     </form>
 
-  </md-dialog-content>
+  </mat-dialog-content>
 
-  <md-dialog-actions>
+  <mat-dialog-actions>
 
-    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+    <button mat-raised-button color="warn" mat-dialog-close>İptal</button>
 
-    <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+    <button mat-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
 
-  </md-dialog-actions>
+  </mat-dialog-actions>
 
 </div>

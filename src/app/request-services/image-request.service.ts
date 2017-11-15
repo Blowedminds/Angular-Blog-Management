@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
 
 import { Observable }     from 'rxjs';
-import 'rxjs/Rx';
 
 import { MainRequestService }   from './main-request.service'
 import { ApiService }           from '../api.service'
@@ -40,7 +39,7 @@ export class ImageRequestService {
       headers: new HttpHeaders({ "enctype": "multipart/form-data", 'X-Requested-With': 'XMLHttpRequest'})
     })
 
-    return this.http.request(req).map(response => response).catch(error => this.main.handleError(error))
+    return this.http.request(req).catch(error => this.main.handleError(error))
   }
 
   getImages(): Observable<any>
@@ -49,7 +48,6 @@ export class ImageRequestService {
 
     return this.http
                     .get(url, { headers: this.headers })
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -59,7 +57,6 @@ export class ImageRequestService {
 
     return this.http
                     .get(url, { headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -69,7 +66,6 @@ export class ImageRequestService {
 
     return this.http
                     .put(url, JSON.stringify(data), { headers: this.headers })
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -79,7 +75,6 @@ export class ImageRequestService {
 
     return this.http
                     .delete(url, { headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 

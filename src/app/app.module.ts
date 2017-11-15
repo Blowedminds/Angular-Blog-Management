@@ -7,26 +7,26 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
 import {
-  MdMenuModule,
-  MdListModule,
-  MdCardModule,
-  MdTabsModule,
-  MdInputModule,
-  MdChipsModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdSliderModule,
-  MdButtonModule,
-  MdTooltipModule,
-  MdSnackBarModule,
-  MdSidenavModule,
-  MdDatepickerModule,
-  MdToolbarModule,
-  MdProgressSpinnerModule,
-  MdDialogModule,
-  MdProgressBarModule,
-  MdCheckboxModule,
-  MdTableModule
+  MatMenuModule,
+  MatListModule,
+  MatCardModule,
+  MatTabsModule,
+  MatInputModule,
+  MatChipsModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatButtonModule,
+  MatTooltipModule,
+  MatSnackBarModule,
+  MatSidenavModule,
+  MatDatepickerModule,
+  MatToolbarModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,
+  MatProgressBarModule,
+  MatCheckboxModule,
+  MatTableModule
 } from '@angular/material'
 
 import { CdkTableModule } from "@angular/cdk/table"
@@ -42,6 +42,7 @@ import { AdminRouteGuard }  from './admin-route.guard'
 import { GuestRouteGuard }  from './guest-route.guard'
 import { ImageRequestService }  from "./request-services/image-request.service"
 import { UserService }  from './system-services/user.service'
+import { GlobalDataService }  from './system-services/global-data.service'
 import { AdminRequestService }  from './request-services/admin-request.service'
 
 import { LoginComponent } from './auth/login/login.component';
@@ -67,7 +68,7 @@ import { AdminPanelComponent } from './management/admin/admin-panel/admin-panel.
 import { CategoriesComponent } from './management/admin/categories/categories.component';
 import { MenusComponent } from './management/admin/menus/menus.component';
 import { LanguagesComponent } from './management/admin/languages/languages.component';
-import { ProfileComponent } from './management/profile/profile.component'
+import { ProfileComponent } from './management/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -102,26 +103,26 @@ import { ProfileComponent } from './management/profile/profile.component'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MdMenuModule,
-    MdListModule,
-    MdCardModule,
-    MdTabsModule,
-    MdInputModule,
-    MdChipsModule,
-    MdRadioModule,
-    MdSelectModule,
-    MdSliderModule,
-    MdButtonModule,
-    MdTooltipModule,
-    MdSnackBarModule,
-    MdSidenavModule,
-    MdDatepickerModule,
-    MdToolbarModule,
-    MdProgressSpinnerModule,
-    MdDialogModule,
-    MdProgressBarModule,
-    MdCheckboxModule,
-    MdTableModule,
+    MatMenuModule,
+    MatListModule,
+    MatCardModule,
+    MatTabsModule,
+    MatInputModule,
+    MatChipsModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatDatepickerModule,
+    MatToolbarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    MatTableModule,
     CdkTableModule
   ],
 
@@ -135,7 +136,8 @@ import { ProfileComponent } from './management/profile/profile.component'
     GuestRouteGuard,
     ImageRequestService,
     UserService,
-    AdminRequestService
+    AdminRequestService,
+    GlobalDataService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ArticleRequestService }  from '../../request-services/article-request.service'
 import { UserRequestService }  from '../../request-services/user-request.service'
 import { UserService }  from '../../system-services/user.service'
+import { GlobalDataService }  from '../../system-services/global-data.service'
 
 import { AddArticleComponent } from '../../dialogs/articles/add-article/add-article.component'
 import { AddArticleLanguageComponent } from '../../dialogs/articles/add-article-language/add-article-language.component'
@@ -22,31 +23,29 @@ export class ArticleComponent implements OnInit {
 
   articles: any;
 
-  properties: any;
+  properties: any = { languages: "", categories: ""};
 
   user_info: any;
 
   subscriptions = new Subscription()
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     private article: ArticleRequestService,
     private admin: UserRequestService,
+    private globalDataService: GlobalDataService,
     private userService: UserService,
-    private snackBar: MdSnackBar
+    private snackBar: MatSnackBar
   ) {
   }
 
   ngOnInit() {
 
-    /*let sub1 = this.article.getArticles().subscribe(response => this.articles = response)
-
-    let sub2 = this.artic le.getProperties().subscribe(response => this.properties = response)
-
-    let sub3 = this.user.userObs.subscribe( user => this.user_info = user)*/
     this.subscriptions.add(this.article.getArticles().subscribe(response => this.articles = response))
 
-    this.subscriptions.add(this.article.getProperties().subscribe(response => this.properties = response))
+    this.subscriptions.add(this.globalDataService.languages.subscribe(response => this.properties.languages = response ? response : null))
+
+    this.subscriptions.add(this.globalDataService.categories.subscribe(response => this.properties.categories = response ? response : null))
 
     this.subscriptions.add(this.userService.userObs.subscribe( user => this.user_info = user))
 

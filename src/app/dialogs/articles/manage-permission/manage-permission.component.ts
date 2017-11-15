@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ArticleRequestService }  from '../../../request-services/article-request.service'
 
@@ -24,8 +24,8 @@ export class ManagePermissionComponent implements OnInit {
 
   constructor(
     private articleRequest: ArticleRequestService,
-    @Inject(MD_DIALOG_DATA) private dialog_data: any,
-    private dialogRef: MdDialogRef<ManagePermissionComponent>,
+    @Inject(MAT_DIALOG_DATA) private dialog_data: any,
+    private dialogRef: MatDialogRef<ManagePermissionComponent>,
   ) { }
 
   ngOnInit() {

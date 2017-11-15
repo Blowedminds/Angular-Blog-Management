@@ -4,19 +4,19 @@
 
       <h2>Giriş</h2>
 
-      <md-card class="form-error" *ngIf="error">
+      <mat-card class="form-error" *ngIf="error">
         <p>{{errorText}}</p>
-      </md-card>
+      </mat-card>
 
-      <md-input-container class="form-group">
-        <input mdInput type="email" placeholder="E-posta" ngModel name="email" required autofocus>
-      </md-input-container>
+      <mat-input-container class="form-group">
+        <input matInput type="email" placeholder="E-posta" ngModel name="email" required autofocus>
+      </mat-input-container>
 
-      <md-input-container class="form-group">
-        <input mdInput type="password"placeholder="Şifre" ngModel name="password" required>
-      </md-input-container>
+      <mat-input-container class="form-group">
+        <input matInput type="password"placeholder="Şifre" ngModel name="password" required>
+      </mat-input-container>
 
-      <button md-button type="submit" [disabled]="!f.valid">Giriş Yap</button>
+      <button mat-button type="submit" [disabled]="!f.valid">Giriş Yap</button>
 
     </form>
   </div>

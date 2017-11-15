@@ -1,34 +1,34 @@
-<md-spinner *ngIf="!data" class="loading"></md-spinner>
+<mat-spinner *ngIf="!data" class="loading"></mat-spinner>
 
 <div class="" *ngIf="data">
 
-  <md-table #table [dataSource]="data">
+  <mat-table #table [dataSource]="data">
 
     <ng-container cdkColumnDef="Author">
-      <md-header-cell *cdkHeaderCellDef> Yazar </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.author.name}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef> Yazar </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.author.name}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="Title">
-      <md-header-cell *cdkHeaderCellDef> Başlık </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.trashed_contents[0].title}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef> Başlık </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.trashed_contents[0].title}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="Deleted_At">
-      <md-header-cell *cdkHeaderCellDef> Silinme Tarihi </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.deleted_at}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef> Silinme Tarihi </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.deleted_at}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="ArticleId">
-      <md-header-cell *cdkHeaderCellDef> Olay</md-header-cell>
-      <md-cell *cdkCellDef="let row">
-        <button md-raised-button (click)="restoreArticle(row.id)"> Geri Döndür </button>
-        <button md-raised-button color="warn" (click)="forceDeleteArticle(row.id)"> Tamamen Sil </button>
-      </md-cell>
+      <mat-header-cell *cdkHeaderCellDef> Olay</mat-header-cell>
+      <mat-cell *cdkCellDef="let row">
+        <button mat-raised-button (click)="restoreArticle(row.id)"> Geri Döndür </button>
+        <button mat-raised-button color="warn" (click)="forceDeleteArticle(row.id)"> Tamamen Sil </button>
+      </mat-cell>
     </ng-container>
 
-    <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
-  </md-table>
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 
 </div>

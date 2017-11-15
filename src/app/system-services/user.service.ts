@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, BehaviorSubject }     from 'rxjs';
+import 'rxjs/Rx';
 
 import { MainRequestService }   from '../request-services/main-request.service'
 import { ApiService } from '../api.service'
@@ -36,7 +37,7 @@ export class UserService {
 
     return this.http
                     .get(url, {headers :this.headers})
-                    .map(response => response)
+                  //  .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 

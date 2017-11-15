@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { NgForm } from '@angular/forms'
 
 import { ImageRequestService }  from '../../../request-services/image-request.service'
@@ -38,7 +38,7 @@ export class ImageEditComponent implements OnInit {
     private route: ActivatedRoute,
     private imageRequest: ImageRequestService,
     private api: ApiService,
-    public dialog: MdDialog,
+    public dialog: MatDialog,
   ) {
     this.API_URL = this.imageRequest.API_URL
 

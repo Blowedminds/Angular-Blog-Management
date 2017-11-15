@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Router }            from '@angular/router';
 import { Observable }     from 'rxjs';
-import 'rxjs/Rx';
 
 import { MainRequestService }   from './main-request.service'
 import { ApiService }           from '../api.service'
@@ -30,7 +29,6 @@ export class ArticleRequestService {
 
     return this.http
                     .get(url, {headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -40,7 +38,6 @@ export class ArticleRequestService {
 
     return this.http
                     .get(url, { headers: this.headers })
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -52,7 +49,6 @@ export class ArticleRequestService {
 
     return this.http
                     .post(url, JSON.stringify(data), { headers: this.headers })
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -64,7 +60,6 @@ export class ArticleRequestService {
 
     return this.http
                     .post(url, JSON.stringify(data), { headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -76,7 +71,6 @@ export class ArticleRequestService {
 
     return this.http
                     .put(url, JSON.stringify(data), { headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -86,7 +80,6 @@ export class ArticleRequestService {
 
     return this.http
                     .put(url, JSON.stringify(data), {headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -96,7 +89,6 @@ export class ArticleRequestService {
 
     return this.http
                     .delete(url, { headers: this.headers})
-                    .map(response  => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -106,7 +98,6 @@ export class ArticleRequestService {
 
     return this.http
                     .get(url, {headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -116,7 +107,6 @@ export class ArticleRequestService {
 
     return this.http
                     .post(url, JSON.stringify({id: id}), {headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -126,7 +116,6 @@ export class ArticleRequestService {
 
     return this.http
                     .post(url, JSON.stringify({id: id, complete: complete}), {headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -136,7 +125,6 @@ export class ArticleRequestService {
 
     return this.http
                     .get(url, {headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 
@@ -146,7 +134,6 @@ export class ArticleRequestService {
 
     return this.http
                     .put(url, JSON.stringify({have_permission: change_have_permission, not_have_permission: change_not_have_permission}),{headers: this.headers})
-                    .map(response => response)
                     .catch(error => this.main.handleError(error))
   }
 }

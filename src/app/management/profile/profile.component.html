@@ -1,20 +1,24 @@
-<md-spinner *ngIf="!profile" class="loading"></md-spinner>
+<mat-spinner *ngIf="!profile || !bio" class="loading"></mat-spinner>
 
-<div class="" *ngIf="profile">
+<div class="" *ngIf="profile && bio">
   <div class="">
     {{profile.user_id}}<br>
 
     <form #f="ngForm" (ngSubmit)="updateProfile(f)">
 
-      <md-input-container>
-        <input mdInput placeholder="İsim" [ngModel]="profile.name" name="name" [disabled]="!edit_bio">
-      </md-input-container>
+      <mat-input-container>
+        <input matInput placeholder="İsim" [ngModel]="profile.name" name="name" [disabled]="!edit_bio">
+      </mat-input-container>
 
-      <md-input-container class="textarea-body">
-        <textarea mdInput [ngModel]="profile.bio" [disabled]="!edit_bio" name="bio"></textarea>
-      </md-input-container>
+      <div class="" *ngFor="let one of bio;let i = index">
 
-      <button md-button type="submit" [disabled]="!edit_bio">Güncelleştir</button>
+        <mat-input-container class="textarea-body">
+          <textarea matInput [placeholder]="bio[i].slug" [(ngModel)]="bio[i].bio" [disabled]="!edit_bio" [name]="one.slug"></textarea>
+        </mat-input-container>
+
+      </div>
+
+      <button mat-button type="submit" [disabled]="!edit_bio">Güncelleştir</button>
 
     </form>
 
@@ -29,7 +33,6 @@
     </div>
 
     {{profile.name}}<br>
-    {{profile.bio}}<br>
     {{profile.role_id}}<br>
     {{profile.role_name}}
   </div>

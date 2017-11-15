@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NgForm } from '@angular/forms'
 
 import { ArticleRequestService }  from '../../../request-services/article-request.service'
@@ -28,10 +28,10 @@ export class AddArticleLanguageComponent implements OnInit, AfterViewInit, OnDes
     editor: any
 
     constructor(
-      public dialogRef: MdDialogRef<AddArticleLanguageComponent>,
-      @Inject(MD_DIALOG_DATA) private data: any,
+      public dialogRef: MatDialogRef<AddArticleLanguageComponent>,
+      @Inject(MAT_DIALOG_DATA) private data: any,
       private article: ArticleRequestService,
-      public dialog: MdDialog
+      public dialog: MatDialog
     )
     {
         let item = data.properties.languages

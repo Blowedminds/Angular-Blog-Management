@@ -1,4 +1,4 @@
-<md-spinner *ngIf="!u_id || !image" class="loading"></md-spinner>
+<mat-spinner *ngIf="!u_id || !image" class="loading"></mat-spinner>
 
 <div class="cs-container" *ngIf="u_id && image">
 
@@ -16,19 +16,19 @@
 
         <form #f="ngForm" (ngSubmit)="saveAndUpdateImage(f, false)">
 
-          <md-input-container>
-            <input mdInput placeholder="Name" name="name" [(ngModel)]="image.name" required>
-          </md-input-container>
+          <mat-input-container>
+            <input matInput placeholder="Name" name="name" [(ngModel)]="image.name" required>
+          </mat-input-container>
 
-          <md-input-container>
-            <input mdInput placeholder="Alt" name="alt" [(ngModel)]="image.alt" required>
-          </md-input-container>
+          <mat-input-container>
+            <input matInput placeholder="Alt" name="alt" [(ngModel)]="image.alt" required>
+          </mat-input-container>
 
-          <md-checkbox
+          <mat-checkbox
               name="public"
               [(ngModel)]="image.public">
               Public
-          </md-checkbox>
+          </mat-checkbox>
 
           <button #submit type="submit" style="display:none"></button>
 
@@ -57,13 +57,13 @@
 
 
         <div class="controller" >
-          <button md-raised-button (click)="initialCropper('img')">{{cropperInitialized ? 'Destroy Cropper' : 'Initialize Cropper'}}</button>
+          <button mat-raised-button (click)="initialCropper('img')">{{cropperInitialized ? 'Destroy Cropper' : 'Initialize Cropper'}}</button>
 
-          <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+          <button mat-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
 
-          <button md-raised-button (click)="openSaveAs()" [disabled]="!f.valid">Farklı Kaydet</button>
+          <button mat-raised-button (click)="openSaveAs()" [disabled]="!f.valid">Farklı Kaydet</button>
 
-          <button md-raised-button color="warn" (click)="deleteImage()">Fotoğrafı Sil</button>
+          <button mat-raised-button color="warn" (click)="deleteImage()">Fotoğrafı Sil</button>
 
         </div>
       </div>
@@ -74,32 +74,32 @@
 
         <form #g="ngForm" (submit)="setData(g)">
 
-          <md-input-container>
-            <input mdInput placeholder="X" name="x" type="number" [(ngModel)]="cropperData.x" (change)="setData(g)">
-          </md-input-container>
+          <mat-input-container>
+            <input matInput placeholder="X" name="x" type="number" [(ngModel)]="cropperData.x" (change)="setData(g)">
+          </mat-input-container>
 
-          <md-input-container>
-            <input mdInput placeholder="Y" name="y" type="number" [(ngModel)]="cropperData.y" (change)="setData(g)">
-          </md-input-container>
+          <mat-input-container>
+            <input matInput placeholder="Y" name="y" type="number" [(ngModel)]="cropperData.y" (change)="setData(g)">
+          </mat-input-container>
 
-          <md-slider
+          <mat-slider
             placeholder="Width"
             [max]="image.width - cropperData.x"
             [thumb-label]="1 == 1"
             [(ngModel)]="cropperData.width"
             name="width" (change)="setData(g)">
-          </md-slider>
+          </mat-slider>
 
-          <md-slider
+          <mat-slider
             [max]="image.height - cropperData.y"
             [thumb-label]="1 == 1"
             [(ngModel)]="cropperData.height"
             name="height" (change)="setData(g)">
-          </md-slider>
+          </mat-slider>
 
-          <md-input-container>
-            <input mdInput placeholder="Rotate" name="rotate" [(ngModel)]="cropperData.rotate" (change)="setData(g)">
-          </md-input-container>
+          <mat-input-container>
+            <input matInput placeholder="Rotate" name="rotate" [(ngModel)]="cropperData.rotate" (change)="setData(g)">
+          </mat-input-container>
 
 
           <!--<button md-raised-button type="submit">Değiştir</button>

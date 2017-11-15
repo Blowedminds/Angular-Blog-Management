@@ -1,26 +1,26 @@
 <div class="edit-main-dialog" *ngIf="article_data && add_categories">
 
-  <div md-dialog-title>
+  <div mat-dialog-title>
     <h3 class="header-text">Makale Özellikleri</h3>
   </div>
 
-  <md-dialog-content>
+  <mat-dialog-content>
 
     <form #f="ngForm" (ngSubmit)="editArticle(f)">
 
       <div class="form-group">
 
-        <md-input-container>
-          <input mdInput placeholder="Yazar" [ngModel]="article_data.author.name" name="title" disabled>
-        </md-input-container>
+        <mat-input-container>
+          <input matInput placeholder="Yazar" [ngModel]="article_data.author.name" name="title" disabled>
+        </mat-input-container>
 
       </div>
 
       <div class="form-group">
 
-        <md-input-container>
-          <input mdInput placeholder="Slug" [ngModel]="article_data.slug" name="slug">
-        </md-input-container>
+        <mat-input-container>
+          <input matInput placeholder="Slug" [ngModel]="article_data.slug" name="slug">
+        </mat-input-container>
 
       </div>
 
@@ -29,7 +29,7 @@
         <img src="{{API_URL + THUMB_URL + article_data.image +'?token=' + getToken()}}" id="img">
 
 
-        <button md-raised-button type="button" (click)="openImageSelect()">Resim Seç</button>
+        <button mat-raised-button type="button" (click)="openImageSelect()">Resim Seç</button>
 
       </div>
 
@@ -45,13 +45,13 @@
 
       <div class="form-group">
 
-        <md-select placeholder="Eklenecek Kategori" #addcategory>
-          <md-option *ngFor="let category of add_categories" [value]="category.id">
+        <mat-select placeholder="Eklenecek Kategori" #addcategory>
+          <mat-option *ngFor="let category of add_categories" [value]="category.id">
             {{ category.name }}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
 
-        <button md-raised-button (click)="addCategory(addcategory)" type="button">Ekle</button>
+        <button mat-raised-button (click)="addCategory(addcategory)" type="button">Ekle</button>
 
       </div>
 
@@ -60,22 +60,22 @@
     </form>
 
     <div class="form-group" *ngIf="user.user_id == article_data.author.user_id || user.role_id == 1">
-      <button (click)="openManagePermission()" md-raised-button>İzinleri Yönet</button>
+      <button (click)="openManagePermission()" mat-raised-button>İzinleri Yönet</button>
     </div>
 
     <div class="form-group">
-      <button (click)="deleteArticle()" md-raised-button>Çöpe taşı</button>
+      <button (click)="deleteArticle()" mat-raised-button>Çöpe taşı</button>
     </div>
 
 
-  </md-dialog-content>
+  </mat-dialog-content>
 
-  <md-dialog-actions>
+  <mat-dialog-actions>
 
-    <button md-raised-button color="warn" md-dialog-close>İptal</button>
+    <button mat-raised-button color="warn" mat-dialog-close>İptal</button>
 
-    <button md-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
+    <button mat-raised-button (click)="submit.click()" [disabled]="!f.valid">Kaydet</button>
 
-  </md-dialog-actions>
+  </mat-dialog-actions>
 
 </div>
