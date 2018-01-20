@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject }     from 'rxjs';
 import 'rxjs/Rx';
 
-import { MainRequestService }   from '../request-services/main-request.service'
-import { ApiService } from '../api.service'
+import { MainRequestService }   from '../../request-services/main-request.service'
+import { ApiService } from '../../api.service'
 
 @Injectable()
 export class UserService {

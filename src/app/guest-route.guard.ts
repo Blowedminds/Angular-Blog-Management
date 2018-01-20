@@ -19,12 +19,12 @@ export class GuestRouteGuard implements CanActivate, CanActivateChild {
   {
     return this.auth.checkAuthenticated().take(1).map(response => {
 
-      let js = response
+      let js = response.error != 'Unauthorized'
 
-      if(js){
-        this.router.navigate(['management/dashboard'])
+      if(!js){
+        this.router.navigate(['dashboard'])
       }
-      return !js
+      return js
     })
   }
 
@@ -34,10 +34,10 @@ export class GuestRouteGuard implements CanActivate, CanActivateChild {
   {
     return this.auth.checkAuthenticated().take(1).map(response => {
 
-      let js = response.json()
+      let js = response.error != 'Unauthorized'
 
       if(js){
-        this.router.navigate(['management/dashboard'])
+        this.router.navigate(['dashboard'])
       }
       return !js
     })

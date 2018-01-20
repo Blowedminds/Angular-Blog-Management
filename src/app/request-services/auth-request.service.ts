@@ -9,8 +9,6 @@ import { ApiService }         from '../api.service';
 @Injectable()
 export class AuthRequestService {
 
-  private mainDomain:string = this.main.mainDomain
-
   private headers = this.main.headers
 
   constructor(
@@ -19,13 +17,13 @@ export class AuthRequestService {
     private api: ApiService
   ) { }
 
-  private AUTH_API_URL: string = this.mainDomain + "admin/"
+  private AUTH_API_URL: string = this.main.mainDomain + this.main.apiDomain
 
   private AUTH_URL: string = this.AUTH_API_URL + "auth/"
 
   checkAuthenticated(): Observable<any>
   {
-    const url = this.AUTH_URL + "check?token=" + this.api.getToken();
+    const url = this.makeUrl('check')
 
     return this.http
                     .get(url, {headers: this.headers})
@@ -34,7 +32,7 @@ export class AuthRequestService {
 
   register(data: any): Observable<any>
   {
-    const url = this.AUTH_URL + "register";
+    const url = this.makeUrl('register');
 
     return this.http
                     .put(url, JSON.stringify(data), {headers: this.headers})
@@ -50,10 +48,15 @@ export class AuthRequestService {
 
   logout(): Observable<any>
   {
-    const url = this.AUTH_URL + "logout?token=" + this.api.getToken();
+    const url = this.makeUrl('logout');
 
     return this.http
                     .get(url, {headers: this.headers})
                     .catch(error => this.main.handleError(error))
+  }
+
+  makeUrl(url: string): string
+  {
+    return this.AUTH_URL + url + "?token=" + this.api.getToken();
   }
 }

@@ -26,7 +26,8 @@ import {
   MatDialogModule,
   MatProgressBarModule,
   MatCheckboxModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule
 } from '@angular/material'
 
 import { CdkTableModule } from "@angular/cdk/table"
@@ -41,8 +42,8 @@ import { ApiService }           from './api.service';
 import { AdminRouteGuard }  from './admin-route.guard'
 import { GuestRouteGuard }  from './guest-route.guard'
 import { ImageRequestService }  from "./request-services/image-request.service"
-import { UserService }  from './system-services/user.service'
-import { GlobalDataService }  from './system-services/global-data.service'
+import { UserService }  from './system-services/user/user.service'
+import { GlobalDataService }  from './system-services/global-data/global-data.service'
 import { AdminRequestService }  from './request-services/admin-request.service'
 
 import { LoginComponent } from './auth/login/login.component';
@@ -70,6 +71,9 @@ import { MenusComponent } from './management/admin/menus/menus.component';
 import { LanguagesComponent } from './management/admin/languages/languages.component';
 import { ProfileComponent } from './management/profile/profile.component';
 
+import { PageNotFoundComponent }  from './system/page-not-found/page-not-found.component'
+import { RedirectComponent }  from './system/redirect/redirect.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,7 +99,9 @@ import { ProfileComponent } from './management/profile/profile.component';
     CategoriesComponent,
     MenusComponent,
     LanguagesComponent,
-    ProfileComponent
+    ProfileComponent,
+    PageNotFoundComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,
@@ -123,6 +129,7 @@ import { ProfileComponent } from './management/profile/profile.component';
     MatProgressBarModule,
     MatCheckboxModule,
     MatTableModule,
+    MatPaginatorModule,
     CdkTableModule
   ],
 

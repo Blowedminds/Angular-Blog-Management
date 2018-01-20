@@ -61,7 +61,12 @@ export class CategoriesComponent implements OnInit {
 
   updateCategory(f: NgForm)
   {
-    let rq2 = this.adminRequest.postCategory({id: f.value.id, name: f.value.name, description: f.value.description}).subscribe(response => {
+    let rq2 = this.adminRequest.postCategory({
+      id: f.value.id,
+      name: f.value.name,
+      description: f.value.description,
+      slug:f.value.slug
+    }).subscribe(response => {
       this.afterChange()
     })
 
@@ -70,7 +75,11 @@ export class CategoriesComponent implements OnInit {
 
   createCategory(f: NgForm)
   {
-    let rq3 = this.adminRequest.putCategory({name: f.value.name, description: f.value.description}).subscribe(response => {
+    let rq3 = this.adminRequest.putCategory({
+      name: f.value.name,
+      description: f.value.description,
+      slug: f.value.slug
+    }).subscribe(response => {
       this.afterChange()
     })
 

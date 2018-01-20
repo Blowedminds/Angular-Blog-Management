@@ -14,7 +14,7 @@ export class MainRequestService {
 
   public mainDomain: string = "http://localhost:8000/";
 
-  public apiDomain: string = "admin/";
+  public apiDomain: string = "editor/";
 
   public headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -46,7 +46,6 @@ export class MainRequestService {
             this.api.navigate(['auth/login']);
             break;
           case 'Unauthorized':
-            console.log('TEST2')
             this.api.navigate(['auth/login']);
             break;
         }

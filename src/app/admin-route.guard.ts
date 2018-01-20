@@ -19,12 +19,12 @@ export class AdminRouteGuard implements CanActivate, CanActivateChild {
   {
     return this.auth.checkAuthenticated().take(1).map(response => {
 
-      let js = response
+      let js = response.error != 'Unauthorized'
 
       if(!js){
         this.router.navigate(['auth/login'])
       }
-      return js
+      return !js
     })
   }
 

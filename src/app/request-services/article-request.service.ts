@@ -32,6 +32,15 @@ export class ArticleRequestService {
                     .catch(error => this.main.handleError(error))
   }
 
+  getArticlesPaginate(paginate: any): Observable<any>
+  {
+    const url = `${this.API_URL}articles?page=${paginate.pageIndex}&per-page=${paginate.pageSize}&token=${this.api.getToken()}`;
+
+    return this.http
+                    .get(url, {headers: this.headers})
+                    .catch(error => this.main.handleError(error))
+  }
+
   getProperties(): Observable<any>
   {
     const url = this.API_URL + "properties?token=" + this.api.getToken()

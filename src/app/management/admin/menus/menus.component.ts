@@ -74,15 +74,15 @@ export class MenusComponent implements OnInit {
     if(bool){
       let array = this.roles
 
-      if(typeof this.menus[i].menu_roles !== "undefined")
-        for(let one of this.menus[i].menu_roles)
+      if(typeof this.menus[i].roles !== "undefined")
+        for(let one of this.menus[i].roles)
           array = array.filter( obj => obj.id !== one)
 
       return array
     }else{
       let array = []
-      if(typeof this.menus[i].menu_roles !== "undefined")
-        for(let one of this.menus[i].menu_roles)
+      if(typeof this.menus[i].roles !== "undefined")
+        for(let one of this.menus[i].roles)
           array.push(this.roles.find( obj => obj.id === one))
 
       return array
@@ -151,12 +151,12 @@ export class MenusComponent implements OnInit {
   {
     let rq2 = this.adminRequest.postMenu({
       id: f.value.id,
-      menu_name: f.value.menu_name,
-      menu_url: f.value.menu_url,
-      menu_roles: this.filtered_role,
-      menu_tooltip: f.value.menu_tooltip,
-      menu_weight: f.value.menu_weight,
-      menu_parent: f.value.menu_parent
+      name: f.value.name,
+      url: f.value.url,
+      roles: this.filtered_role,
+      tooltip: f.value.tooltip,
+      weight: f.value.weight,
+      parent: f.value.parent
     }).subscribe(response => {
       this.afterChange()
     })
@@ -167,12 +167,12 @@ export class MenusComponent implements OnInit {
   createMenu(f: NgForm)
   {
     let rq3 = this.adminRequest.putMenu({
-      menu_name: f.value.menu_name,
-      menu_url: f.value.menu_url,
-      menu_roles: this.create_new_filtered_role,
-      menu_tooltip: f.value.menu_tooltip,
-      menu_weight: f.value.menu_weight,
-      menu_parent: f.value.menu_parent
+      name: f.value.name,
+      url: f.value.url,
+      roles: this.create_new_filtered_role,
+      tooltip: f.value.tooltip,
+      weight: f.value.weight,
+      parent: f.value.parent
     }).subscribe(response => {
       this.afterChange()
     })

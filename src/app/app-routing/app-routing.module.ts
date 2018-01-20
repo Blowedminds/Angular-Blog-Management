@@ -16,13 +16,13 @@ import { CategoriesComponent }  from '../management/admin/categories/categories.
 import { MenusComponent }  from '../management/admin/menus/menus.component'
 import { LanguagesComponent } from '../management/admin/languages/languages.component'
 import { ProfileComponent } from '../management/profile/profile.component'
+import { PageNotFoundComponent }  from '../system/page-not-found/page-not-found.component'
 
 import { AdminRouteGuard }  from '../admin-route.guard'
 import { GuestRouteGuard }  from '../guest-route.guard'
 
 const routes: Routes = [
-  { path: "", redirectTo: 'management/dashboard', pathMatch: "full" },
-  { path: "management", redirectTo: 'management/dashboard', pathMatch: "full" },
+  { path: "", redirectTo: 'dashboard', pathMatch: "full" },
   { path: "auth", component: AuthComponent, children: [
       { path: "", redirectTo: "login", pathMatch: "full" },
       { path: "login", canActivate: [GuestRouteGuard], component: LoginComponent },
@@ -30,7 +30,7 @@ const routes: Routes = [
       { path: "logout", component: LogoutComponent }
     ]
   },
-  { path: "management", component: ManagementComponent, canActivateChild: [AdminRouteGuard], children: [
+  { path: "", component: ManagementComponent, canActivateChild: [AdminRouteGuard], children: [
       { path: "dashboard", component: DashboardComponent },
       { path: "articles", component: ArticleComponent},
       { path: "articles/trash" , component: ArticleTrashComponent },
@@ -41,13 +41,16 @@ const routes: Routes = [
         { path: "categories", component: CategoriesComponent, outlet: "settings"},
         { path: "menus", component: MenusComponent, outlet: "settings"},
         { path: "languages", component: LanguagesComponent, outlet: "settings"}
-      ]}
+      ]},
     ]
   },
+  { path:"**", component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes,
+    { enableTracing: false } // Debugging purposes only
+  ) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

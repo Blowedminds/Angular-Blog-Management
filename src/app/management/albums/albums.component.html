@@ -6,7 +6,7 @@
     <h2>Public</h2>
 
     <div class="image-col" *ngFor="let one of images.public">
-      <a [routerLink]="['/management/albums/edit', one.u_id]">
+      <a [routerLink]="['/albums/edit', one.u_id]">
         <p>{{one.name}}</p>
           <img src="{{API_URL + THUMB_URL + one.u_id +'?token=' + getToken()}}" [alt]="one.alt">
       </a>
@@ -19,7 +19,7 @@
 
     <div class="image-col" *ngFor="let one of images.private">
 
-      <a [routerLink]="['/management/albums/edit', one.u_id]">
+      <a [routerLink]="['/albums/edit', one.u_id]">
         <p>{{one.name}}</p>
         <img src="{{API_URL + THUMB_URL + one.u_id +'?token=' + getToken()}}">
       </a>

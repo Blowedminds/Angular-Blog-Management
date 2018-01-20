@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms'
 
 import { UserRequestService } from '../../request-services/user-request.service'
-import { GlobalDataService } from '../../system-services/global-data.service'
+import { GlobalDataService } from '../../system-services/global-data/global-data.service'
 
 import { Subscription } from 'rxjs/Subscription'
 

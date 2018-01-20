@@ -42,7 +42,7 @@ export class AddArticleComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     this.properties = data.properties
 
-    this.add_categories = data.properties.categories
+    this.add_categories = data.properties.categories.filter( (obj) => obj)
   }
 
 
@@ -118,7 +118,7 @@ export class AddArticleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addCategory(item: any)
   {
-    if(item.selected.value == undefined || item.selected.value == null) return;
+    if(typeof item.selected.value == 'undefined' || item.selected.value == null) return;
 
     let index = this.add_categories.findIndex( obj => obj.id === item.selected.value)
 
@@ -130,6 +130,7 @@ export class AddArticleComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteCategory(item: any)
   {
     this.add_categories.push(this.categories[item])
+
     this.categories.splice(item, 1)
   }
 
@@ -160,7 +161,6 @@ export class AddArticleComponent implements OnInit, AfterViewInit, OnDestroy {
       this.image_name = response.u_id
 
       rq2.unsubscribe()
-      rq2 = null
     })
   }
 

@@ -3,7 +3,7 @@ import { NgForm }                   from '@angular/forms';
 
 import { AuthRequestService }     from '../../request-services/auth-request.service'
 import { ApiService }             from '../../api.service'
-import { UserService }             from '../../system-services/user.service'
+import { UserService }             from '../../system-services/user/user.service'
 
 @Component({
   selector: 'app-login',
@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
 
   login(f: NgForm)
   {
+    this.error = false
+
     let rq1 = this.authService.login({
       email: f.value.email,
       password: f.value.password
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit {
 
         this.userService.updateUser(response)
 
-        this.api.navigate(['management/dashboard']);
+        this.api.navigate(['dashboard']);
 
         rq1.unsubscribe()
         rq2.unsubscribe()

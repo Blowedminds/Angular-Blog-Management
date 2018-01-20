@@ -2,9 +2,9 @@
   <div class="col-md-3">
     <ul>
       <li *ngFor="let one of menus;let i = index">
-        <span (click)="selectPan(i)">{{one.menu_name}}</span>
+        <span (click)="selectPan(i)">{{one.name}}</span>
         <ul>
-          <li *ngFor="let role of one.menu_roles">{{role}}</li>
+          <li *ngFor="let role of one.roles">{{role}}</li>
         </ul>
       </li>
       <li (click)="createNew()">+++</li>
@@ -20,32 +20,32 @@
       <input type="hidden" name="id" [ngModel]="selected_one.id" name="id" required>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="İsim" [ngModel]="selected_one.menu_name" name="menu_name" required autofocus>
+        <input matInput type="text" placeholder="İsim" [ngModel]="selected_one.name" name="name" required autofocus>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Tooltip" [ngModel]="selected_one.menu_tooltip" name="menu_tooltip" required>
+        <input matInput type="text" placeholder="Tooltip" [ngModel]="selected_one.tooltip" name="tooltip" required>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Url" [ngModel]="selected_one.menu_url" name="menu_url" required>
+        <input matInput type="text" placeholder="Url" [ngModel]="selected_one.url" name="url" required>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Weight" [ngModel]="selected_one.menu_weight" name="menu_weight" required>
+        <input matInput type="text" placeholder="Weight" [ngModel]="selected_one.weight" name="weight" required>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Parent" [ngModel]="selected_one.menu_parent" name="menu_parent" required>
+        <input matInput type="text" placeholder="Parent" [ngModel]="selected_one.parent" name="parent" required>
       </mat-input-container>
 
       <ul>
         <li *ngFor="let one_role of filtered_role; let i = index">{{one_role.role_name}} <span (click)="deleteRole(i)">X</span></li>
       </ul>
 
-      <mat-select placeholder="Eklenecek Kategori" #addrole>
+      <mat-select placeholder="Eklenecek Rol" #addrole>
         <mat-option *ngFor="let role of filtered_not_role" [value]="role.id">
-          {{ role.role_name }}
+          {{ role.name }}
         </mat-option>
       </mat-select>
 
@@ -65,23 +65,23 @@
     <form (ngSubmit)="createMenu(g)" #g="ngForm">
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="İsim" ngModel name="menu_name" required autofocus>
+        <input matInput type="text" placeholder="İsim" ngModel name="name" required autofocus>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Tooltip" ngModel name="menu_tooltip" required>
+        <input matInput type="text" placeholder="Tooltip" ngModel name="tooltip" required>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Url" ngModel name="menu_url" required>
+        <input matInput type="text" placeholder="Url" ngModel name="url" required>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Weight" ngModel name="menu_weight" required>
+        <input matInput type="text" placeholder="Weight" ngModel name="weight" required>
       </mat-input-container>
 
       <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Parent" ngModel name="menu_parent" required>
+        <input matInput type="text" placeholder="Parent" ngModel name="parent" required>
       </mat-input-container>
 
       <ul>

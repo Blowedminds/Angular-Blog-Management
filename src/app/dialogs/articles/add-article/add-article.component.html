@@ -70,7 +70,7 @@
       <div class="form-group">
 
         <mat-select placeholder="Eklenecek Kategori" #addcategory>
-          <mat-option *ngFor="let one of properties.categories" [value]="one.id">
+          <mat-option *ngFor="let one of add_categories" [value]="one.id">
             {{ one.name }}
           </mat-option>
         </mat-select>

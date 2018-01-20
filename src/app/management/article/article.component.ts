@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ArticleRequestService }  from '../../request-services/article-request.service'
 import { UserRequestService }  from '../../request-services/user-request.service'
-import { UserService }  from '../../system-services/user.service'
-import { GlobalDataService }  from '../../system-services/global-data.service'
+import { UserService }  from '../../system-services/user/user.service'
+import { GlobalDataService }  from '../../system-services/global-data/global-data.service'
 
 import { AddArticleComponent } from '../../dialogs/articles/add-article/add-article.component'
 import { AddArticleLanguageComponent } from '../../dialogs/articles/add-article-language/add-article-language.component'
@@ -29,6 +29,9 @@ export class ArticleComponent implements OnInit {
 
   subscriptions = new Subscription()
 
+  pageSizeOptions: Array<number> = [5, 10, 20, 50]
+
+
   constructor(
     public dialog: MatDialog,
     private article: ArticleRequestService,
@@ -41,11 +44,15 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {
 
-    this.subscriptions.add(this.article.getArticles().subscribe(response => this.articles = response))
+    this.getArticlesPaginate({
+      length: null,
+      pageSize: this.pageSizeOptions[0],
+      pageIndex: 0
+    })
 
-    this.subscriptions.add(this.globalDataService.languages.subscribe(response => this.properties.languages = response ? response : null))
+    this.subscriptions.add(this.globalDataService.languages.subscribe(response => this.properties.languages = response || null))
 
-    this.subscriptions.add(this.globalDataService.categories.subscribe(response => this.properties.categories = response ? response : null))
+    this.subscriptions.add(this.globalDataService.categories.subscribe(response => this.properties.categories = response || null))
 
     this.subscriptions.add(this.userService.userObs.subscribe( user => this.user_info = user))
 
@@ -56,13 +63,27 @@ export class ArticleComponent implements OnInit {
     this.subscriptions.unsubscribe()
   }
 
+  getArticlesPaginate(props: any)
+  {
+    this.articles = null
+
+     let rq1 = this.article.getArticlesPaginate({
+        pageSize: props.pageSize, pageIndex: props.pageIndex + 1
+      }).subscribe(response => this.articles = response)
+
+     this.subscriptions.add(rq1);
+  }
+
+  intval(value: string)
+  {
+    return +value;
+  }
+
   findLanguage(id: number)
   {
     let lang = this.properties.languages.find( obj => obj.id === id)
-    if( lang)
-      return lang.name
 
-    return "NullLanguage"
+    return lang ? lang.name : "NullLanguage";
   }
 
   openDialog()
@@ -82,22 +103,16 @@ export class ArticleComponent implements OnInit {
       })
 
       this.articles = null
-      //this.properties = null
 
       let rq7 = this.article.getArticles().subscribe(response => {
         this.articles = response
         rq7.unsubscribe()
       })
-      /*
-      let rq8 = this.article.getProperties().subscribe(response => {
-        this.properties = response
-        rq8.unsubscribe()
-        rq8 = null
-      })
-*/
+
       rq1.unsubscribe()
     })
   }
+
 
   openEditDialog(article_content: any)
   {

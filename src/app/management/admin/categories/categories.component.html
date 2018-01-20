@@ -24,6 +24,10 @@
         <input matInput type="text" placeholder="Açıklama" [ngModel]="selected_one.description" name="description" required>
       </mat-input-container>
 
+      <mat-input-container class="form-group">
+        <input matInput type="text" placeholder="Uzantı" [ngModel]="selected_one.slug" name="slug" required>
+      </mat-input-container>
+
       <button mat-button type="button" (click)="deleteCategory(selected_one.id)">Sil</button>
 
       <button mat-button type="submit">Güncelle</button>
@@ -44,6 +48,10 @@
 
       <mat-input-container class="form-group">
         <input matInput type="text" placeholder="Description" ngModel name="description" required>
+      </mat-input-container>
+
+      <mat-input-container class="form-group">
+        <input matInput type="text" placeholder="Uzantı" ngModel name="slug" required>
       </mat-input-container>
 
       <button mat-button type="submit">Yeni Oluştur</button>

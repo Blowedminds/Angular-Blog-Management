@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, BehaviorSubject }     from 'rxjs';
 
-import { UserRequestService } from '../request-services/user-request.service'
+import { UserRequestService } from '../../request-services/user-request.service'
 
 @Injectable()
 export class GlobalDataService {

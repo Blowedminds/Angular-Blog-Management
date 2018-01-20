@@ -35,10 +35,9 @@ export class AddArticleLanguageComponent implements OnInit, AfterViewInit, OnDes
     )
     {
         let item = data.properties.languages
-        for(let i = 0; i < data.data.contents.length; i++){
 
+        for(let i = 0; i < data.data.contents.length; i++)
           item = item.filter( (obj) => obj.id !== data.data.contents[i].language)
-        }
 
         this.properties = item
 

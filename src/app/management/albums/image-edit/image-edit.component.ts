@@ -150,7 +150,7 @@ export class ImageEditComponent implements OnInit {
 
       swal(response.header, response.message, response.state)
 
-      this.api.navigate(['/management/albums'])
+      this.api.navigate(['/albums'])
 
       rq2.unsubscribe()
       rq2 = null

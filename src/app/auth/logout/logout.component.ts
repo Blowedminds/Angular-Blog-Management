@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthRequestService }     from '../../request-services/auth-request.service'
 import { ApiService }             from '../../api.service'
-import { UserService }             from '../../system-services/user.service'
+import { UserService }             from '../../system-services/user/user.service'
 
 @Component({
   selector: 'app-logout',

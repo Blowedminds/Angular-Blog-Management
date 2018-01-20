@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 
 import { UserRequestService } from '../request-services/user-request.service'
-import { UserService }  from '../system-services/user.service'
+import { UserService }  from '../system-services/user/user.service'
 
 @Component({
   selector: 'app-management',
