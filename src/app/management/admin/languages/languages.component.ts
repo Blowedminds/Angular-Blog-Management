@@ -8,19 +8,21 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-languages',
   templateUrl: './languages.component.html',
-  styleUrls: ['./languages.component.css']
+  styleUrls: ['./languages.component.sass']
 })
 export class LanguagesComponent implements OnInit {
 
   languages: any
 
-  selected_one: any
-
-  open_form: boolean = false
-
-  create_new: boolean = false
+  edit_language: any
 
   subs = new Subscription()
+
+  default_language: any = {
+    id: null,
+    name: null,
+    slug: null
+  }
 
   constructor(
     private adminRequest: AdminRequestService
@@ -37,68 +39,44 @@ export class LanguagesComponent implements OnInit {
     this.subs.unsubscribe()
   }
 
-  selectPan(i: number)
+  submitForm(f: NgForm)
   {
-    if(this.selected_one)
-      if(this.selected_one.id === this.languages[i].id){
+    const language = {
+            id: f.value.id,
+            name: f.value.name,
+            slug: f.value.slug
+          }
 
-        this.closePan()
+    let rq1;
 
-        return
-      }
+    if(language.id)
+      rq1 = this.adminRequest.postLanguage(language).subscribe(response => this.refreshComponent())
+    else
+      rq1 = this.adminRequest.putLanguage(language).subscribe(response => this.refreshComponent())
 
-    this.open_form = true
-
-    this.selected_one = this.languages[i]
+    this.subs.add(rq1)
   }
 
-  closePan()
+  delete(id: number)
   {
-    this.selected_one = null
+    let rq4 = this.adminRequest.deleteLanguage(id).subscribe(response => this.refreshComponent())
 
-    this.open_form = false
+    this.subs.add(rq4)
   }
 
-  updateLanguage(f: NgForm)
+  refreshComponent()
   {
-    let rq2 = this.adminRequest.postLanguage({id: f.value.id, name: f.value.name, slug: f.value.slug}).subscribe(response => {
-      this.afterChange()
-    })
-
-    this.subs.add(rq2)
-  }
-
-  createLanguage(f: NgForm)
-  {
-    let rq3 = this.adminRequest.putLanguage({name: f.value.name, slug: f.value.slug}).subscribe(response => {
-      this.afterChange()
-    })
-
-    this.subs.add(rq3)
-  }
-
-  deleteLanguage(id: number)
-  {
-      let rq4 = this.adminRequest.deleteLanguage(id).subscribe(response => {
-        this.afterChange()
-      })
-
-      this.subs.add(rq4)
-  }
-
-  afterChange()
-  {
-    this.selected_one = null
-
-    this.open_form = false
-
     this.languages = null
 
-    this.create_new = false
+    this.edit_language = null
 
     let rq1 = this.adminRequest.getLanguages().subscribe( response => this.languages = response)
 
     this.subs.add(rq1)
   }
 
+  selectLanguage(language: any)
+  {
+    this.edit_language = language;
+  }
 }

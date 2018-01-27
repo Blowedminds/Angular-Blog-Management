@@ -14,13 +14,16 @@ export class CategoriesComponent implements OnInit {
 
   categories: any
 
-  selected_one: any
-
-  open_form: boolean = false
-
-  create_new: boolean = false
+  edit_category: any
 
   subs = new Subscription()
+
+  default_category: any = {
+    id: null,
+    name: null,
+    slug: null,
+    description: null
+  }
 
   constructor(
     private adminRequest: AdminRequestService
@@ -37,77 +40,45 @@ export class CategoriesComponent implements OnInit {
     this.subs.unsubscribe()
   }
 
-  selectPan(i: number)
+  submitForm(f: NgForm)
   {
-    if(this.selected_one)
-      if(this.selected_one.id === this.categories[i].id){
+    const category = {
+            id: f.value.id,
+            name: f.value.name,
+            slug: f.value.slug,
+            description: f.value.description,
+          }
 
-        this.closePan()
+    let rq1;
 
-        return
-      }
+    if(category.id)
+      rq1 = this.adminRequest.postCategory(category).subscribe(response => this.refreshComponent())
+    else
+      rq1 = this.adminRequest.putCategory(category).subscribe(response => this.refreshComponent())
 
-    this.open_form = true
-
-    this.selected_one = this.categories[i]
+    this.subs.add(rq1)
   }
 
-  closePan()
+  delete(id: number)
   {
-    this.selected_one = null
-
-    this.open_form = false
-  }
-
-  updateCategory(f: NgForm)
-  {
-    let rq2 = this.adminRequest.postCategory({
-      id: f.value.id,
-      name: f.value.name,
-      description: f.value.description,
-      slug:f.value.slug
-    }).subscribe(response => {
-      this.afterChange()
-    })
-
-    this.subs.add(rq2)
-  }
-
-  createCategory(f: NgForm)
-  {
-    let rq3 = this.adminRequest.putCategory({
-      name: f.value.name,
-      description: f.value.description,
-      slug: f.value.slug
-    }).subscribe(response => {
-      this.afterChange()
-    })
-
-    this.subs.add(rq3)
-  }
-
-  deleteCategory(id: number)
-  {
-    let rq4 = this.adminRequest.deleteCategory(id).subscribe(response => {
-      this.afterChange()
-    })
+    let rq4 = this.adminRequest.deleteCategory(id).subscribe(response => this.refreshComponent())
 
     this.subs.add(rq4)
   }
 
-  afterChange()
+  refreshComponent()
   {
-    this.selected_one = null
-
-    this.open_form = false
-
     this.categories = null
 
-    this.create_new = false
+    this.edit_category = null
 
     let rq1 = this.adminRequest.getCategories().subscribe( response => this.categories = response)
 
     this.subs.add(rq1)
   }
 
+  selectCategory(category: any)
+  {
+    this.edit_category = category;
+  }
 }

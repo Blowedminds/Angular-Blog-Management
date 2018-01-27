@@ -41,13 +41,9 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
       this.article_content = data.data
 
       let lang =  data.properties.languages.find( (obj) =>
-          obj.id === data.data.language)
+          obj.id === data.data.language_id)
 
-      if(lang){
-        this.language = lang
-      }else{
-        this.language = {name: "NullLanguage", id: 0}
-      }
+      this.language = lang || {name: "NullLanguage", id: 0}
     }
 
     ngOnInit()  {
@@ -104,7 +100,7 @@ export class EditArticleLanguageComponent implements OnInit, AfterViewInit, OnDe
         body: tinymce.activeEditor.getContent(  ),
         keywords: f.value.keywords,
         published: f.value.published ? 1 : 0,
-        language: this.article_content.language,
+        language_id: this.article_content.language_id,
       }).subscribe(response => {
 
         this.dialogRef.close(response.message);

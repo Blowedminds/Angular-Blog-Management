@@ -14,23 +14,25 @@ export class MenusComponent implements OnInit {
 
   menus: any
 
-  selected_one: any
-
-  open_form: boolean = false
-
-  create_new: boolean = false
+  edit_menu: any
 
   subs = new Subscription()
 
   roles: Array<any> = []
 
-  filtered_role: any
+  has_roles: Array<any> = []
 
-  filtered_not_role: any
+  not_has_roles: Array<any> = []
 
-  create_new_filtered_role: any
-
-  create_new_filtered_not_role: any
+  default_menu: any = {
+    id: null,
+    name: null,
+    tooltip: null,
+    url: null,
+    weight: null,
+    parent: null,
+    roles: []
+  }
 
   constructor(
     private adminRequest: AdminRequestService
@@ -50,154 +52,42 @@ export class MenusComponent implements OnInit {
     this.subs.unsubscribe()
   }
 
-  selectPan(i: number)
+  submitForm(f: NgForm)
   {
-    if(this.selected_one)
-      if(this.selected_one.id === this.menus[i].id){
+    const menu = {
+            id: f.value.id,
+            name: f.value.name,
+            tooltip: f.value.tooltip,
+            url: f.value.url,
+            weight: f.value.weight,
+            parent: f.value.parent,
+            roles: this.has_roles
+          }
 
-        this.closePan()
+    let rq1;
 
-        return
-      }
+    if(menu.id)
+      rq1 = this.adminRequest.postMenu(menu).subscribe(response => this.refreshComponent())
+    else
+      rq1 = this.adminRequest.putMenu(menu).subscribe(response => this.refreshComponent())
 
-    this.selected_one = this.menus[i]
-
-    this.filtered_not_role =  this.filterRole(i, true)
-
-    this.filtered_role =  this.filterRole(i, false)
-
-    this.open_form = true
-  }
-
-  filterRole(i: number, bool: boolean)
-  {
-    if(bool){
-      let array = this.roles
-
-      if(typeof this.menus[i].roles !== "undefined")
-        for(let one of this.menus[i].roles)
-          array = array.filter( obj => obj.id !== one)
-
-      return array
-    }else{
-      let array = []
-      if(typeof this.menus[i].roles !== "undefined")
-        for(let one of this.menus[i].roles)
-          array.push(this.roles.find( obj => obj.id === one))
-
-      return array
-    }
-  }
-
-  deleteRole(i: number)
-  {
-    this.filtered_not_role.push(this.filtered_role[i])
-    this.filtered_role.splice(i, 1)
-  }
-
-  addRole(item: any)
-  {
-    let value = item.selected.value
-
-    if(value == undefined || value == null) return;
-
-    let index = this.roles.findIndex( obj => obj.id === value)
-
-    this.filtered_role.push(this.roles[index])
-
-    this.filtered_not_role.splice(this.filtered_not_role.findIndex( obj => obj.id === value), 1)
-  }
-
-  closePan()
-  {
-    this.selected_one = null
-
-    this.open_form = false
-  }
-
-  createNew()
-  {
-    this.create_new = !this.create_new
-
-    if(!this.create_new){
-      return
-    }
-
-    this.create_new_filtered_role = []
-
-    this.create_new_filtered_not_role = this.roles.filter( obj => true)
-  }
-
-  addNewRole(item: any)
-  {
-    let value = item.selected.value
-
-    if(value == undefined || value == null) return;
-
-    let index = this.roles.findIndex( obj => obj.id === value)
-
-    this.create_new_filtered_role.push(this.roles[index])
-
-    this.create_new_filtered_not_role.splice(this.create_new_filtered_not_role.findIndex( obj => obj.id === value), 1)
-  }
-
-  deleteNewRole(i: number)
-  {
-    this.create_new_filtered_not_role.push(this.create_new_filtered_role[i])
-    this.create_new_filtered_role.splice(i, 1)
-  }
-
-  updateMenu(f: NgForm)
-  {
-    let rq2 = this.adminRequest.postMenu({
-      id: f.value.id,
-      name: f.value.name,
-      url: f.value.url,
-      roles: this.filtered_role,
-      tooltip: f.value.tooltip,
-      weight: f.value.weight,
-      parent: f.value.parent
-    }).subscribe(response => {
-      this.afterChange()
-    })
-
-    this.subs.add(rq2)
-  }
-
-  createMenu(f: NgForm)
-  {
-    let rq3 = this.adminRequest.putMenu({
-      name: f.value.name,
-      url: f.value.url,
-      roles: this.create_new_filtered_role,
-      tooltip: f.value.tooltip,
-      weight: f.value.weight,
-      parent: f.value.parent
-    }).subscribe(response => {
-      this.afterChange()
-    })
-
-    this.subs.add(rq3)
+    this.subs.add(rq1)
   }
 
   deleteMenu(id: number)
   {
-    let rq4 = this.adminRequest.deleteMenu(id).subscribe(response => {
-      this.afterChange()
-    })
+    let rq4 = this.adminRequest.deleteMenu(id).subscribe(response =>  this.refreshComponent())
 
     this.subs.add(rq4)
   }
 
-  afterChange()
+  refreshComponent()
   {
-    this.selected_one = null
-
-    this.open_form = false
-
     this.menus = null
 
-    this.create_new = false
+    this.roles = null
+
+    this.edit_menu = null
 
     let rq1 = this.adminRequest.getMenus().subscribe( response => {
       this.menus = response.menus
@@ -207,4 +97,64 @@ export class MenusComponent implements OnInit {
     this.subs.add(rq1)
   }
 
+  selectMenu(menu: any)
+  {
+    this.edit_menu = menu;
+
+    this.filterRoles(menu.roles)
+  }
+
+  filterRoles(roles)
+  {
+    this.has_roles = []
+
+    this.not_has_roles = []
+
+    this.has_roles = this.roles.filter( role => {
+
+      role.changed = false
+
+      for(let one of roles) {
+
+        if(one.id === role.id)
+          return true
+      }
+
+      this.not_has_roles.push(role)
+
+      return false
+    })
+
+    this.sortRoles()
+  }
+
+  addRole(id: number)
+  {
+    this.changeRole(id, this.has_roles, this.not_has_roles)
+  }
+
+  discardRole(id: number)
+  {
+    this.changeRole(id, this.not_has_roles, this.has_roles)
+  }
+
+  changeRole(id:number, add: any, sub: any)
+  {
+    let index = sub.findIndex(role => role.id === id)
+
+    sub[index].changed = !sub[index].changed
+
+    add.push(sub[index])
+
+    sub.splice(index, 1)
+
+    this.sortRoles()
+  }
+
+  sortRoles()
+  {
+    this.has_roles.sort( (a, b) => a.id - b.id)
+
+    this.not_has_roles.sort( (a, b) => a.id - b.id)
+  }
 }

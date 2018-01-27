@@ -39,7 +39,7 @@
           <mat-tab-group>
 
             <!-- [label]="properties.languages[one.contents[k].language - 1].name"!-->
-            <mat-tab [label]="findLanguage(article_content.language)" *ngFor="let article_content of one.contents; let k = index">
+            <mat-tab [label]="findLanguage(article_content.language_id)" *ngFor="let article_content of one.contents; let k = index">
 
               <h3 class="header-text article-header">{{article_content.title.slice(0, 20)}}</h3>
 

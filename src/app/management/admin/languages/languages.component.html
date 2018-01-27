@@ -1,53 +1,46 @@
-<div class="" *ngIf="languages">
+<mat-card *ngIf="languages">
+  <div class="columns is-desktop">
 
-  <div class="col-md-2">
+    <div class="column is-one-third">
+      <div class="columns is-multiline">
+        <div class="column is-half has-text-centered" *ngFor="let language of languages">
+          <button mat-button (click)="selectLanguage(language)">
+            {{language.name}}
+          </button>
+        </div>
+      </div>
 
-    <ul>
-      <li *ngFor="let one of languages; let i = index" (click)="selectPan(i)">{{one.name}}</li>
-      <li (click)="create_new = !create_new">+++</li>
-    </ul>
+      <div class="columns">
+        <div class="column has-text-centered">
+          <button mat-mini-fab (click)="selectLanguage(default_language)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="column is-one-third">
+
+      <form (ngSubmit)="submitForm(f)" #f="ngForm" class="form one-page-form" *ngIf="edit_language">
+
+        <i class="fa fa-window-close" aria-hidden="true" (click)="edit_language = null" style="float: right"></i>
+
+        <input type="hidden" name="id" [ngModel]="edit_language.id" name="id" required>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="İsim" [ngModel]="edit_language.name" name="name" required autofocus>
+        </mat-input-container>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="Slug" [ngModel]="edit_language.slug" name="slug" required autofocus>
+        </mat-input-container>
+
+        <button mat-raised-button type="submit">{{ edit_language.id ? 'Güncelle' : 'Ekle'}}</button>
+
+        <button mat-raised-button type="button" id="delete" color="warn" (click)="delete(edit_language.id)" *ngIf="edit_language.id">Sil</button>
+
+      </form>
+    </div>
 
   </div>
-
-  <div class="col-md-4" *ngIf="open_form">
-
-    <h3>Düzenle</h3>
-
-    <form (ngSubmit)="updateLanguage(f)" #f="ngForm">
-
-      <input type="hidden" name="id" [ngModel]="selected_one.id" name="id" required>
-
-      <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="İsim" [ngModel]="selected_one.name" name="name" required autofocus>
-      </mat-input-container>
-
-      <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Slug" [ngModel]="selected_one.slug" name="slug" required>
-      </mat-input-container>
-
-      <button mat-button type="button" (click)="deleteLanguage(selected_one.id)">Sil</button>
-
-      <button mat-button type="submit">Güncelle</button>
-
-    </form>
-  </div>
-
-  <div class="col-md-4" *ngIf="create_new">
-
-    <h3>Ekle</h3>
-
-    <form (ngSubmit)="createLanguage(g)" #g="ngForm">
-
-      <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="İsim" ngModel name="name" required autofocus>
-      </mat-input-container>
-
-      <mat-input-container class="form-group">
-        <input matInput type="text" placeholder="Slug" ngModel name="slug" required>
-      </mat-input-container>
-
-      <button mat-button type="submit">Yeni Oluştur</button>
-
-    </form>
-  </div>
-</div>
+</mat-card>
