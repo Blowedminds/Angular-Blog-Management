@@ -21,7 +21,7 @@ export class UserRequestService {
 
   private mainDomain: string = this.main.mainDomain;
 
-  private API_URL: string = this.mainDomain + this.main.apiDomain + "user/"
+  private API_URL: string = this.mainDomain + "user/"
 
   getUserProfile(): Observable<any>
   {

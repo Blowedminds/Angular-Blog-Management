@@ -46,11 +46,7 @@ export class ImageEditComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.route.params.switchMap( (params: Params) => {
-
-
-
-      return this.imageRequest.getEdit(params['image'])}).subscribe(response => {
+    this.route.params.switchMap( (params: Params) => this.imageRequest.getEdit(params['image'])).subscribe(response => {
         this.u_id = response.u_id
         this.image = response
       })

@@ -16,7 +16,7 @@ export class UserService {
 
   private headers = this.main.headers
 
-  private API_URL = this.main.mainDomain + this.main.apiDomain + "user/"
+  private API_URL = this.main.mainDomain + "user/"
 
   constructor(
     private main: MainRequestService,

@@ -3,6 +3,8 @@ import { HttpHeaders }    from '@angular/common/http';
 
 import { ApiService } from '../api.service'
 
+import { environment } from '../../environments/environment'
+
 declare var swal: any;
 
 @Injectable()
@@ -12,7 +14,7 @@ export class MainRequestService {
     private api: ApiService,
   ) { }
 
-  public mainDomain: string = "http://localhost:8000/";
+  public mainDomain: string = environment.apiUrl;
 
   public apiDomain: string = "editor/";
 

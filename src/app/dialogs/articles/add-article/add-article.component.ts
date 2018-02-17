@@ -102,7 +102,7 @@ export class AddArticleComponent implements OnInit, AfterViewInit, OnDestroy {
       body: tinymce.activeEditor.getContent(),
       keywords: f.value.keywords,
       published: f.value.published ? 1 : 0,
-      language: f.value.language,
+      language_id: f.value.language_id,
       slug: f.value.slug,
       category: categories,
       image: this.image_name

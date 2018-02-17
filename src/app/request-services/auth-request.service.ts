@@ -17,9 +17,7 @@ export class AuthRequestService {
     private api: ApiService
   ) { }
 
-  private AUTH_API_URL: string = this.main.mainDomain + this.main.apiDomain
-
-  private AUTH_URL: string = this.AUTH_API_URL + "auth/"
+  private AUTH_URL: string = this.main.mainDomain + "auth/"
 
   checkAuthenticated(): Observable<any>
   {
@@ -41,7 +39,8 @@ export class AuthRequestService {
   login(data: any): Observable<any>
   {
     const url = this.AUTH_URL + "login";
-
+    console.log( this.http
+                    .post(url, JSON.stringify(data), {headers: this.headers}))
     return this.http
                     .post(url, JSON.stringify(data), {headers: this.headers})
   }
