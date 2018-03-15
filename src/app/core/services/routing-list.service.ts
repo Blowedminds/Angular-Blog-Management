@@ -10,53 +10,37 @@ interface Routes {
 
 @Injectable()
 export class RoutingListService {
-// { [key: string]: { [key: string]: Routes } }
   routes: any = {
-
-    auth: {
-      url: 'auth/',
-      'register': {
-        url: 'register/'
-      },
-      'is-authenticated': {
-        url: 'is-authenticated/'
-      },
-      'login': {
-        url: 'login/'
-      },
-      'logout': {
-        url: 'logout/'
-      }
+    auth: { url: 'auth/',
+      'register': { url: 'register/' },
+      'is-authenticated': { url: 'is-authenticated/' },
+      'login': { url: 'login/' },
+      'logout': { url: 'logout/' }
     },
-    article: {
-      url: '',
-      'article': {
-        url: 'article/',
-        'content': {
-          url: 'content/'
-        }
+    article: { url: 'editor/',
+      'article': { url: 'article/',
+        'content': { url: 'content/' }
       },
-      'articles': {
-        url: 'articles/'
-      },
-      'trash': {
-        url: 'trash/'
-      },
-      'restore': {
-        url: 'restore/'
-      },
-      'force-delete': {
-        url: 'force-delete'
-      },
-      'permission': {
-        url: 'permission'
-      }
+      'articles': { url: 'articles/' },
+      'trash': { url: 'trash/' },
+      'restore': { url: 'restore/' },
+      'force-delete': { url: 'force-delete' },
+      'permission': { url: 'permission' }
     },
-    admin: {
-
+    admin: { url: 'editor/panel/',
+      'languages': { url: 'languages/' },
+      'categories': { url: 'categories' },
+      'menus': { url: 'menus/' }
     },
-    image: {
-
+    image: { url: 'image/',
+      'image': { url: 'image/' },
+      'thumb': { url: 'thumb/' },
+      'images': { url: 'images/' },
+      'edit': { url: 'edit/'}
+    },
+    user: { url: 'user/',
+      'info': { url: 'info/' },
+      'menus': { url: 'menus/' }
     }
   };
 
@@ -80,7 +64,7 @@ export class RoutingListService {
     return url;
   }
 
-  private parseKey(key: string): Array<any>
+  private parseKey(key: string): Array<string>
   {
     let parsedKey = [];
 

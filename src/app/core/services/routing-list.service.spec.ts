@@ -19,33 +19,33 @@ fdescribe('RoutingListService', () => {
   it('should return article content url', () => {
     expect(service.getUrl('article.article.content')).toEqual('article/article/content/');
   });
-
-  it('should parse empty string', () => {
-    expect(service.parseKey('')).toEqual([]);
-  });
-
-  it('should parse article.content', () => {
-    expect(service.parseKey('article.content')).toEqual(['article', 'content']);
-  });
-
-  it('should parse .article.content', () => {
-    expect(service.parseKey('.article.content')).toEqual(['article', 'content']);
-  });
-
-  it('should parse article.content.', () => {
-    expect(service.parseKey('article.content.')).toEqual(['article', 'content']);
-  });
-
-  it('should parse article.content.test', () => {
-    expect(service.parseKey('article.content.test')).toEqual(['article', 'content', 'test']);
-  });
-
-  it('should parse article.content.test.', () => {
-    expect(service.parseKey('article.content.test.')).toEqual(['article', 'content', 'test']);
-  });
-
-  it('should parse .article.content.test', () => {
-    expect(service.parseKey('.article.content.test')).toEqual(['article', 'content', 'test']);
-  });
+  //
+  // it('should parse empty string', () => {
+  //   expect(service.parseKey('')).toEqual([]);
+  // });
+  //
+  // it('should parse article.content', () => {
+  //   expect(service.parseKey('article.content')).toEqual(['article', 'content']);
+  // });
+  //
+  // it('should parse .article.content', () => {
+  //   expect(service.parseKey('.article.content')).toEqual(['article', 'content']);
+  // });
+  //
+  // it('should parse article.content.', () => {
+  //   expect(service.parseKey('article.content.')).toEqual(['article', 'content']);
+  // });
+  //
+  // it('should parse article.content.test', () => {
+  //   expect(service.parseKey('article.content.test')).toEqual(['article', 'content', 'test']);
+  // });
+  //
+  // it('should parse article.content.test.', () => {
+  //   expect(service.parseKey('article.content.test.')).toEqual(['article', 'content', 'test']);
+  // });
+  //
+  // it('should parse .article.content.test', () => {
+  //   expect(service.parseKey('.article.content.test')).toEqual(['article', 'content', 'test']);
+  // });
 
 });

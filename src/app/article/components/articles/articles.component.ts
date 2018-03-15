@@ -25,6 +25,11 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   pageSizeOptions: Array<number> = [5, 10, 20, 50]
 
+  get isPageReady(): boolean
+  {
+    return this.articles && this.languages && this.categories && this.user;
+  }
+
   constructor(
     private articleService: ArticleService,
     private articleRequestService: ArticleRequestService,
@@ -38,10 +43,16 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       pageIndex: 0
     })
 
-    // let rq1 = this.cacheService.listenLanguages().subscribe(response => this.languages = response);
-    // let rq2 = this.cacheService.listenCategories().subscribe(response => this.categories = response);
-    // let rq3 = this.cacheService.listenUser().subscribe( user => this.user = user);
-    //
+    let rq1 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+                      .subscribe(response => this.languages = response);
+
+    let rq2 = this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
+                      .subscribe(response => this.categories = response);
+
+    let rq3 = this.cacheService.get('user', this.articleRequestService.makeGetRequest('user.info'))
+                      .subscribe(response => this.user = response);
+
+    // BUG: this line causes the request cancelled
     // this.subscriptions.add(rq1).add(rq2).add(rq3);
   }
 

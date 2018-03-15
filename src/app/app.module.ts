@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 
+import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ArticleModule } from './article/article.module';
-import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
+import { ImageModule } from './image/image.module';
 import { MaterialModule } from './material/material.module';
+
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -12,11 +14,12 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    ArticleModule,
-    AuthModule,
     AdminModule,
     AppRoutingModule,
-    MaterialModule
+    ArticleModule,
+    AuthModule,
+    ImageModule,
+    MaterialModule,
   ],
   providers: [
 

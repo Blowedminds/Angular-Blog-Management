@@ -17,25 +17,15 @@ export class ImageRequestService extends MainRequestService{
     super(http, helpersService, routingListService);
   }
 
-  public API_URL: string = "image/"
-
-  public IMAGE_URL: string = "image/"
-
-  public THUMB_URL: string = "thumb/"
-
   postImage(data:any, file: any): Observable<any>
   {
-    const url = this.makeUrl("image?token=" + this.helpersService.getToken());
+    const url = this.makeUrl('image.image','?token=' + this.helpersService.getToken());
 
     let formData = new FormData()
 
     formData.append('file', file)
     for(let prop in data)
       formData.append(prop, data[prop])
-
-    // formData.append('name', data.name)
-    // formData.append('public', data.public)
-    // formData.append('alt', data.alt)
 
     const req = new HttpRequest('POST', url, formData, {
       reportProgress: true,
@@ -47,7 +37,7 @@ export class ImageRequestService extends MainRequestService{
 
   getImages(): Observable<any>
   {
-    const url = this.makeUrl('images');
+    const url = this.makeUrl('image.images');
 
     return this.http
                     .get(url, this.options)
@@ -56,7 +46,7 @@ export class ImageRequestService extends MainRequestService{
 
   getEdit(image: string): Observable<any>
   {
-    const url = this.makeUrl('edit/' + image);
+    const url = this.makeUrl('image.edit', image);
 
     return this.http
                     .get(url, this.options)
@@ -79,10 +69,5 @@ export class ImageRequestService extends MainRequestService{
     return this.http
                     .delete(url, this.options)
                     .catch(error => this.handleError(error))
-  }
-
-  makeUrl(url: string)
-  {
-    return this.MAIN_URI + this.API_URL + url;
   }
 }

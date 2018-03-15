@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
-import { MaterialModule } from '../material/material.module';
 import { ArticleRoutingModule } from './article-routing.module';
 
 import { ArticlesComponent } from './components/articles/articles.component';
@@ -17,6 +16,7 @@ import { ArticlePermissionComponent } from './dialogs/article-permission/article
 
 import { ArticleRequestService } from './services/article-request.service';
 import { ArticleService } from './services/article.service';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +26,12 @@ import { ArticleService } from './services/article.service';
     ArticleContentAddComponent,
     ArticleContentEditComponent,
     ArticleTrashComponent,
-    ArticlePermissionComponent
+    ArticlePermissionComponent,
+    NavigationComponent
   ],
   imports: [
     CommonModule,
     ArticleRoutingModule,
-    MaterialModule,
     SharedModule,
     CoreModule
   ],

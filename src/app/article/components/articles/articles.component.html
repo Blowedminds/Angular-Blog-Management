@@ -1,45 +1,48 @@
-<mat-spinner *ngIf="!articles || !properties || !user_info" class="loading"></mat-spinner>
+<mat-spinner *ngIf="!isPageReady" class="loading"></mat-spinner>
 
-<div class="article" *ngIf="articles && properties && user_info">
+<div class="article" *ngIf="isPageReady">
 
-  <div class="cs-container">
+  <div class="section">
 
-    <div class="">
+    <div class="columns">
       <a routerLink="trash"><button mat-button>Çöplük</button></a>
     </div>
 
-    <div class="row">
-      <div class="col-md-3" *ngFor="let one of articles.data; let i = index">
+    <div class="columns is-multiline">
+      <div class="column is-one-quarter" *ngFor="let article of articles.data; let i = index">
         <mat-card>
 
-          <button *ngIf="properties.languages.length > one.contents.length" mat-mini-fab (click)="openAddLanguage(i)" id="language-add">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
+          <a [routerLink]="['/article/content/add', article.slug]" *ngIf="languages.length > article.contents.length">
+            <button mat-mini-fab>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </a>
 
-          <button mat-mini-fab (click)="openEditMainDialog(i)" id="language-edit">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </button>
+          <a [routerLink]="['/article/edit', article.slug]">
+            <button mat-mini-fab>
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </button>
+          </a>
 
           <div class="group-container">
-            <p><strong>Yazar </strong>{{one.author.name}}</p>
+            <p><strong>Yazar </strong>{{article.author.name}}</p>
           </div>
 
           <div class="group-container">
-            <p><strong>Slug </strong>{{one.slug}}</p>
+            <p><strong>Slug </strong>{{article.slug}}</p>
           </div>
 
           <div class="group-container">
-            <p><strong>View Time </strong>{{one.views}}</p>
+            <p><strong>View Time </strong>{{article.views}}</p>
           </div>
 
           <div class="group-container">
-            <p><strong>Category </strong><span *ngFor="let category of one.categories">{{category.name}}, </span></p>
+            <p><strong>Category </strong><span *ngFor="let category of article.categories">{{category.name}}, </span></p>
           </div>
 
           <mat-tab-group>
 
-            <!-- [label]="properties.languages[one.contents[k].language - 1].name"!-->
-            <mat-tab [label]="findLanguage(article_content.language_id)" *ngFor="let article_content of one.contents; let k = index">
+            <mat-tab [label]="article_content.language.name" *ngFor="let article_content of article.contents; let k = index">
 
               <h3 class="header-text article-header">{{article_content.title.slice(0, 20)}}</h3>
 
@@ -58,7 +61,11 @@
 
               <div class="centered">
 
-                <button mat-raised-button (click)="openEditDialog(article_content)">Düzenle</button>
+                <a [routerLink]="['/article/content/edit', article.slug, article_content.language.slug]">
+                  <button mat-raised-button>
+                    Düzenle
+                  </button>
+                </a>
 
               </div>
 
@@ -78,7 +85,7 @@
 
   </div>
 
-  <button mat-fab class="add-btn" (click)="openDialog()">
+  <button mat-fab class="add-btn" [routerLink]="['/article/add']">
     <i class="fa fa-plus" aria-hidden="true"></i>
   </button>
 

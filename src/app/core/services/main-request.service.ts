@@ -17,8 +17,6 @@ export class MainRequestService {
 
   public PUBLIC_IMAGE_URL: string = "images/";
 
-  protected API_URL: string = "editor/";
-
   protected USER_API_URL: string = "user/";
 
   private _options: any = {
@@ -39,14 +37,23 @@ export class MainRequestService {
     protected routingListService: RoutingListService
   ) { }
 
+  makeGetRequest(key: string)
+  {
+    const url = this.makeUrl(key)
+
+    return this.http
+                .get(url, this.options)
+                .catch(error => this.handleError(error));
+  }
+
   protected getToken(): string
   {
     return this.helpersService.getToken()
   }
 
-  protected makeUrl(key: string, url?: string): string
+  public makeUrl(key: string, url?: string): string
   {
-    return this.MAIN_URI + this.API_URL + this.routingListService.getUrl(key) + (url || '');
+    return this.MAIN_URI + this.routingListService.getUrl(key) + (url || '');
   }
 
   protected handleError(error: any, router: any = null): Promise<any> {

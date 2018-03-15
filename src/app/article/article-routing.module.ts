@@ -7,14 +7,18 @@ import { ArticleContentAddComponent } from './components/article-content-add/art
 import { ArticleEditComponent } from './components/article-edit/article-edit.component';
 import { ArticleContentEditComponent } from './components/article-content-edit/article-content-edit.component';
 import { ArticleTrashComponent } from './components/article-trash/article-trash.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 const routes = [
-  { path: "articles", component: ArticlesComponent },
-  { path: "articles/trash", component: ArticleTrashComponent },
-  { path: "article/add", component: ArticleAddComponent },
-  { path: "article/edit/:slug", component: ArticleEditComponent },
-  { path: "article/content/add/:slug", component: ArticleContentAddComponent },
-  { path: "article/content/edit/:slug/:language_slug", component: ArticleContentEditComponent },
+  { path: "", component: NavigationComponent, children: [
+      { path: "articles", component: ArticlesComponent },
+      { path: "articles/trash", component: ArticleTrashComponent },
+      { path: "article/add", component: ArticleAddComponent },
+      { path: "article/edit/:slug", component: ArticleEditComponent },
+      { path: "article/content/add/:slug", component: ArticleContentAddComponent },
+      { path: "article/content/edit/:slug/:language_slug", component: ArticleContentEditComponent },
+    ]
+  }
 ];
 
 @NgModule({
