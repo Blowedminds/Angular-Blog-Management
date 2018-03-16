@@ -17,6 +17,13 @@ export class MainRequestService {
 
   public PUBLIC_IMAGE_URL: string = "images/";
 
+  get options()
+  {
+    this._options.params.token = this.helpersService.getToken()
+
+    return this._options;
+  }
+
   protected USER_API_URL: string = "user/";
 
   private _options: any = {
@@ -24,7 +31,6 @@ export class MainRequestService {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'X-Socket-ID': ''
-      //'Access-Control-Max-Age': '600'
     }),
     params: {
       token: null
@@ -46,42 +52,27 @@ export class MainRequestService {
                 .catch(error => this.handleError(error));
   }
 
+  makeUrl(key: string, url?: string): string
+  {
+    return this.MAIN_URI + this.routingListService.getUrl(key) + (url || '');
+  }
+
   protected getToken(): string
   {
     return this.helpersService.getToken()
-  }
-
-  public makeUrl(key: string, url?: string): string
-  {
-    return this.MAIN_URI + this.routingListService.getUrl(key) + (url || '');
   }
 
   protected handleError(error: any, router: any = null): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
 
     switch (error.status){
-      case 202:
-
-        break;
-      case 404:
-
-        break;
       case 401:
         this.helpersService.navigate(['login']);
         break;
       case 421:
         this.helpersService.navigate([error.link]);
         break;
-      case 422:
-      break;
     }
     return Promise.reject(error.message || error);
-  }
-
-  get options()
-  {
-    this._options.params.token = this.helpersService.getToken()
-
-    return this._options;
   }
 }

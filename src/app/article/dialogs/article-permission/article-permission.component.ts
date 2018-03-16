@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ArticleRequestService } from '../../services/article-request.service';
 
@@ -19,6 +19,11 @@ export class ArticlePermissionComponent implements OnInit {
   change_have_permission: Array<any> = []
 
   change_not_have_permission: Array<any> = []
+
+  get isPageReady()
+  {
+    return this.have_permission && this.not_have_permission;
+  }
 
   constructor(
     private articleRequestService: ArticleRequestService,

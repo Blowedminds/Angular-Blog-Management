@@ -14,13 +14,13 @@
 
           <a [routerLink]="['/article/content/add', article.slug]" *ngIf="languages.length > article.contents.length">
             <button mat-mini-fab>
-              <i class="fa fa-plus" aria-hidden="true"></i>
+              <i class="fa fa-plus" aria-hidden="true">Ekle</i>
             </button>
           </a>
 
           <a [routerLink]="['/article/edit', article.slug]">
             <button mat-mini-fab>
-              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              <i class="fa fa-pencil-square-o" aria-hidden="true">Düzenle</i>
             </button>
           </a>
 

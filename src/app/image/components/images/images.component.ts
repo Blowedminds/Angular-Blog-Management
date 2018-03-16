@@ -17,9 +17,12 @@ export class ImagesComponent implements OnInit {
 
   images: any;
 
-  IMAGE_URL: string;
-
   THUMB_IMAGE_URL: string;
+
+  get isPageReady()
+  {
+    return !!this.images;
+  }
 
   constructor(
     public dialog: MatDialog,
@@ -27,8 +30,6 @@ export class ImagesComponent implements OnInit {
     private helpersService: HelpersService
   )
   {
-    this.IMAGE_URL = this.imageRequestService.makeUrl('image.images');
-
     this.THUMB_IMAGE_URL = this.imageRequestService.makeUrl('image.thumb');
   }
 
@@ -62,10 +63,5 @@ export class ImagesComponent implements OnInit {
       rq2.unsubscribe()
       rq2 = null
     })
-  }
-
-  get isPageReady()
-  {
-    return !!this.images;
   }
 }

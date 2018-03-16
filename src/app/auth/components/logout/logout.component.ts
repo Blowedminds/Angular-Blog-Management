@@ -21,7 +21,7 @@ export class LogoutComponent implements OnInit {
 
     let rq1 = this.authRequestService.logout().subscribe(response => {
       localStorage.removeItem('token')
-      this.helpersService.navigate(['auth/login']);
+      this.helpersService.navigate(['login']);
       // this.cacheService.deleteUser()
       rq1.unsubscribe()
       rq1 = null

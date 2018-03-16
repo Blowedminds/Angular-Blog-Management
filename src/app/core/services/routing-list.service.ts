@@ -3,11 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable }     from 'rxjs';
 
-interface Routes {
-  url: string;
-
-}
-
 @Injectable()
 export class RoutingListService {
   routes: any = {
@@ -19,13 +14,13 @@ export class RoutingListService {
     },
     article: { url: 'editor/',
       'article': { url: 'article/',
-        'content': { url: 'content/' }
+        'content': { url: 'content/' },
+        'restore': { url: 'restore/' },
+        'force-delete': { url: 'force-delete/' },
+        'permission': { url: 'permission/' }
       },
       'articles': { url: 'articles/' },
-      'trash': { url: 'trash/' },
-      'restore': { url: 'restore/' },
-      'force-delete': { url: 'force-delete' },
-      'permission': { url: 'permission' }
+      'trash': { url: 'trashed-articles/' },
     },
     admin: { url: 'editor/panel/',
       'languages': { url: 'languages/' },

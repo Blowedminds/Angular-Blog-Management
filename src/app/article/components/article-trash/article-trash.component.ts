@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {DataSource} from '@angular/cdk/table';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ArticleRequestService }  from '../../services/article-request.service';
 
@@ -13,11 +13,13 @@ declare var swal: any;
   templateUrl: './article-trash.component.html',
   styleUrls: ['./article-trash.component.sass']
 })
-export class ArticleTrashComponent implements OnInit {
+export class ArticleTrashComponent implements OnInit, OnDestroy {
 
   data: any
 
   displayedColumns: Array<string> = ['Author', 'Title', 'Deleted_At', 'ArticleId']
+
+  subs = new Subscription();
 
   constructor(
     private articleRequestService: ArticleRequestService
@@ -30,58 +32,26 @@ export class ArticleTrashComponent implements OnInit {
     this.data = new DataSourceCode(this.dataBase)
   }
 
+  ngOnDestroy()
+  {
+    this.subs.unsubscribe();
+  }
 
   restoreArticle(article_id: number)
   {
-    swal({
-      title: 'Emin misiniz?',
-      text: "Bu makaleyi geri yükleyeceksiniz",
-      type: 'warning',
-      showCancelButton: true,
-      cancelButtonText: "Hayır",
-      confirmButtonText: 'Evet, Geri Döndür'
-    }).then( () => {
-      let rq1 = this.articleRequestService.postRestore(article_id).subscribe(response => {
+    let rq1 = this.articleRequestService.postRestore(article_id)
+                                .subscribe(response => this.data = new DataSourceCode(new DataBase(this.articleRequestService)))
 
-        let test = new DataBase(this.articleRequestService)
-
-        this.data = new DataSourceCode(test)
-
-        swal(response.header, response.message, response.state)
-
-        rq1.unsubscribe()
-        rq1 = null
-      })
-    })
+    this.subs.add(rq1)
   }
 
   forceDeleteArticle(article_id: number)
   {
-    swal({
-      title: 'Emin misiniz?',
-      text: "Bu makale kayıtlardan tamamen silinecek",
-      type: 'warning',
-      input: 'checkbox',
-      inputPlaceholder: ' Eski kayıtlarla bearber sil',
-      showCancelButton: true,
-      cancelButtonText: "Hayır",
-      confirmButtonText: 'Tamamen Sil'
-    }).then( (response) => {
+    let rq2 = this.articleRequestService.deleteForceDelete(article_id)
+                            .subscribe(response => this.data = new DataSourceCode(new DataBase(this.articleRequestService)))
 
-      let complete = (response) ? 1 : 0
+    this.subs.add(rq2)
 
-      let rq2 = this.articleRequestService.deleteForceDelete(article_id).subscribe(response => {
-
-        let test = new DataBase(this.articleRequestService)
-
-        this.data = new DataSourceCode(test)
-
-        swal(response.header, response.message, response.state)
-
-        rq2.unsubscribe()
-        rq2 = null
-      })
-    })
   }
 
 }

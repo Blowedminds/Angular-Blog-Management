@@ -113,7 +113,7 @@ export class ArticleRequestService extends MainRequestService {
 
   postRestore(id: number): Observable<any>
   {
-    const url = this.makeUrl('article.restore', `${id}`);
+    const url = this.makeUrl('article.article.restore', `${id}`);
 
     return this.http
                     .post(url, null, this.options)
@@ -122,7 +122,7 @@ export class ArticleRequestService extends MainRequestService {
 
   deleteForceDelete(id: number): Observable<any>
   {
-    const url = this.makeUrl('article.force-delete' ,`${id}`);
+    const url = this.makeUrl('article.article.force-delete' ,`${id}`);
 
     return this.http
                     .delete(url, this.options)
@@ -131,7 +131,7 @@ export class ArticleRequestService extends MainRequestService {
 
   getPermission(article_id: number): Observable<any>
   {
-    const url = this.makeUrl('article.permission',`${article_id}`);
+    const url = this.makeUrl('article.article.permission',`${article_id}`);
 
     return this.http
                     .get(url, this.options)

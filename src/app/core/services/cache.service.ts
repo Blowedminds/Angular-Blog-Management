@@ -17,9 +17,9 @@ export class CacheService {
   readonly DEFAULT_MAX_AGE: number = 300000;
 
   get(key: string, fallback?: Observable<any>, maxAge?: number): Observable<any> | Subject<any> {
-
+    console.log('entered get')
     if (this.hasValidCachedValue(key)) {
-      // console.log(`%cGetting from cache ${key}`, 'color: green');
+      console.log(`%cGetting from cache ${key}`, 'color: green');
       return Observable.of(this.cache.get(key).value);
     }
 
@@ -29,13 +29,13 @@ export class CacheService {
     }
 
     if (this.inFlightObservables.has(key)) {
-
+      console.log('inflight has');
       return this.inFlightObservables.get(key);
     }
     else if (fallback && fallback instanceof Observable) {
 
       this.inFlightObservables.set(key, new Subject());
-      // console.log(`%c Calling api for ${key}`, 'color: purple');
+      console.log(`%c Calling api for ${key}`, 'color: purple');
       return fallback.do((value) => { this.set(key, value, maxAge); });
     }
     else {
@@ -45,7 +45,7 @@ export class CacheService {
   }
 
   set(key: string, value: any, maxAge: number = this.DEFAULT_MAX_AGE): void {
-
+    console.log('setted');
     this.cache.set(key, { value: value, expiry: Date.now() + maxAge });
 
     this.notifyInFlightObservers(key, value);

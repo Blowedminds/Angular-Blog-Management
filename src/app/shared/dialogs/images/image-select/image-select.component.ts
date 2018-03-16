@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-image-select',
@@ -10,39 +10,31 @@ export class ImageSelectComponent implements OnInit {
 
   images: any
 
-  API_URL: string;
+  THUMB_IMAGE_URL: string
 
-  THUMB_URL: string
-
-  IMAGE_URL: string
+  get isPageReady()
+  {
+    return !!this.images;
+  }
 
   constructor(
-    // private api: ApiService,
-    // private imageRequest: ImageRequestService,
+    @Inject(MAT_DIALOG_DATA) private dialog_data: any,
     private dialogRef: MatDialogRef<ImageSelectComponent>,
-  ) {
-    // this.API_URL = this.imageRequest.API_URL
-    //
-    // this.IMAGE_URL = this.imageRequest.IMAGE_URL
-    //
-    // this.THUMB_URL = this.imageRequest.THUMB_URL
+  )
+  {
+    this.THUMB_IMAGE_URL = dialog_data.thumb_image_url;
+
+    dialog_data.image_request.subscribe( response => this.images = response);
   }
 
   ngOnInit() {
-    // let rq1 = this.imageRequest.getImages().subscribe(response => {this.images = response; rq1.unsubscribe(); rq1 = null})
-  }
-
-  getToken()
-  {
-    // return this.api.getToken()
   }
 
   selectImage(image: any)
   {
     this.dialogRef.close({
-      thumb_url:this.API_URL + this.THUMB_URL + image.u_id +'?token=' + this.getToken(),
+      thumb_url: this.THUMB_IMAGE_URL + image.u_id,
       u_id: image.u_id,
-      image_url: this.API_URL + this.IMAGE_URL + image.u_id +'?token=' + this.getToken(),
       alt: image.alt,
       width: image.width,
       height: image.height

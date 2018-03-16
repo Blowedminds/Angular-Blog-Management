@@ -55,7 +55,7 @@ export class ImageRequestService extends MainRequestService{
 
   putEdit(data: any): Observable<any>
   {
-    const url = this.makeUrl('edit/' + data.u_id);
+    const url = this.makeUrl('image.edit', data.u_id);
 
     return this.http
                     .put(url, JSON.stringify(data), this.options)
@@ -64,7 +64,7 @@ export class ImageRequestService extends MainRequestService{
 
   deleteImage(u_id: string): Observable<any>
   {
-    const url = this.makeUrl('image/' + u_id);
+    const url = this.makeUrl('image.image', u_id);
 
     return this.http
                     .delete(url, this.options)

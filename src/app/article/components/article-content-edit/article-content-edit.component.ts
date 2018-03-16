@@ -42,6 +42,11 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
       setTimeout(() => this.runTinymce(), 0);
   }
 
+  get isPageReady()
+  {
+    return this.article && this.language;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private cacheService: CacheService,
@@ -58,10 +63,11 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
 
                     this.article = response;
 
-                    // let rq2 = this.cacheService.listenLanguages().subscribe( languages => {
-                    //     this.language = languages.find( language => language.id !== response.content.language_id)
-                    // });
-                    //
+                    let rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+                                                .subscribe( languages => {
+                                                    this.language = languages.find( language => language.id !== response.content.language_id)
+                                                });
+
                     // this.subs.add(rq2)
                   });
 

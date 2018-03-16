@@ -49,6 +49,12 @@ export class ArticleAddComponent implements OnInit {
     private dialog: MatDialog
   )
   {
+    this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+                      .subscribe( response => this.languages = response);
+
+    this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
+                      .subscribe( response => this.categories = response);
+
     // let rq1 = cacheService.listenLanguages().subscribe( response => this.languages = response)
     //
     // let rq2 = cacheService.listenCategories().subscribe( response => this.categories = response.filter(obj => true));
@@ -143,7 +149,12 @@ export class ArticleAddComponent implements OnInit {
 
   openImageSelect()
   {
-    let dialogRef = this.dialog.open(ImageSelectComponent)
+    let dialogRef = this.dialog.open(ImageSelectComponent, {
+      data: {
+        image_request: this.articleRequestService.makeGetRequest('image.images'),
+        thumb_image_url: this.articleRequestService.makeUrl('image.thumb')
+      }
+    });
 
     let rq2 = dialogRef.afterClosed().subscribe( response => {
 

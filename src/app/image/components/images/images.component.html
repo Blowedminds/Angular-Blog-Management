@@ -19,9 +19,9 @@
 
     <div class="image-col" *ngFor="let one of images.private">
 
-      <a [routerLink]="['/albums/edit', one.u_id]">
+      <a [routerLink]="['/image', one.u_id]">
         <p>{{one.name}}</p>
-        <img src="{{API_URL + THUMB_URL + one.u_id +'?token=' + getToken()}}">
+        <img src="{{makeImageUrl(one.u_id)}}">
       </a>
     </div>
   </div>

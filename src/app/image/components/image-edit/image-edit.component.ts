@@ -155,9 +155,7 @@ export class ImageEditComponent implements OnInit {
 
   calcSize(size: number)
   {
-    let size_2 = (''+(size/1024))
-
-    return parseInt(size_2);
+    return (size/1024).toFixed(1);
   }
 
   openSaveAs()

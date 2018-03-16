@@ -51,12 +51,13 @@ export class ArticleContentAddComponent implements OnInit {
 
                         this.article = response;
 
-                        // let rq2 = this.cacheService.listenLanguages().subscribe( languages => {
-                        //   this.add_languages = languages
-                        //
-                        //   for(let content of response.contents)
-                        //     this.add_languages = this.add_languages.filter( language => language.id !== content.language_id)
-                        // });
+                        let rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+                          .subscribe( languages => {
+                            this.add_languages = languages
+
+                            for(let content of response.contents)
+                              this.add_languages = this.add_languages.filter( language => language.id !== content.language_id)
+                          });
 
                         // this.subs.add(rq2)
                       });
