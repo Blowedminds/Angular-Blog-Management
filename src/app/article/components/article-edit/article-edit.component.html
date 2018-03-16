@@ -35,7 +35,7 @@
       <h5>Kategoriler</h5>
 
       <ul>
-        <li *ngFor="let category_item of categories; let i = index">{{category_item.name}} <span class="" (click)="deleteCategory(i)">X</span></li>
+        <li *ngFor="let category_item of article.categories; let i = index">{{category_item.name}} <span class="" (click)="deleteCategory(i)">X</span></li>
       </ul>
 
     </div>

@@ -58,14 +58,16 @@ export class ArticleEditComponent implements OnInit {
 
                     this.article = response;
 
+                    this.categories = response.categories;
+
                     let rq2 = this.cacheService
                       .get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
                       .subscribe( categories => {
 
-                        this.categories = categories
+                        this.add_categories = categories
 
                         for(let category of this.categories)
-                          this.add_categories = this.categories.filter( obj => obj.id !== category.id)
+                          this.add_categories = this.add_categories.filter( obj => obj.id !== category.id)
                       });
 
                     this.subs.add(rq2)
