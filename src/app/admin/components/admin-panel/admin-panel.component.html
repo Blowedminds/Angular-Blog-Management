@@ -1,3 +1,32 @@
-<p>
-  admin-panel works!
-</p>
+<div class="">
+  <div class="container">
+
+    <mat-card class="menu-container">
+      <div class="columns">
+
+        <div class="column">
+          <a [routerLink]="[{ outlets: {'settings': ['menus']}}]"><button mat-button>Menü</button></a>
+        </div>
+
+        <div class="column">
+          <a [routerLink]="[{ outlets: {'settings': ['languages']}}]"><button mat-button>Dil</button></a>
+        </div>
+
+        <div class="column">
+          <a [routerLink]="[{ outlets: {'settings': ['categories']}}]"><button mat-button>Kategori</button></a>
+        </div>
+
+      </div>
+    </mat-card>
+
+
+    <div class="columns">
+      <div class="column">
+
+          <router-outlet name="settings"></router-outlet>
+
+      </div>
+    </div>
+
+  </div>
+</div>

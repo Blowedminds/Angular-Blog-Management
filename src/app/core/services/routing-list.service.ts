@@ -24,7 +24,7 @@ export class RoutingListService {
     },
     admin: { url: 'editor/panel/',
       'languages': { url: 'languages/' },
-      'categories': { url: 'categories' },
+      'categories': { url: 'categories/' },
       'menus': { url: 'menus/' }
     },
     image: { url: 'image/',

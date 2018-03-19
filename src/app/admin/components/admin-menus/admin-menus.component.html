@@ -1,3 +1,97 @@
-<p>
-  admin-menus works!
-</p>
+<mat-card *ngIf="isPageReady">
+  <div class="columns is-desktop">
+
+    <div class="column is-one-third">
+      <div class="columns is-multiline">
+        <div class="column is-12 has-text-centered" *ngFor="let menu of menus">
+          <button mat-button (click)="selectMenu(menu)">
+            {{menu.name[languages[1].slug]}}
+          </button>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+          <button mat-mini-fab (click)="selectMenu(default_menu)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-one-third">
+
+      <form (ngSubmit)="submitForm(f)" #f="ngForm" class="form one-page-form" *ngIf="edit_menu">
+
+        <i class="fa fa-window-close" aria-hidden="true" (click)="edit_menu = null" style="float: right"></i>
+
+        <input type="hidden" name="id" [ngModel]="edit_menu.id" name="id" required>
+
+        <mat-tab-group>
+          <mat-tab [label]="language.name" *ngFor="let language of languages">
+
+            <mat-input-container class="form-group">
+              <input matInput type="text" placeholder="İsim" [(ngModel)]="edit_menu.name[language.slug]" name="name[{{language.slug}}]" required autofocus>
+            </mat-input-container>
+
+            <mat-input-container class="form-group">
+              <input matInput type="text" placeholder="Tooltip" [(ngModel)]="edit_menu.tooltip[language.slug]" name="tooltip[{{language.slug}}]" required autofocus>
+            </mat-input-container>
+
+          </mat-tab>
+        </mat-tab-group>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="Url" [ngModel]="edit_menu.url" name="url" required autofocus>
+        </mat-input-container>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="Weight" [ngModel]="edit_menu.weight" name="weight" required>
+        </mat-input-container>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="Parent" [ngModel]="edit_menu.parent" name="parent" required>
+        </mat-input-container>
+
+        <div class="columns">
+          <div class="column">
+
+            <div class="level">
+              <strong>İzinler</strong>
+            </div>
+
+            <div class="level">
+              <ul>
+                <li class="" *ngFor="let role of has_roles">
+                  <span class="interactive-role" [ngClass]="{'role-changed': role.changed}" (click)="discardRole(role.id)">{{role.name}}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <div class="column">
+
+            <div class="level">
+              <strong>İzin Ekle</strong>
+            </div>
+
+            <div class="level">
+              <ul>
+                <li *ngFor="let role of not_has_roles">
+                  <span class="interactive-role" [ngClass]="{'role-changed': role.changed}" (click)="addRole(role.id)">{{role.name}}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <button mat-raised-button type="submit">{{ edit_menu.id ? 'Güncelle' : 'Ekle'}}</button>
+
+        <button mat-raised-button type="button" id="delete" color="warn" (click)="deleteMenu(edit_menu.id)" *ngIf="edit_menu.id">Sil</button>
+
+      </form>
+    </div>
+
+  </div>
+</mat-card>

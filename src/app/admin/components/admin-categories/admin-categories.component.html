@@ -1,3 +1,50 @@
-<p>
-  admin-categories works!
-</p>
+<mat-card *ngIf="isPageReady">
+  <div class="columns is-desktop">
+
+    <div class="column is-one-third">
+      <div class="columns is-multiline">
+        <div class="column is-half has-text-centered" *ngFor="let category of categories">
+          <button mat-button (click)="selectCategory(category)">
+            {{category.name}}
+          </button>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+          <button mat-mini-fab (click)="selectCategory(default_category)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-one-third">
+
+      <form (ngSubmit)="submitForm(f)" #f="ngForm" class="form one-page-form" *ngIf="edit_category">
+
+        <i class="fa fa-window-close" aria-hidden="true" (click)="edit_category = null" style="float: right"></i>
+
+        <input type="hidden" name="id" [ngModel]="edit_category.id" name="id" required>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="İsim" [ngModel]="edit_category.name" name="name" required autofocus>
+        </mat-input-container>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="Slug" [ngModel]="edit_category.slug" name="slug" required autofocus>
+        </mat-input-container>
+
+        <mat-input-container class="form-group">
+          <input matInput type="text" placeholder="Description" [ngModel]="edit_category.description" name="description" required autofocus>
+        </mat-input-container>
+
+        <button mat-raised-button type="submit">{{ edit_category.id ? 'Güncelle' : 'Ekle'}}</button>
+
+        <button mat-raised-button type="button" id="delete" color="warn" (click)="delete(edit_category.id)" *ngIf="edit_category.id">Sil</button>
+
+      </form>
+    </div>
+
+  </div>
+</mat-card>
