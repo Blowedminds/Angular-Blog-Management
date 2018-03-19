@@ -1,0 +1,92 @@
+<mat-spinner *ngIf="!isPageReady" class="loading"></mat-spinner>
+
+<div class="article" *ngIf="isPageReady">
+
+  <div class="section">
+
+    <div class="columns">
+      <a routerLink="trash"><button mat-button>Çöplük</button></a>
+    </div>
+
+    <div class="columns is-multiline">
+      <div class="column is-one-quarter" *ngFor="let article of articles.data; let i = index">
+        <mat-card>
+
+          <a [routerLink]="['/article/content/add', article.slug]" *ngIf="languages.length > article.contents.length">
+            <button mat-mini-fab>
+              <i class="fa fa-plus" aria-hidden="true">Ekle</i>
+            </button>
+          </a>
+
+          <a [routerLink]="['/article/edit', article.slug]">
+            <button mat-mini-fab>
+              <i class="fa fa-pencil-square-o" aria-hidden="true">Düzenle</i>
+            </button>
+          </a>
+
+          <div class="group-container">
+            <p><strong>Yazar </strong>{{article.author.name}}</p>
+          </div>
+
+          <div class="group-container">
+            <p><strong>Slug </strong>{{article.slug}}</p>
+          </div>
+
+          <div class="group-container">
+            <p><strong>View Time </strong>{{article.views}}</p>
+          </div>
+
+          <div class="group-container">
+            <p><strong>Category </strong><span *ngFor="let category of article.categories">{{category.name}}, </span></p>
+          </div>
+
+          <mat-tab-group>
+
+            <mat-tab [label]="article_content.language.name" *ngFor="let article_content of article.contents; let k = index">
+
+              <h3 class="header-text article-header">{{article_content.title.slice(0, 20)}}</h3>
+
+              <hr>
+
+              <div class="group-container">
+                <p><strong>Yayınlanma</strong>
+                  <i class="fa fa-check" aria-hidden="true" *ngIf="article_content.published == 1"></i>
+                  <i class="fa fa-times" aria-hidden="true" *ngIf="article_content.published == 0"></i>
+                </p>
+              </div>
+
+              <div class="group-container">
+                <p><strong>Sürüm</strong> {{article_content.version}}</p>
+              </div>
+
+              <div class="centered">
+
+                <a [routerLink]="['/article/content/edit', article.slug, article_content.language.slug]">
+                  <button mat-raised-button>
+                    Düzenle
+                  </button>
+                </a>
+
+              </div>
+
+            </mat-tab>
+          </mat-tab-group>
+
+        </mat-card>
+      </div>
+    </div>
+
+    <mat-paginator [length]="articles.total"
+          [pageSize]="intval(articles.per_page)"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="articles.current_page - 1"
+          (page)="getArticlesPaginate($event)">
+    </mat-paginator>
+
+  </div>
+
+  <button mat-fab class="add-btn" [routerLink]="['/article/add']">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+  </button>
+
+</div>
