@@ -14,7 +14,7 @@ export class AdminRequestService extends MainRequestService {
     routingListService: RoutingListService
   )
   {
-    super(http, helpersService, routingListService)
+    super(http, helpersService, routingListService);
   }
 
   public getMenus():Observable<any>

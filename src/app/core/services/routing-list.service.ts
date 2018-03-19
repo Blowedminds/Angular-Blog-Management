@@ -35,7 +35,11 @@ export class RoutingListService {
     },
     user: { url: 'user/',
       'info': { url: 'info/' },
-      'menus': { url: 'menus/en/' }
+      'menus': { url: 'menus/en/' },
+      'dashboard': { url: 'dashboard/'},
+      'management': { url: 'management/'},
+      'profile-image': { url: 'profile-image'},
+      'profile': { url: 'profile'}
     }
   };
 
