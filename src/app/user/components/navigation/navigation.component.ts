@@ -23,7 +23,6 @@ export class NavigationComponent extends MainNavigationComponent {
     this.cacheService.get('user', this.mainRequestService.makeGetRequest('user.info'))
                       .subscribe(response => this.user = response);
   }
-
 }
 
 export function ExtendedComponent(extendedConfig: Component = {}) {
@@ -49,7 +48,6 @@ export function ExtendedComponent(extendedConfig: Component = {}) {
             });
         }
 
-        // console.log(target['__annotations__'][0]);
         return Component(extendedConfig)(target);
     };
 }

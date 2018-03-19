@@ -6,6 +6,7 @@ import { ArticleModule } from './article/article.module';
 import { AuthModule } from './auth/auth.module';
 import { ImageModule } from './image/image.module';
 import { MaterialModule } from './material/material.module';
+import { UserModule } from './user/user.module';
 
 import { AppComponent } from './app.component';
 
@@ -20,6 +21,7 @@ import { AppComponent } from './app.component';
     AuthModule,
     ImageModule,
     MaterialModule,
+    UserModule,
   ],
   providers: [
 

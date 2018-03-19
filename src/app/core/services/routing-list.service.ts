@@ -35,7 +35,7 @@ export class RoutingListService {
     },
     user: { url: 'user/',
       'info': { url: 'info/' },
-      'menus': { url: 'menus/' }
+      'menus': { url: 'menus/en/' }
     }
   };
 
