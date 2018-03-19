@@ -1,0 +1,29 @@
+<mat-spinner *ngIf="!isPageReady" class="loading"></mat-spinner>
+
+<mat-sidenav-container id="main-sidenav-container" class="example-container" *ngIf="isPageReady">
+
+  <mat-sidenav #sidenav id="main-sidenav">
+
+  </mat-sidenav>
+
+  <mat-toolbar id="main-menu">
+
+    <a [routerLink]="one.url" routerLinkActive="active" *ngFor="let one of menus; let i = index"><button mat-button [matTooltip]="one.tooltip">{{one.name}}</button></a>
+
+    <button mat-button color="warn" [matMenuTriggerFor]="menu">{{user.name}}</button>
+    <mat-menu #menu="matMenu">
+
+      <a routerLink="/profile"><button mat-button class="open-menu-btn">Profile</button></a>
+
+      <!--<button mat-menu-item (click)="changeTheme()">Tema</button>!-->
+
+      <a routerLink="/logout"><button mat-button class="open-menu-btn">Çıkış</button></a>
+    </mat-menu>
+
+    <button mat-button (click)="sidenav.open()">_--_</button>
+
+  </mat-toolbar>
+
+  <router-outlet></router-outlet>
+
+</mat-sidenav-container>

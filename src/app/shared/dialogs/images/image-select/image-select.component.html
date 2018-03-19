@@ -1,0 +1,9 @@
+
+<div class="" *ngIf="isPageReady">
+  <div class="image-col" *ngFor="let image of images.public">
+    <div (click)="selectImage(image)">
+      <p>{{image.name}}</p>
+      <img src="{{THUMB_IMAGE_URL + image.u_id}}" [alt]="image.alt">
+    </div>
+  </div>
+</div>

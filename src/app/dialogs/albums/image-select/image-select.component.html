@@ -1,9 +1,0 @@
-
-<div class="" *ngIf="images">
-  <div class="image-col" *ngFor="let one of images.public">
-    <div (click)="selectImage(one)">
-      <p>{{one.name}}</p>
-      <img src="{{API_URL + THUMB_URL + one.u_id +'?token=' + getToken()}}" [alt]="one.alt">
-    </div>
-  </div>
-</div>
