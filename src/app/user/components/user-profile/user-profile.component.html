@@ -1,19 +1,19 @@
-<mat-spinner *ngIf="!profile || !bio" class="loading"></mat-spinner>
+<mat-spinner *ngIf="!isPageReady" class="loading"></mat-spinner>
 
-<div class="" *ngIf="profile && bio">
+<div class="" *ngIf="isPageReady">
   <div class="">
-    {{profile.user_id}}<br>
+    {{user.user_id}}<br>
 
     <form #f="ngForm" (ngSubmit)="updateProfile(f)">
 
       <mat-input-container>
-        <input matInput placeholder="İsim" [ngModel]="profile.name" name="name" [disabled]="!edit_bio">
+        <input matInput placeholder="İsim" [ngModel]="user.name" name="name" [disabled]="!edit_bio">
       </mat-input-container>
 
-      <div class="" *ngFor="let one of bio;let i = index">
+      <div class="" *ngFor="let language of languages;let i = index">
 
         <mat-input-container class="textarea-body">
-          <textarea matInput [placeholder]="bio[i].slug" [(ngModel)]="bio[i].bio" [disabled]="!edit_bio" [name]="one.slug"></textarea>
+          <textarea matInput [placeholder]="language.slug" [(ngModel)]="user.user_data.biography[language.slug]" [disabled]="!edit_bio" [name]="language.slug"></textarea>
         </mat-input-container>
 
       </div>
@@ -28,12 +28,12 @@
 
     <div class="" (click)="file.click()">
 
-      <img src="{{AUTHOR_IMAGE_URL + profile.profile_image}}" alt="" id="img">
+      <img src="{{AUTHOR_IMAGE_URL + user.user_data.profile_image}}" alt="" id="img">
 
     </div>
 
-    {{profile.name}}<br>
-    {{profile.role_id}}<br>
-    {{profile.role_name}}
+    {{user.name}}<br>
+    {{user.role.id}}<br>
+    {{user.role.name}}
   </div>
 </div>

@@ -13,11 +13,9 @@ import { UserRequestService } from '../../services/user-request.service';
 })
 export class UserProfileComponent implements OnInit {
 
-  profile: any
+  user: any
 
   subs = new Subscription()
-
-  bio: Array<any> = []
 
   languages: any
 
@@ -27,31 +25,24 @@ export class UserProfileComponent implements OnInit {
 
   @ViewChild('file') file: ElementRef
 
+  get isPageReady()
+  {
+    return this.user;
+  }
+
   constructor(
     private userRequestService: UserRequestService,
     private cacheService: CacheService
-  ) { }
+  )
+  {
+    this.AUTHOR_IMAGE_URL = this.userRequestService.makeUrl('public.image.author');
+  }
 
   ngOnInit() {
     let rq2 = this.cacheService.get('languages', this.userRequestService.makeGetRequest('admin.languages'))
                                 .subscribe( response => this.languages = response )
 
-    let rq1 = this.userRequestService.getUserProfile().subscribe( response => {
-      this.profile = response
-
-      for(let one of this.languages){
-
-        let temp = { slug: one.slug, bio: ""}
-
-        let bio = response.bio.find( obj => one.slug === obj.slug)
-
-        if(bio) temp.bio = bio.bio
-
-        this.bio.push(temp)
-      }
-
-      console.log(this.bio)
-    })
+    let rq1 = this.userRequestService.getUserProfile().subscribe( response => this.user = response );
 
     this.subs.add(rq1)
   }
@@ -69,7 +60,6 @@ export class UserProfileComponent implements OnInit {
 
     let item = document.getElementById(img)
 
-    //item.setAttribute('src', '')
     reader.onload = (e: any) => {
 
       let rq3 = this.userRequestService.postUserProfileImage(this.file.nativeElement.files.item(0)).subscribe( response => {
@@ -85,12 +75,12 @@ export class UserProfileComponent implements OnInit {
 
   updateProfile(f: NgForm)
   {
-    let rq2 = this.userRequestService.postUserProfile({name: f.value.name, bio: this.bio}).subscribe( response => {
-                this.profile = null
+    let rq2 = this.userRequestService.postUserProfile({name: f.value.name, biography: this.user.user_data.biography}).subscribe( response => {
+                this.user = null
 
                 this.edit_bio = false
 
-                let rq1 = this.userRequestService.getUserProfile().subscribe( response => this.profile = response)
+                let rq1 = this.userRequestService.getUserProfile().subscribe( response => this.user = response)
 
                 this.subs.add(rq1)
               })

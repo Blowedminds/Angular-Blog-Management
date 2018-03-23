@@ -40,6 +40,11 @@ export class RoutingListService {
       'management': { url: 'management/'},
       'profile-image': { url: 'profile-image/'},
       'profile': { url: 'profile/'}
+    },
+    public: { url: '',
+      'image': { url: 'images/',
+        'author': { url: 'author/' }
+      }
     }
   };
 
