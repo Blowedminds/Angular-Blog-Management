@@ -15,8 +15,6 @@ export class MainRequestService {
 
   public MAIN_URI: string = environment.apiUrl;
 
-  public PUBLIC_IMAGE_URL: string = "images/";
-
   get options()
   {
     this._options.params.token = this.helpersService.getToken()
@@ -24,13 +22,11 @@ export class MainRequestService {
     return this._options;
   }
 
-  protected USER_API_URL: string = "user/";
-
   private _options: any = {
     headers:  new HttpHeaders({
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
-      'X-Socket-ID': ''
+      // 'X-Socket-ID': ''
     }),
     params: {
       token: null
@@ -54,7 +50,15 @@ export class MainRequestService {
 
   makeUrl(key: string, url?: string): string
   {
-    return this.MAIN_URI + this.routingListService.getUrl(key) + (url || '');
+    let route = this.routingListService.getUrl(key);
+
+    // if(typeof url === 'undefined')
+    //   route = route.substring(0, route.length - 1);
+    // else
+    //   route = url.charAt(0) === '?' ? route.substring(0, route.length - 1) : route;
+    // console.log(route, url)
+    
+    return this.MAIN_URI + route + (url || '');
   }
 
   protected getToken(): string

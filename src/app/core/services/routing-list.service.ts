@@ -38,8 +38,8 @@ export class RoutingListService {
       'menus': { url: 'menus/en/' },
       'dashboard': { url: 'dashboard/'},
       'management': { url: 'management/'},
-      'profile-image': { url: 'profile-image'},
-      'profile': { url: 'profile'}
+      'profile-image': { url: 'profile-image/'},
+      'profile': { url: 'profile/'}
     }
   };
 

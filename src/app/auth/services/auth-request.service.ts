@@ -51,9 +51,4 @@ export class AuthRequestService extends MainRequestService{
                     .get(url, this.options)
                     .catch(error => this.handleError(error))
   }
-
-  makeUrl(key: string, url?: string): string
-  {
-    return this.MAIN_URI + this.routingListService.getUrl(key) + (url || '');
-  }
 }
