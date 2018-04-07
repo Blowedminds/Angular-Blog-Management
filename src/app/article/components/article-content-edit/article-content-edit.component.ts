@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgForm } from '@angular/forms'
 
@@ -36,6 +38,8 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
 
   subs = new Subscription();
 
+  separatorKeysCodes = [ENTER, COMMA];
+
   @ViewChild('tiny') set tiny(tiny: ElementRef)
   {
     if(this.article)
@@ -65,7 +69,8 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
 
                     let rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
                                                 .subscribe( languages => {
-                                                    this.language = languages.find( language => language.id !== response.content.language_id)
+                                                    this.language = languages.find( language => language.id === response.content.language_id);
+                                                    console.log(this.language)
                                                 });
 
                     // this.subs.add(rq2)
@@ -127,11 +132,34 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
       title: f.value.title,
       sub_title: f.value.sub_title,
       body: tinymce.activeEditor.getContent(),
-      keywords: f.value.keywords,
+      keywords: this.article.content.keywords,
       published: f.value.published ? 1 : 0,
       language_id: this.article.content.language_id,
     }).subscribe(response => alert('success'))
 
     this.subs.add(rq2);
+  }
+
+  addKeyword(event: MatChipInputEvent): void {
+    let input = event.input;
+    let value = event.value;
+
+    // Add our keyword
+    if ((value || '').trim()) {
+      this.article.content.keywords.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeKeyword(keyword: any): void {
+    let index = this.article.content.keywords.indexOf(keyword);
+
+    if (index >= 0) {
+      this.article.content.keywords.splice(index, 1);
+    }
   }
 }
