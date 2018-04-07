@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { NgForm } from '@angular/forms'
+import { NgForm } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { CacheService, HelpersService, ImageSelectComponent } from '../../imports';
 
@@ -25,11 +26,11 @@ export class ArticleEditComponent implements OnInit {
 
   add_categories: any;
 
-  API_URL: any
+  API_URL: any;
 
-  THUMB_IMAGE_URL: string
+  THUMB_IMAGE_URL: string;
 
-  user: any
+  user: any;
 
   subs = new Subscription();
 
@@ -50,45 +51,47 @@ export class ArticleEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    let rq1 = this.route.params
-                  .switchMap( (params: Params) =>
+    const rq1 = this.route.params
+                  .pipe(switchMap( (params: Params) =>
                     this.articleRequestService.getArticle(params['slug'])
-                  )
+                  ))
                   .subscribe((response: any) => {
 
                     this.article = response;
 
                     this.categories = response.categories;
 
-                    let rq2 = this.cacheService
+                    const rq2 = this.cacheService
                       .get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
                       .subscribe( categories => {
 
-                        this.add_categories = categories
+                        this.add_categories = categories;
 
-                        for(let category of this.categories)
+                        for (const category of this.categories) {
+
                           this.add_categories = this.add_categories.filter( obj => obj.id !== category.id)
+                        }
                       });
 
                     this.subs.add(rq2)
                   });
 
-    let rq2 = this.cacheService.get('user', this.articleRequestService.makeGetRequest('user.info'))
+    const rq2 = this.cacheService.get('user', this.articleRequestService.makeGetRequest('user.info'))
                                 .subscribe( response => this.user = response);
 
-    this.subs.add(rq1).add(rq2)
+    this.subs.add(rq1).add(rq2);
   }
 
   getToken()
   {
-    return this.helpersService.getToken()
+    return this.helpersService.getToken();
   }
 
   addCategory(item: any)
   {
-    if(item.selected.value == undefined || item.selected.value == null) return;
+    if (item.selected.value == undefined || item.selected.value == null) return;
 
-    let index = this.add_categories.findIndex( obj => obj.id === item.selected.value)
+    const index = this.add_categories.findIndex( obj => obj.id === item.selected.value)
 
     this.categories.push(this.add_categories[index])
 
@@ -104,9 +107,9 @@ export class ArticleEditComponent implements OnInit {
 
   editArticle(f: NgForm)
   {
-    let categories = this.categories.map( category => category.id);
+    const categories = this.categories.map( category => category.id);
 
-    let rq1 = this.articleRequestService.postArticle(this.article.id, {
+    const rq1 = this.articleRequestService.postArticle(this.article.id, {
       slug: f.value.slug,
       categories: categories,
       image: f.value.image
@@ -117,44 +120,45 @@ export class ArticleEditComponent implements OnInit {
 
   deleteArticle()
   {
-    let rq2 = this.articleRequestService.deleteArticle(this.article.id).subscribe(response => this.helpersService.navigate(['/articles']));
+    const rq2 = this.articleRequestService.deleteArticle(this.article.id)
+                                          .subscribe(response => this.helpersService.navigate(['/articles']));
 
     this.subs.add(rq2);
   }
 
   openImageSelect()
   {
-    let dialogRef = this.dialog.open(ImageSelectComponent, {
+    const dialogRef = this.dialog.open(ImageSelectComponent, {
       data: {
         image_request: this.articleRequestService.makeGetRequest('image.images'),
         thumb_image_url: this.articleRequestService.makeUrl('image.thumb')
       }
     });
 
-    let rq3 = dialogRef.afterClosed().subscribe( response => {
+    const rq3 = dialogRef.afterClosed().subscribe( response => {
 
       if(response){
 
-        let test = document.getElementById('img')
+        const element = document.getElementById('img');
 
-        test.setAttribute('src', response.thumb_url)
+        element.setAttribute('src', response.thumb_url);
 
-        this.article.image = response.u_id
+        this.article.image = response.u_id;
       }
-    })
+    });
 
-    this.subs.add(rq3)
+    this.subs.add(rq3);
   }
 
   openManagePermission()
   {
-    let dialogRef = this.dialog.open(ArticlePermissionComponent, {
+    const dialogRef = this.dialog.open(ArticlePermissionComponent, {
       data: {
         id: this.article.id,
       }
-    })
+    });
 
-    let rq4 = dialogRef.afterClosed().subscribe( response => alert('success'))
+    const rq4 = dialogRef.afterClosed().subscribe( response => alert('success'));
 
     this.subs.add(rq4);
   }

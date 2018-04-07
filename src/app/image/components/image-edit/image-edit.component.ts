@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { NgForm } from '@angular/forms'
+import { NgForm } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 import { ImageRequestService } from '../../services/image-request.service';
+import { HelpersService } from '../../imports';
 
 import { ImageSaveAsComponent } from '../../dialogs/image-save-as/image-save-as.component';
-
-import { HelpersService } from '../../imports';
 
 declare var Cropper: any;
 
@@ -23,13 +23,13 @@ export class ImageEditComponent implements OnInit {
 
   API_URL: string;
 
-  IMAGE_URL: string
+  IMAGE_URL: string;
 
-  cropper: any
+  cropper: any;
 
-  cropperInitialized: boolean = false
+  cropperInitialized = false;
 
-  cropperData: any = {x: null, y: null, width: null, height: null, rotate: null}
+  cropperData: any = {x: null, y: null, width: null, height: null, rotate: null};
 
   get isPageReady()
   {
@@ -42,17 +42,17 @@ export class ImageEditComponent implements OnInit {
     private imageRequestService: ImageRequestService,
     private helpersService: HelpersService,
   ) {
-    this.API_URL = this.imageRequestService.makeUrl('image')
+    this.API_URL = this.imageRequestService.makeUrl('image');
 
-    this.IMAGE_URL = this.imageRequestService.makeUrl('image.image')
+    this.IMAGE_URL = this.imageRequestService.makeUrl('image.image');
    }
 
   ngOnInit() {
-    this.route.params.switchMap( (params: Params) => this.imageRequestService.getEdit(params['image']))
+    this.route.params.pipe(switchMap( (params: Params) => this.imageRequestService.getEdit(params['image'])))
                       .subscribe(response => {
-                        this.u_id = response.u_id
-                        this.image = response
-                      })
+                        this.u_id = response.u_id;
+                        this.image = response;
+                      });
   }
 
   getToken()
@@ -62,27 +62,27 @@ export class ImageEditComponent implements OnInit {
 
   initialCropper(id: string)
   {
-    if(this.cropper){
-      this.cropper.destroy()
-      this.cropper = null
-      this.cropperInitialized = false
-      return
+    if (this.cropper) {
+      this.cropper.destroy();
+      this.cropper = null;
+      this.cropperInitialized = false;
+      return;
     }
 
-    let element = document.getElementById(id)
+    const element = document.getElementById(id);
 
     this.cropper = new Cropper(element, {
       scalable: false,
       zoomable: false,
       ready: () => this.cropperInitialized = true,
       crop: (e: any) => {
-        this.cropperData.x = parseInt(e.detail.x)
-        this.cropperData.y = parseInt(e.detail.y)
-        this.cropperData.width = parseInt(e.detail.width)
-        this.cropperData.height = parseInt(e.detail.height)
-        this.cropperData.rotate = parseInt(e.detail.rotate)
+        this.cropperData.x = parseInt(e.detail.x);
+        this.cropperData.y = parseInt(e.detail.y);
+        this.cropperData.width = parseInt(e.detail.width);
+        this.cropperData.height = parseInt(e.detail.height);
+        this.cropperData.rotate = parseInt(e.detail.rotate);
       }
-    })
+    });
   }
 
   setData(f: NgForm)
@@ -103,14 +103,14 @@ export class ImageEditComponent implements OnInit {
 
   saveAndUpdateImage(f: NgForm, save: boolean)
   {
-    let data = {}
+    let data = {};
 
-    let _public = f.value.public ? 1 : 0
+    const _public = f.value.public ? 1 : 0;
 
-    let save_as = (save) ? 1 : 0
+    const save_as = (save) ? 1 : 0;
 
-    if(this.cropper){
-      let cropper = this.cropper.getData()
+    if (this.cropper) {
+      const cropper = this.cropper.getData();
 
       data = {
         u_id: this.u_id,
@@ -124,8 +124,8 @@ export class ImageEditComponent implements OnInit {
         x: parseInt(cropper.x),
         y: parseInt(cropper.y),
         rotate: parseInt(cropper.rotate)
-      }
-    }else{
+      };
+    } else {
       data = {
         u_id: this.u_id,
         name: f.value.name,
@@ -133,45 +133,45 @@ export class ImageEditComponent implements OnInit {
         save_as: save_as,
         crop: 0,
         public: _public
-      }
+      };
     }
 
     let rq1 = this.imageRequestService.putEdit(data).subscribe(response => {
-      rq1.unsubscribe()
-      rq1 = null
-    })
+      rq1.unsubscribe();
+      rq1 = null;
+    });
   }
 
   deleteImage()
   {
     let rq2 = this.imageRequestService.deleteImage(this.u_id).subscribe(response => {
 
-      this.helpersService.navigate(['images'])
+      this.helpersService.navigate(['images']);
 
-      rq2.unsubscribe()
-      rq2 = null
-    })
+      rq2.unsubscribe();
+      rq2 = null;
+    });
   }
 
   calcSize(size: number)
   {
-    return (size/1024).toFixed(1);
+    return (size / 1024).toFixed(1);
   }
 
   openSaveAs()
   {
-    let dialogRef = this.dialog.open(ImageSaveAsComponent, {
+    const dialogRef = this.dialog.open(ImageSaveAsComponent, {
       disableClose: true
-    })
+    });
 
     let rq3 = dialogRef.afterClosed().subscribe( result => {
-      if(!result) return
+      if (!result) return;
 
-      this.saveAndUpdateImage(result, true)
+      this.saveAndUpdateImage(result, true),
 
-      rq3.unsubscribe()
-      rq3 = null
-    })
+      rq3.unsubscribe();
+      rq3 = null;
+    });
   }
 
 }

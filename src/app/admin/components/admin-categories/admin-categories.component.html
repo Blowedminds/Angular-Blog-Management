@@ -27,17 +27,17 @@
 
         <input type="hidden" name="id" [ngModel]="edit_category.id" name="id" required>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="İsim" [ngModel]="edit_category.name" name="name" required autofocus>
-        </mat-input-container>
+        </mat-form-field>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="Slug" [ngModel]="edit_category.slug" name="slug" required autofocus>
-        </mat-input-container>
+        </mat-form-field>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="Description" [ngModel]="edit_category.description" name="description" required autofocus>
-        </mat-input-container>
+        </mat-form-field>
 
         <button mat-raised-button type="submit">{{ edit_category.id ? 'Güncelle' : 'Ekle'}}</button>
 

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm }            from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { AdminRequestService } from '../../services/admin-request.service';
 
@@ -10,79 +10,77 @@ import { AdminRequestService } from '../../services/admin-request.service';
   templateUrl: './admin-categories.component.html',
   styleUrls: ['./admin-categories.component.sass']
 })
-export class AdminCategoriesComponent implements OnInit {
+export class AdminCategoriesComponent implements OnInit, OnDestroy {
 
-  categories: any
+  categories: any;
 
-  edit_category: any
+  edit_category: any;
 
-  subs = new Subscription()
+  subs = new Subscription();
 
   default_category: any = {
     id: null,
     name: null,
     slug: null,
     description: null
-  }
+  };
 
-  get isPageReady()
-  {
+  get isPageReady() {
     return this.categories;
   }
 
   constructor(
-    private AdminRequestService: AdminRequestService
+    private adminRequestService: AdminRequestService
   ) { }
 
   ngOnInit() {
-    let rq1 = this.AdminRequestService.getCategories().subscribe( response => this.categories = response)
+    const rq1 = this.adminRequestService.getCategories().subscribe(response => this.categories = response)
 
-    this.subs.add(rq1)
+    this.subs.add(rq1);
   }
 
-  ngOnDestroy()
-  {
-    this.subs.unsubscribe()
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
-  submitForm(f: NgForm)
-  {
+  submitForm(f: NgForm) {
     const category = {
-            name: f.value.name,
-            slug: f.value.slug,
-            description: f.value.description,
-          }
+      name: f.value.name,
+      slug: f.value.slug,
+      description: f.value.description,
+    }
 
     let rq1;
 
-    if(f.value.id)
-      rq1 = this.AdminRequestService.postCategory(category, f.value.id).subscribe(response => this.refreshComponent())
-    else
-      rq1 = this.AdminRequestService.putCategory(category).subscribe(response => this.refreshComponent())
+    if (f.value.id) {
 
-    this.subs.add(rq1)
+      rq1 = this.adminRequestService.postCategory(category, f.value.id).subscribe(response => this.refreshComponent());
+    }
+    else {
+
+      rq1 = this.adminRequestService.putCategory(category).subscribe(response => this.refreshComponent());
+    }
+
+    this.subs.add(rq1);
   }
 
-  delete(id: number)
-  {
-    let rq4 = this.AdminRequestService.deleteCategory(id).subscribe(response => this.refreshComponent())
+  delete(id: number) {
+    const rq4 = this.adminRequestService.deleteCategory(id).subscribe(response => this.refreshComponent());
 
-    this.subs.add(rq4)
+    this.subs.add(rq4);
   }
 
-  refreshComponent()
-  {
-    this.categories = null
+  refreshComponent() {
+    this.categories = null;
 
-    this.edit_category = null
+    this.edit_category = null;
 
-    let rq1 = this.AdminRequestService.getCategories().subscribe( response => this.categories = response)
+    const rq1 = this.adminRequestService.getCategories().subscribe(response => this.categories = response);
 
-    this.subs.add(rq1)
+    this.subs.add(rq1);
   }
 
-  selectCategory(category: any)
-  {
+  selectCategory(category: any) {
     this.edit_category = category;
   }
 }

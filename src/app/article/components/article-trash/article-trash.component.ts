@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {DataSource} from '@angular/cdk/table';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 
-import { ArticleRequestService }  from '../../services/article-request.service';
+import { ArticleRequestService } from '../../services/article-request.service';
 
 declare var swal: any;
 
@@ -15,9 +13,9 @@ declare var swal: any;
 })
 export class ArticleTrashComponent implements OnInit, OnDestroy {
 
-  data: any
+  data: any;
 
-  displayedColumns: Array<string> = ['Author', 'Title', 'Deleted_At', 'ArticleId']
+  displayedColumns: Array<string> = ['Author', 'Title', 'Deleted_At', 'ArticleId'];
 
   subs = new Subscription();
 
@@ -25,11 +23,11 @@ export class ArticleTrashComponent implements OnInit, OnDestroy {
     private articleRequestService: ArticleRequestService
   ) { }
 
-  dataBase: any =  new DataBase(this.articleRequestService)
+  dataBase: any =  new DataBase(this.articleRequestService);
 
   ngOnInit() {
 
-    this.data = new DataSourceCode(this.dataBase)
+    this.data = new DataSourceCode(this.dataBase);
   }
 
   ngOnDestroy()
@@ -39,18 +37,18 @@ export class ArticleTrashComponent implements OnInit, OnDestroy {
 
   restoreArticle(article_id: number)
   {
-    let rq1 = this.articleRequestService.postRestore(article_id)
-                                .subscribe(response => this.data = new DataSourceCode(new DataBase(this.articleRequestService)))
+    const rq1 = this.articleRequestService.postRestore(article_id)
+                                .subscribe(response => this.data = new DataSourceCode(new DataBase(this.articleRequestService)));
 
-    this.subs.add(rq1)
+    this.subs.add(rq1);
   }
 
   forceDeleteArticle(article_id: number)
   {
-    let rq2 = this.articleRequestService.deleteForceDelete(article_id)
-                            .subscribe(response => this.data = new DataSourceCode(new DataBase(this.articleRequestService)))
+    const rq2 = this.articleRequestService.deleteForceDelete(article_id)
+                            .subscribe(response => this.data = new DataSourceCode(new DataBase(this.articleRequestService)));
 
-    this.subs.add(rq2)
+    this.subs.add(rq2);
 
   }
 
@@ -73,30 +71,32 @@ export class DataBase {
   constructor(private article: ArticleRequestService) {
 
     let rq3 = this.article.getTrash().subscribe(response => {
-      for(let one of response.data)
-        this.addContent(one)
-      rq3.unsubscribe()
-      rq3 = null
-    })
+      for(let one of response.data) {
+
+        this.addContent(one);
+      }
+      rq3.unsubscribe();
+      rq3 = null;
+    });
   }
 
   addContent(content: any)
   {
-    const copiedData = this.data.slice()
-    copiedData.push(content)
-    this.dataChange.next(copiedData)
+    const copiedData = this.data.slice();
+    copiedData.push(content);
+    this.dataChange.next(copiedData);
   }
 }
 
 export class DataSourceCode extends DataSource<any> {
 
-  constructor(private _dataBase: DataBase){
+  constructor(private _dataBase: DataBase) {
     super();
   }
 
   connect(): Observable<any>
   {
-    return this._dataBase.dataChange
+    return this._dataBase.dataChange;
   }
 
   disconnect() {}

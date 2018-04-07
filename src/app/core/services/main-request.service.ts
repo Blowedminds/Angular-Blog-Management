@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import { HelpersService } from './helpers.service';
 import { RoutingListService } from './routing-list.service';
 import { environment } from '../../../environments/environment';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class MainRequestService {
@@ -31,7 +29,7 @@ export class MainRequestService {
     params: {
       token: null
     }
-  }
+  };
 
   constructor(
     protected http: HttpClient,
@@ -41,35 +39,29 @@ export class MainRequestService {
 
   makeGetRequest(key: string)
   {
-    const url = this.makeUrl(key)
+    const url = this.makeUrl(key);
 
     return this.http
                 .get(url, this.options)
-                .catch(error => this.handleError(error));
+                .pipe(catchError(error => this.handleError(error)));
   }
 
   makeUrl(key: string, url?: string): string
   {
-    let route = this.routingListService.getUrl(key);
+    const route = this.routingListService.getUrl(key);
 
-    // if(typeof url === 'undefined')
-    //   route = route.substring(0, route.length - 1);
-    // else
-    //   route = url.charAt(0) === '?' ? route.substring(0, route.length - 1) : route;
-    // console.log(route, url)
-    
     return this.MAIN_URI + route + (url || '');
   }
 
   protected getToken(): string
   {
-    return this.helpersService.getToken()
+    return this.helpersService.getToken();
   }
 
   protected handleError(error: any, router: any = null): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
 
-    switch (error.status){
+    switch (error.status) {
       case 401:
         this.helpersService.navigate(['login']);
         break;

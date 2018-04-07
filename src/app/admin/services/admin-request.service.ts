@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable }     from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { HelpersService, MainRequestService, RoutingListService }   from '../imports';
+import { HelpersService, MainRequestService, RoutingListService } from '../imports';
 
 @Injectable()
 export class AdminRequestService extends MainRequestService {
@@ -17,111 +18,111 @@ export class AdminRequestService extends MainRequestService {
     super(http, helpersService, routingListService);
   }
 
-  public getMenus():Observable<any>
+  getMenus(): Observable<any>
   {
     const url = this.makeUrl('admin.menus');
 
     return this.http
                   .get(url, this.options)
-                  .catch(error => this.handleError(error))
+                  .pipe(catchError(error => this.handleError(error)));
   }
 
-  public postMenu(data: any):Observable<any>
+  postMenu(data: any): Observable<any>
   {
     const url = this.makeUrl('admin.menus');
 
     return this.http
                     .post(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public putMenu(data: any):Observable<any>
+  putMenu(data: any): Observable<any>
   {
     const url = this.makeUrl('admin.menus');
 
     return this.http
                     .put(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public deleteMenu(id: number):Observable<any>
+  deleteMenu(id: number): Observable<any>
   {
     const url = this.makeUrl('admin.menus', `${id}`);
 
     return this.http
                     .delete(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public getLanguages():Observable<any>
+  getLanguages(): Observable<any>
   {
     const url = this.makeUrl('admin.languages');
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public postLanguage(data: any):Observable<any>
+  postLanguage(data: any): Observable<any>
   {
     const url = this.makeUrl('admin.languages');
 
     return this.http
                     .post(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public putLanguage(data: any):Observable<any>
+  putLanguage(data: any): Observable<any>
   {
     const url = this.makeUrl('admin.languages');
 
     return this.http
                     .put(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public deleteLanguage(id: number):Observable<any>
+  deleteLanguage(id: number): Observable<any>
   {
     const url = this.makeUrl('admin.languages', `${id}`);
 
     return this.http
                     .delete(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public getCategories():Observable<any>
+  getCategories(): Observable<any>
   {
     const url = this.makeUrl('admin.categories');
 
     return this.http
                   .get(url, this.options)
-                  .catch(error => this.handleError(error))
+                  .pipe(catchError(error => this.handleError(error)));
   }
 
-  public postCategory(data: any, id: number):Observable<any>
+  postCategory(data: any, id: number): Observable<any>
   {
     const url = this.makeUrl('admin.categories', `${id}`);
 
     return this.http
                     .post(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public putCategory(data: any):Observable<any>
+  putCategory(data: any): Observable<any>
   {
     const url = this.makeUrl('admin.categories');
 
     return this.http
                     .put(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  public deleteCategory(id: number):Observable<any>
+  deleteCategory(id: number): Observable<any>
   {
     const url = this.makeUrl('admin.categories', `${id}`);
 
     return this.http
                     .delete(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 }

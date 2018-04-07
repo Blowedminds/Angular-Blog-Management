@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { ActivatedRoute, Params } from '@angular/router';
-import { NgForm } from '@angular/forms'
+import { NgForm } from '@angular/forms';
 
 import * as tinymce from 'tinymce/tinymce';
 import 'tinymce/themes/modern/theme';
@@ -17,7 +17,8 @@ import { CacheService, ImageSelectComponent } from '../../imports';
 import { ArticleService } from '../../services/article.service';
 import { ArticleRequestService } from '../../services/article-request.service';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-content-edit',
@@ -30,11 +31,11 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
 
   language: any;
 
-  @Input() elementId: string = "tinymce-textarea";
+  @Input() elementId = 'tinymce-textarea';
 
   @Output() onEditorKeyup = new EventEmitter<any>();
 
-  editor: any
+  editor: any;
 
   subs = new Subscription();
 
@@ -42,8 +43,10 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
 
   @ViewChild('tiny') set tiny(tiny: ElementRef)
   {
-    if(this.article)
+    if (this.article) {
+
       setTimeout(() => this.runTinymce(), 0);
+    }
   }
 
   get isPageReady()
@@ -59,24 +62,23 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
   ) { }
 
   ngOnInit()  {
-    let rq1 = this.route.params
-                  .switchMap( (params: Params) =>
+    const rq1 = this.route.params.pipe(
+                  switchMap( (params: Params) =>
                     this.articleRequestService.getArticleByContent(params['slug'], params['language_slug'])
-                  )
+                  ))
                   .subscribe((response: any) => {
 
                     this.article = response;
 
-                    let rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
-                                                .subscribe( languages => {
-                                                    this.language = languages.find( language => language.id === response.content.language_id);
-                                                    console.log(this.language)
-                                                });
+                    const rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+                                    .subscribe( languages => {
+                                        this.language = languages.find( language => language.id === response.content.language_id);
+                                    });
 
                     // this.subs.add(rq2)
                   });
 
-    this.subs.add(rq1)
+    this.subs.add(rq1);
   }
 
   ngAfterViewInit() {
@@ -91,7 +93,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
       skin_url: '/assets/skins/lightgray',
       setup: editor => {
 
-        let dialog = this.dialog
+        const dialog = this.dialog;
 
         editor.on('keyup', () => {
 
@@ -103,13 +105,13 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
               text: 'Add Image',
               context: 'tools',
               onclick: function() {
-                let ImageSelectDialog = dialog.open(ImageSelectComponent)
+                const ImageSelectDialog = dialog.open(ImageSelectComponent);
 
                 let rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
                   editor.insertContent(`<img src="${response.image_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`)
 
-                  rq1.unsubscribe()
-                })
+                  rq1.unsubscribe();
+                });
               }
             });
 
@@ -117,18 +119,18 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
       },
     });
 
-    tinymce.activeEditor.setContent(this.article.content.body)
+    tinymce.activeEditor.setContent(this.article.content.body);
   }
 
   ngOnDestroy() {
     tinymce.remove(this.editor);
 
-    this.subs.unsubscribe()
+    this.subs.unsubscribe();
   }
 
   editArticle(f: NgForm)
   {
-    let rq2 = this.articleRequestService.postArticleContent(this.article.id, {
+    const rq2 = this.articleRequestService.postArticleContent(this.article.id, {
       title: f.value.title,
       sub_title: f.value.sub_title,
       body: tinymce.activeEditor.getContent(),
@@ -141,8 +143,8 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
   }
 
   addKeyword(event: MatChipInputEvent): void {
-    let input = event.input;
-    let value = event.value;
+    const input = event.input;
+    const value = event.value;
 
     // Add our keyword
     if ((value || '').trim()) {
@@ -156,7 +158,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit, OnDes
   }
 
   removeKeyword(keyword: any): void {
-    let index = this.article.content.keywords.indexOf(keyword);
+    const index = this.article.content.keywords.indexOf(keyword);
 
     if (index >= 0) {
       this.article.content.keywords.splice(index, 1);

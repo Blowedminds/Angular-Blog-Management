@@ -16,13 +16,13 @@
 
         <form #f="ngForm" (ngSubmit)="saveAndUpdateImage(f, false)">
 
-          <mat-input-container>
+          <mat-form-field>
             <input matInput placeholder="Name" name="name" [(ngModel)]="image.name" required>
-          </mat-input-container>
+          </mat-form-field>
 
-          <mat-input-container>
+          <mat-form-field>
             <input matInput placeholder="Alt" name="alt" [(ngModel)]="image.alt" required>
-          </mat-input-container>
+          </mat-form-field>
 
           <mat-checkbox
               name="public"
@@ -74,32 +74,32 @@
 
         <form #g="ngForm" (submit)="setData(g)">
 
-          <mat-input-container>
+          <mat-form-field>
             <input matInput placeholder="X" name="x" type="number" [(ngModel)]="cropperData.x" (change)="setData(g)">
-          </mat-input-container>
+          </mat-form-field>
 
-          <mat-input-container>
+          <mat-form-field>
             <input matInput placeholder="Y" name="y" type="number" [(ngModel)]="cropperData.y" (change)="setData(g)">
-          </mat-input-container>
+          </mat-form-field>
 
           <mat-slider
             placeholder="Width"
             [max]="image.width - cropperData.x"
-            [thumb-label]="1 == 1"
+            [thumbLabel]="1 == 1"
             [(ngModel)]="cropperData.width"
             name="width" (change)="setData(g)">
           </mat-slider>
 
           <mat-slider
             [max]="image.height - cropperData.y"
-            [thumb-label]="1 == 1"
+            [thumbLabel]="1 == 1"
             [(ngModel)]="cropperData.height"
             name="height" (change)="setData(g)">
           </mat-slider>
 
-          <mat-input-container>
+          <mat-form-field>
             <input matInput placeholder="Rotate" name="rotate" [(ngModel)]="cropperData.rotate" (change)="setData(g)">
-          </mat-input-container>
+          </mat-form-field>
 
 
           <!--<button md-raised-button type="submit">Değiştir</button>

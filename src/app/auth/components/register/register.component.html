@@ -8,21 +8,21 @@
         <p>{{errorText}}</p>
       </mat-card>
 
-      <mat-input-container class="form-group">
+      <mat-form-field class="form-group">
         <input matInput type="text"placeholder="İsim" ngModel name="name" required autofocus>
-      </mat-input-container>
+      </mat-form-field>
 
-      <mat-input-container class="form-group">
+      <mat-form-field class="form-group">
         <input matInput type="email"placeholder="E-posta" ngModel name="email" required>
-      </mat-input-container>
+      </mat-form-field>
 
-      <mat-input-container class="form-group">
+      <mat-form-field class="form-group">
         <input matInput type="password"placeholder="Şifre" ngModel name="password" required>
-      </mat-input-container>
+      </mat-form-field>
 
-      <mat-input-container class="form-group">
+      <mat-form-field class="form-group">
         <input matInput type="password"placeholder="Şifre Onay" ngModel name="password_confirmation" required>
-      </mat-input-container>
+      </mat-form-field>
 
       <button mat-button type="submit" [disabled]="!f.valid">Kayıt Ol</button>
 

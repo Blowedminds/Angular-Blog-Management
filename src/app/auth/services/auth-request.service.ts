@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Router }            from '@angular/router';
-import { Observable }     from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { HelpersService, MainRequestService, RoutingListService }   from '../imports';
+import { HelpersService, MainRequestService, RoutingListService } from '../imports';
 
 @Injectable()
 export class AuthRequestService extends MainRequestService{
@@ -20,10 +21,10 @@ export class AuthRequestService extends MainRequestService{
 
   checkAuthenticated(): Observable<any>
   {
-    const url = this.makeUrl('auth.is-authenticated')
+    const url = this.makeUrl('auth.is-authenticated');
 
     return this.http
-                    .get(url, this.options)
+                    .get(url, this.options);
 
   }
 
@@ -32,7 +33,7 @@ export class AuthRequestService extends MainRequestService{
     const url = this.makeUrl('auth.register');
 
     return this.http
-                    .put(url, JSON.stringify(data), this.options)
+                    .put(url, JSON.stringify(data), this.options);
   }
 
   login(data: any): Observable<any>
@@ -40,7 +41,7 @@ export class AuthRequestService extends MainRequestService{
     const url = this.makeUrl('auth.login');
 
     return this.http
-                    .post(url, JSON.stringify(data), this.options)
+                    .post(url, JSON.stringify(data), this.options);
   }
 
   logout(): Observable<any>
@@ -49,6 +50,6 @@ export class AuthRequestService extends MainRequestService{
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 }

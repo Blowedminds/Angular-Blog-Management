@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm }                   from '@angular/forms';
+import { NgForm } from '@angular/forms';
+
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { HelpersService, CacheService } from '../../imports';
 import { AuthRequestService } from '../../services/auth-request.service';
@@ -17,7 +19,7 @@ export class RegisterComponent implements OnInit {
     private helpersService: HelpersService
   ) { }
 
-  error: boolean = false;
+  error = false;
 
   errorText: string;
 
@@ -39,34 +41,36 @@ export class RegisterComponent implements OnInit {
       password: f.value.password,
       password_confirmation: f.value.password_confirmation
     })
-    .map(response => this.helpersService.parseToken(response))
-    .do(response => {
-      localStorage.setItem('token', response.token);
-      this.helpersService.navigate(['/']);
-    })
-    .catch(error => this.registerErrorHandle(error))
+    .pipe(
+      map(response => this.helpersService.parseToken(response)),
+      tap(response => {
+        localStorage.setItem('token', response.token);
+        this.helpersService.navigate(['/']);
+      }),
+      catchError(error => this.registerErrorHandle(error))
+    )
     .subscribe(response => {
-      rq2.unsubscribe()
-      rq2 = null
-    })
+      rq2.unsubscribe();
+      rq2 = null;
+    });
   }
 
   private registerErrorHandle(error: any, route: any = null): Promise<any>
   {
-    let jsError = error.error
+    const jsError = error.error;
 
-    switch(error.status){
+    switch (error.status) {
       case 422:
         this.error = true;
 
-        for(const one of Object.keys(jsError)){
+        for (const one of Object.keys(jsError)) {
 
-          this.errorText = jsError[one][0]
-          break
+          this.errorText = jsError[one][0];
+          break;
         }
-        break
+        break;
     }
 
-    return Promise.reject(error.message || error)
+    return Promise.reject(error.message || error);
   }
 }
