@@ -10,31 +10,34 @@ import { CacheService, ImageSelectComponent } from '../../imports';
 import { ArticleService } from '../../services/article.service';
 import { ArticleRequestService } from '../../services/article-request.service';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-content-add',
   templateUrl: './article-content-add.component.html',
   styleUrls: ['./article-content-add.component.sass']
 })
-export class ArticleContentAddComponent implements OnInit {
+export class ArticleContentAddComponent implements OnInit, OnDestroy {
 
   article: any;
 
   add_languages: any;
 
-  @Input() elementId: string = "tinymce-textarea";
+  @Input() elementId = 'tinymce-textarea';
 
   @Output() onEditorKeyup = new EventEmitter<any>();
 
-  editor: any
+  editor: any;
 
   subs = new Subscription();
 
   @ViewChild('tiny') set tiny(tiny: ElementRef)
   {
-    if(this.add_languages)
+    if (this.add_languages) {
+
       setTimeout(() => this.runTinymce(), 0);
+    }
   }
 
   constructor(
@@ -46,25 +49,24 @@ export class ArticleContentAddComponent implements OnInit {
 
   ngOnInit() {
 
-    let rq1 = this.route.params.switchMap( (params: Params) => this.articleRequestService.getArticle(params['slug']))
-                      .subscribe(response => {
+    const rq1 = this.route.params.pipe(switchMap( (params: Params) => this.articleRequestService.getArticle(params['slug']))
+)                     .subscribe(response => {
 
                         this.article = response;
 
-                        let rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+                        const rq2 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
                           .subscribe( languages => {
-                            this.add_languages = languages
+                            this.add_languages = languages;
 
-                            for(let content of response.contents)
+                            for (const content of response.contents) {
+
                               this.add_languages = this.add_languages.filter( language => language.id !== content.language_id)
+                            }
                           });
 
                         // this.subs.add(rq2)
                       });
-    this.subs.add(rq1)
-  }
-
-  ngAfterViewInit() {
+    this.subs.add(rq1);
   }
 
   ngOnDestroy() {
@@ -82,7 +84,7 @@ export class ArticleContentAddComponent implements OnInit {
       skin_url: '/assets/skins/lightgray',
       setup: editor => {
 
-        let dialog = this.dialog
+        const dialog = this.dialog;
 
         editor.on('keyup', () => {
 
@@ -94,14 +96,14 @@ export class ArticleContentAddComponent implements OnInit {
               text: 'Add Image',
               context: 'tools',
               onclick: function() {
-                let ImageSelectDialog = dialog.open(ImageSelectComponent)
+                const ImageSelectDialog = dialog.open(ImageSelectComponent);
 
                 let rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
                   editor.insertContent(`<img src="${response.image_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`)
 
-                  rq1.unsubscribe()
-                  rq1 = null
-                })
+                  rq1.unsubscribe();
+                  rq1 = null;
+                });
               }
             });
 
@@ -112,16 +114,16 @@ export class ArticleContentAddComponent implements OnInit {
 
   addLanguageArticle(f: NgForm)
   {
-    let rq1 = this.articleRequestService.putArticleContent(this.article.id, {
+    const rq1 = this.articleRequestService.putArticleContent(this.article.id, {
       title: f.value.title,
       sub_title: f.value.sub_title,
       body: tinymce.activeEditor.getContent(),
       keywords: f.value.keywords,
       published: f.value.published ? 1 : 0,
       language_id: f.value.language_id
-    }).subscribe( (response) => alert('success'))
+    }).subscribe( (response) => alert('success'));
 
-    this.subs.add(rq1)
+    this.subs.add(rq1);
   }
 
 }

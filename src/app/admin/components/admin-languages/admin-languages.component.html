@@ -27,13 +27,13 @@
 
         <input type="hidden" name="id" [ngModel]="edit_language.id" name="id" required>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="İsim" [ngModel]="edit_language.name" name="name" required autofocus>
-        </mat-input-container>
+        </mat-form-field>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="Slug" [ngModel]="edit_language.slug" name="slug" required autofocus>
-        </mat-input-container>
+        </mat-form-field>
 
         <button mat-raised-button type="submit">{{ edit_language.id ? 'Güncelle' : 'Ekle'}}</button>
 

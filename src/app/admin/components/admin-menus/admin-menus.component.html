@@ -30,28 +30,28 @@
         <mat-tab-group>
           <mat-tab [label]="language.name" *ngFor="let language of languages">
 
-            <mat-input-container class="form-group">
+            <mat-form-field class="form-group">
               <input matInput type="text" placeholder="İsim" [(ngModel)]="edit_menu.name[language.slug]" name="name[{{language.slug}}]" required autofocus>
-            </mat-input-container>
+            </mat-form-field>
 
-            <mat-input-container class="form-group">
+            <mat-form-field class="form-group">
               <input matInput type="text" placeholder="Tooltip" [(ngModel)]="edit_menu.tooltip[language.slug]" name="tooltip[{{language.slug}}]" required autofocus>
-            </mat-input-container>
+            </mat-form-field>
 
           </mat-tab>
         </mat-tab-group>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="Url" [ngModel]="edit_menu.url" name="url" required autofocus>
-        </mat-input-container>
+        </mat-form-field>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="Weight" [ngModel]="edit_menu.weight" name="weight" required>
-        </mat-input-container>
+        </mat-form-field>
 
-        <mat-input-container class="form-group">
+        <mat-form-field class="form-group">
           <input matInput type="text" placeholder="Parent" [ngModel]="edit_menu.parent" name="parent" required>
-        </mat-input-container>
+        </mat-form-field>
 
         <div class="columns">
           <div class="column">

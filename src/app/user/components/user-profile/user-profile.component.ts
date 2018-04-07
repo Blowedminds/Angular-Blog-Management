@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgForm } from '@angular/forms'
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription'
+import { Subscription } from 'rxjs/';
 
 import { CacheService } from '../../imports';
 import { UserRequestService } from '../../services/user-request.service';
@@ -11,19 +11,19 @@ import { UserRequestService } from '../../services/user-request.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.sass']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
-  user: any
+  user: any;
 
-  subs = new Subscription()
+  subs = new Subscription();
 
-  languages: any
+  languages: any;
 
-  edit_bio: boolean = false
+  edit_bio = false;
 
-  AUTHOR_IMAGE_URL: string
+  AUTHOR_IMAGE_URL: string;
 
-  @ViewChild('file') file: ElementRef
+  @ViewChild('file') file: ElementRef;
 
   get isPageReady()
   {
@@ -39,60 +39,61 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    let rq2 = this.cacheService.get('languages', this.userRequestService.makeGetRequest('admin.languages'))
+    const rq2 = this.cacheService.get('languages', this.userRequestService.makeGetRequest('admin.languages'))
                                 .subscribe( response => this.languages = response )
 
-    let rq1 = this.userRequestService.getUserProfile().subscribe( response => this.user = response );
+    const rq1 = this.userRequestService.getUserProfile().subscribe( response => this.user = response );
 
-    this.subs.add(rq1)
+    this.subs.add(rq1);
   }
 
   ngOnDestroy()
   {
-    this.subs.unsubscribe()
+    this.subs.unsubscribe();
   }
 
   showImage(img: string)
   {
-    var reader = new FileReader();
+    const reader = new FileReader();
 
-    let input = this.file.nativeElement
+    const input = this.file.nativeElement;
 
-    let item = document.getElementById(img)
+    const item = document.getElementById(img);
 
     reader.onload = (e: any) => {
 
-      let rq3 = this.userRequestService.postUserProfileImage(this.file.nativeElement.files.item(0)).subscribe( response => {
+      const rq3 = this.userRequestService.postUserProfileImage(this.file.nativeElement.files.item(0)).subscribe( response => {
 
-        item.setAttribute('src', e.target.result)
-      })
+        item.setAttribute('src', e.target.result);
+      });
 
-      this.subs.add(rq3)
-    }
+      this.subs.add(rq3);
+    };
 
     reader.readAsDataURL(input.files.item(0));
   }
 
   updateProfile(f: NgForm)
   {
-    let rq2 = this.userRequestService.postUserProfile({name: f.value.name, biography: this.user.user_data.biography}).subscribe( response => {
-                this.user = null
+    const rq2 = this.userRequestService.postUserProfile({
+      name: f.value.name,
+      biography: this.user.user_data.biography
+    }).subscribe( response => {
+                this.user = null;
 
-                this.edit_bio = false
+                this.edit_bio = false;
 
-                let rq1 = this.userRequestService.getUserProfile().subscribe( response => this.user = response)
+                const rq1 = this.userRequestService.getUserProfile().subscribe( (user: any) => this.user = user);
 
-                this.subs.add(rq1)
-              })
+                this.subs.add(rq1);
+              });
 
-    this.subs.add(rq2)
+    this.subs.add(rq2);
   }
 
   updateProfileImage()
   {
-    let rq3 = this.userRequestService.postUserProfileImage(this.file.nativeElement.files.item(0)).subscribe( response => {
-
-    })
+    const rq3 = this.userRequestService.postUserProfileImage(this.file.nativeElement.files.item(0)).subscribe( response => null);
   }
 
 }

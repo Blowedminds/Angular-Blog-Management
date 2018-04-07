@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable }     from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { HelpersService, MainRequestService, RoutingListService }   from '../imports';
+import { HelpersService, MainRequestService, RoutingListService } from '../imports';
 
 @Injectable()
 export class ArticleRequestService extends MainRequestService {
@@ -23,83 +24,83 @@ export class ArticleRequestService extends MainRequestService {
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   getArticleByContent(slug: string, language_slug: string): Observable<any>
   {
-    const url = this.makeUrl('article.article.content', `${slug}/${language_slug}`)
+    const url = this.makeUrl('article.article.content', `${slug}/${language_slug}`);
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   getArticles(): Observable<any>
   {
     return this.http
                     .get(this.makeUrl('articles'), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   getArticlesPaginate(paginate: any): Observable<any>
   {
-    const url = this.makeUrl('article.articles',`?page=${paginate.pageIndex}&per-page=${paginate.pageSize}`);
+    const url = this.makeUrl('article.articles', `?page=${paginate.pageIndex}&per-page=${paginate.pageSize}`);
 
     return this.http
                     .get(url,  this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   putArticle(data: any): Observable<any>
   {
     const url = this.makeUrl('article.article');
 
-    data.category = JSON.stringify(data.category)
+    data.category = JSON.stringify(data.category);
 
     return this.http
                     .put(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   postArticleContent(id: number, data: any): Observable<any>
   {
-    const url = this.makeUrl('article.article.content',`${id}`);
+    const url = this.makeUrl('article.article.content', `${id}`);
 
     let formData = new FormData()
 
     return this.http
                     .post(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   putArticleContent(id: number, data: any): Observable<any>
   {
-    const url = this.makeUrl('article.article.content',`${id}`);
+    const url = this.makeUrl('article.article.content', `${id}`);
 
-    let formData = new FormData()
+    const formData = new FormData()
 
     return this.http
                     .put(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
-  postArticle(id:string, data:any): Observable<any>
+  postArticle(id: string, data: any): Observable<any>
   {
-    const url = this.makeUrl('article.article',`${id}`);
+    const url = this.makeUrl('article.article', `${id}`);
 
     return this.http
                     .post(url, JSON.stringify(data), this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   deleteArticle(id: number): Observable<any>
   {
-    const url = this.makeUrl('article.article',`${id}`);
+    const url = this.makeUrl('article.article', `${id}`);
 
     return this.http
                     .delete(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   getTrash(): Observable<any>
@@ -108,7 +109,7 @@ export class ArticleRequestService extends MainRequestService {
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   postRestore(id: number): Observable<any>
@@ -117,25 +118,25 @@ export class ArticleRequestService extends MainRequestService {
 
     return this.http
                     .post(url, null, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   deleteForceDelete(id: number): Observable<any>
   {
-    const url = this.makeUrl('article.article.force-delete' ,`${id}`);
+    const url = this.makeUrl('article.article.force-delete', `${id}`);
 
     return this.http
                     .delete(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   getPermission(article_id: number): Observable<any>
   {
-    const url = this.makeUrl('article.article.permission',`${article_id}`);
+    const url = this.makeUrl('article.article.permission', `${article_id}`);
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   putPermission(
@@ -147,7 +148,10 @@ export class ArticleRequestService extends MainRequestService {
     const url = this.makeUrl('article.permission',`${article_id}`);
 
     return this.http
-                    .put(url, JSON.stringify({have_permission: change_have_permission, not_have_permission: change_not_have_permission}),this.options)
-                    .catch(error => this.handleError(error))
+                    .put(url, JSON.stringify({
+                      have_permission: change_have_permission,
+                      not_have_permission: change_not_have_permission
+                    }), this.options)
+                    .pipe(catchError(error => this.handleError(error)));
   }
 }

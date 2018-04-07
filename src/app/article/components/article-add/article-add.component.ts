@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
-import { MatDialog } from '@angular/material'
-import { NgForm } from '@angular/forms'
+import { MatDialog } from '@angular/material';
+import { NgForm } from '@angular/forms';
 
 import * as tinymce from 'tinymce/tinymce';
 
@@ -8,14 +8,14 @@ import { CacheService, HelpersService, ImageSelectComponent } from '../../import
 import { ArticleService } from '../../services/article.service';
 import { ArticleRequestService } from '../../services/article-request.service';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-article-add',
   templateUrl: './article-add.component.html',
   styleUrls: ['./article-add.component.sass']
 })
-export class ArticleAddComponent implements OnInit {
+export class ArticleAddComponent implements OnInit, OnDestroy {
 
   published = false;
 
@@ -23,21 +23,21 @@ export class ArticleAddComponent implements OnInit {
 
   languages: any;
 
-  categories: any
+  categories: any;
 
-  image_name: string
+  image_name: string;
 
   subs = new Subscription();
 
-  @Input() elementId: string = "tinymce-textarea";
+  @Input() elementId = 'tinymce-textarea';
 
   @Output() onEditorKeyup = new EventEmitter<any>();
 
-  editor: any
+  editor: any;
 
   @ViewChild('tiny') set tiny(tiny:ElementRef)
   {
-    if(this.languages && this.categories){
+    if (this.languages && this.categories) {
       setTimeout(() => this.runTinymce(), 0);
     }
   }
@@ -55,17 +55,9 @@ export class ArticleAddComponent implements OnInit {
     this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
                       .subscribe( response => this.categories = response);
 
-    // let rq1 = cacheService.listenLanguages().subscribe( response => this.languages = response)
-    //
-    // let rq2 = cacheService.listenCategories().subscribe( response => this.categories = response.filter(obj => true));
-
-    // this.subs.add(rq1).add(rq2);
   }
 
   ngOnInit()  {
-  }
-
-  ngAfterViewInit() {
   }
 
   ngOnDestroy() {
@@ -83,7 +75,7 @@ export class ArticleAddComponent implements OnInit {
       skin_url: '/assets/skins/lightgray',
       setup: editor => {
 
-        let dialog = this.dialog
+        const dialog = this.dialog;
 
         editor.on('keyup', () => {
 
@@ -95,13 +87,13 @@ export class ArticleAddComponent implements OnInit {
               text: 'Add Image',
               context: 'tools',
               onclick: function() {
-                let ImageSelectDialog = dialog.open(ImageSelectComponent)
+                const ImageSelectDialog = dialog.open(ImageSelectComponent);
 
-                let rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
+                const rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
                   editor.insertContent(`<img src="${response.image_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`)
 
-                  rq1.unsubscribe()
-                })
+                  rq1.unsubscribe();
+                });
               }
             });
 
@@ -112,9 +104,9 @@ export class ArticleAddComponent implements OnInit {
 
   addArticle(f: NgForm)
   {
-    let categories = this.add_categories.map( category => category.id)
+    const categories = this.add_categories.map( category => category.id);
 
-    let rq1 = this.articleRequestService.putArticle({
+    const rq1 = this.articleRequestService.putArticle({
       title: f.value.title,
       sub_title: f.value.sub_title,
       body: tinymce.activeEditor.getContent(),
@@ -124,47 +116,47 @@ export class ArticleAddComponent implements OnInit {
       slug: f.value.slug,
       category: categories,
       image: this.image_name
-    }).subscribe(response => this.helpersService.navigate(['/articles']))
+    }).subscribe(response => this.helpersService.navigate(['/articles']));
 
     this.subs.add(rq1);
   }
 
   addCategory(item: any)
   {
-    if(typeof item.selected.value == 'undefined' || item.selected.value == null) return;
+    if (typeof item.selected.value == 'undefined' || item.selected.value == null) return;
 
-    let index = this.categories.findIndex( obj => obj.id === item.selected.value)
+    const index = this.categories.findIndex( obj => obj.id === item.selected.value);
 
-    this.add_categories.push(this.categories[index])
+    this.add_categories.push(this.categories[index]);
 
-    this.categories.splice(index, 1)
+    this.categories.splice(index, 1);
   }
 
   deleteCategory(item: any)
   {
-    this.categories.push(this.categories[item])
+    this.categories.push(this.categories[item]);
 
-    this.add_categories.splice(item, 1)
+    this.add_categories.splice(item, 1);
   }
 
   openImageSelect()
   {
-    let dialogRef = this.dialog.open(ImageSelectComponent, {
+    const dialogRef = this.dialog.open(ImageSelectComponent, {
       data: {
         image_request: this.articleRequestService.makeGetRequest('image.images'),
         thumb_image_url: this.articleRequestService.makeUrl('image.thumb')
       }
     });
 
-    let rq2 = dialogRef.afterClosed().subscribe( response => {
+    const rq2 = dialogRef.afterClosed().subscribe( response => {
 
-      let el = document.getElementById('img')
+      const el = document.getElementById('img');
 
-      el.setAttribute('src', response.thumb_url)
+      el.setAttribute('src', response.thumb_url);
 
-      this.image_name = response.u_id
+      this.image_name = response.u_id;
 
-      rq2.unsubscribe()
-    })
+      rq2.unsubscribe();
+    });
   }
 }

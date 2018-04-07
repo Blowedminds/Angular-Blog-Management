@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { CacheService } from '../../imports';
 import { ArticleService } from '../../services/article.service';
@@ -21,9 +21,9 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   user: any;
 
-  subscriptions = new Subscription()
+  subscriptions = new Subscription();
 
-  pageSizeOptions: Array<number> = [5, 10, 20, 50]
+  pageSizeOptions: Array<number> = [5, 10, 20, 50];
 
   get isPageReady(): boolean
   {
@@ -41,15 +41,15 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     this.getArticlesPaginate({
       pageSize: this.pageSizeOptions[0],
       pageIndex: 0
-    })
+    });
 
-    let rq1 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
+    const rq1 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
                       .subscribe(response => this.languages = response);
 
-    let rq2 = this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
+    const rq2 = this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
                       .subscribe(response => this.categories = response);
 
-    let rq3 = this.cacheService.get('user', this.articleRequestService.makeGetRequest('user.info'))
+    const rq3 = this.cacheService.get('user', this.articleRequestService.makeGetRequest('user.info'))
                       .subscribe(response => this.user = response);
 
     // BUG: this line causes the request cancelled
@@ -63,9 +63,9 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   getArticlesPaginate(props: {pageSize: number, pageIndex: number})
   {
-    this.articles = null
+    this.articles = null;
 
-     let rq1 = this.articleRequestService.getArticlesPaginate({
+     const rq1 = this.articleRequestService.getArticlesPaginate({
         pageSize: props.pageSize, pageIndex: props.pageIndex + 1
       }).subscribe(response => this.articles = response)
 
@@ -79,8 +79,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   findLanguage(id: number)
   {
-    let lang = this.languages.find( language => language.id === id)
+    const lang = this.languages.find( language => language.id === id);
 
-    return lang || {name: "NullLanguage"};
+    return lang || {name: 'NullLanguage'};
   }
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable }     from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { HelpersService, MainRequestService, RoutingListService }   from '../imports';
+import { HelpersService, MainRequestService, RoutingListService } from '../imports';
 
 @Injectable()
 export class UserRequestService extends MainRequestService {
@@ -23,7 +24,7 @@ export class UserRequestService extends MainRequestService {
 
     return this.http
                     .get( url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   postUserProfile(data: any): Observable<any>
@@ -32,27 +33,27 @@ export class UserRequestService extends MainRequestService {
 
     return this.http
                     .post( url, data, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   postUserProfileImage(file: any): Observable<any>
   {
     const url = this.makeUrl('user.profile-image')
 
-    let formData = new FormData()
+    const formData = new FormData();
 
-    formData.append('file', file)
+    formData.append('file', file);
 
     return this.http
                     .post( url, formData, { headers: new HttpHeaders({
-                        "enctype": "multipart/form-data",
+                        'enctype': 'multipart/form-data',
                         'X-Requested-With': 'XMLHttpRequest'
                       }),
                       params: {
                         token: this.helpersService.getToken()
                       }
                     }
-                    ).catch(error => this.handleError(error))
+                    ).pipe(catchError(error => this.handleError(error)));
   }
 
   adminPanel(): Observable<any>{
@@ -61,7 +62,7 @@ export class UserRequestService extends MainRequestService {
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   getMenus(): Observable<any>
@@ -70,7 +71,7 @@ export class UserRequestService extends MainRequestService {
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 
   dashboard(): Observable<any>{
@@ -79,6 +80,6 @@ export class UserRequestService extends MainRequestService {
 
     return this.http
                     .get(url, this.options)
-                    .catch(error => this.handleError(error))
+                    .pipe(catchError(error => this.handleError(error)));
   }
 }

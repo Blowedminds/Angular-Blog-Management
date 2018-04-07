@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject }     from 'rxjs';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Rx';
+import { Observable, Subject, of, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 interface CacheContent {
   expiry: number;
@@ -20,7 +20,7 @@ export class CacheService {
 
     if (this.hasValidCachedValue(key)) {
 
-      return Observable.of(this.cache.get(key).value);
+      return of(this.cache.get(key).value);
     }
 
     if (!maxAge) {
@@ -36,12 +36,14 @@ export class CacheService {
 
       this.inFlightObservables.set(key, new Subject());
 
-      return fallback.do((value) => { this.set(key, value, maxAge); })
-                      .catch( error => this.handleError(error, key));
+      return fallback.pipe(
+        tap((value) => this.set(key, value, maxAge)),
+        catchError( error => this.handleError(error, key))
+      );
     }
     else {
 
-      return Observable.throw('Requested key is not available in Cache');
+      return throwError('Requested key is not available in Cache');
     }
   }
 
