@@ -1,5 +1,5 @@
 @import node_modules/bulma/bulma
-@import themes/dark/dark
+@import themes/dark/theme
 
 h1, h2, h3, h4, h5, h6, p, li, span, a
   font-weight: 300
@@ -20,6 +20,8 @@ h1, h2, h3, h4, h5, h6, p, li, span, a
 html
   width: 100%
   height: 100%
+  overflow: auto
+
 body
   width: 100%
   height: 100%
@@ -27,31 +29,25 @@ body
   font-family: 'Open Sans', sans-serif
   background-color: $body-background-color
 
-a
-  color: $menu-a-color
-a:hover
-  color: orange
+a, p, li, h1, h2, h3, h4, h5, h6, 
+  color: $main-text-color
 
 .loading
   position: absolute !important
   top: 40%
   left: 45%
-.header-text
-  text-align: center
-  width: 100%
-.cs-container
-  padding: 2em
+
 #main-sidenav-container
   width: 100%
   height: 100%
+
 #main-sidenav
   width: 350px
   background: green
+
 #main-menu
-  a
-    color: $menu-a-color
-  a:hover
-    text-decoration: none
+  a button
+    color: $main-text-color
   mat-toolbar-row
     justify-content: flex-end
 
