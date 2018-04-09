@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { CacheService } from '../../imports';
+import { CacheService, HelpersService } from '../../imports';
 import { ArticleService } from '../../services/article.service';
 import { ArticleRequestService } from '../../services/article-request.service';
 
@@ -25,62 +27,68 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   pageSizeOptions: Array<number> = [5, 10, 20, 50];
 
-  get isPageReady(): boolean
-  {
+  get isPageReady(): boolean {
     return this.articles && this.languages && this.categories && this.user;
   }
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private articleService: ArticleService,
     private articleRequestService: ArticleRequestService,
     private cacheService: CacheService,
+    private helpersService: HelpersService,
   ) { }
 
   ngOnInit() {
 
-    this.getArticlesPaginate({
-      pageSize: this.pageSizeOptions[0],
-      pageIndex: 0
-    });
+    const rq = this.activatedRoute.queryParams.pipe(
+      switchMap((params: Params) => this.getArticlesPaginate({
+        pageSize: +params['page-size'] || this.pageSizeOptions[0],
+        pageIndex: +params['page'] || 0
+      }))
+    ).subscribe(articles => this.articles = articles);
 
     const rq1 = this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
-                      .subscribe(response => this.languages = response);
+      .subscribe(response => this.languages = response);
 
     const rq2 = this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
-                      .subscribe(response => this.categories = response);
+      .subscribe(response => this.categories = response);
 
     const rq3 = this.cacheService.get('user', this.articleRequestService.makeGetRequest('user.info'))
-                      .subscribe(response => this.user = response);
+      .subscribe(response => this.user = response);
 
     // BUG: this line causes the request cancelled
     // this.subscriptions.add(rq1).add(rq2).add(rq3);
   }
 
-  ngOnDestroy()
-  {
-    this.subscriptions.unsubscribe()
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
-  getArticlesPaginate(props: {pageSize: number, pageIndex: number})
-  {
+  getArticlesPaginate(options: { pageSize: number, pageIndex: number }): Observable<any> {
     this.articles = null;
 
-     const rq1 = this.articleRequestService.getArticlesPaginate({
-        pageSize: props.pageSize, pageIndex: props.pageIndex + 1
-      }).subscribe(response => this.articles = response)
-
-     this.subscriptions.add(rq1);
+    return this.articleRequestService.getArticlesPaginate({
+      pageSize: options.pageSize, pageIndex: options.pageIndex
+    });
   }
 
-  intval(value: string)
-  {
+  intval(value: string) {
     return +value;
   }
 
-  findLanguage(id: number)
-  {
-    const lang = this.languages.find( language => language.id === id);
+  findLanguage(id: number) {
+    const lang = this.languages.find(language => language.id === id);
 
-    return lang || {name: 'NullLanguage'};
+    return lang || { name: 'NullLanguage' };
+  }
+
+  changePageOptions(options: { pageSize: number, pageIndex: number }) {
+    this.helpersService.navigate(['/articles'], {
+      queryParams: {
+        'page-size': options.pageSize,
+        'page': options.pageIndex + 1
+      }
+    });
   }
 }

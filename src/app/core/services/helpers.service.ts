@@ -6,21 +6,18 @@ export class HelpersService {
 
   constructor(private router: Router) { }
 
-  parseToken(response: any)
-  {
+  parseToken(response: any) {
     const token = response.token;
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return {token: token, decodedToken:JSON.parse(window.atob(base64))};
+    return { token: token, decodedToken: JSON.parse(window.atob(base64)) };
   }
 
-  getToken()
-  {
+  getToken() {
     return localStorage.getItem('token');
   }
 
-  navigate(link: Array<any>)
-  {
-    return this.router.navigate(link);
+  navigate(link: Array<any>, options?: any) {
+    return this.router.navigate(link, options || null);
   }
 }

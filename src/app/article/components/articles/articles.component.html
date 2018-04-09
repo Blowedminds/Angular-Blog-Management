@@ -1,14 +1,35 @@
 <mat-spinner *ngIf="!isPageReady" class="loading"></mat-spinner>
 
-<div class="article" *ngIf="isPageReady">
+<div class="section" *ngIf="isPageReady">
+  
+  <div class="columns">
+    <a routerLink="trash"><button mat-button>Çöplük</button></a>
+  </div>
 
-  <div class="section">
-
-    <div class="columns">
-      <a routerLink="trash"><button mat-button>Çöplük</button></a>
-    </div>
-
-    <div class="columns is-multiline">
+  <section class="articles">
+    <table>
+      <thead>
+        <tr>
+          <td>Başlık</td>
+          <td>Yayınlanma</td>
+          <td>Oluşturulma Tarihi</td>
+          <td>Diller</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let article of articles.data">
+          <td>{{article.contents[0].title}}</td>
+          <td>{{article.id}}</td>
+          <td>{{article.created_at | date}}</td>
+          <td *ngFor="let content of article.contents">
+              <a [routerLink]="['/article/content/edit', article.slug, content.language.slug]">
+                <span class="tag is-light is-rounded">{{content.language.name}}</span>
+              </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="columns is-multiline">
       <div class="column is-one-quarter" *ngFor="let article of articles.data; let i = index">
         <mat-card>
 
@@ -74,19 +95,20 @@
 
         </mat-card>
       </div>
-    </div>
+    </div> -->
 
     <mat-paginator [length]="articles.total"
           [pageSize]="intval(articles.per_page)"
           [pageSizeOptions]="pageSizeOptions"
           [pageIndex]="articles.current_page - 1"
-          (page)="getArticlesPaginate($event)">
+          (page)="changePageOptions($event)">
     </mat-paginator>
 
-  </div>
+  </section>
 
   <button mat-fab class="add-btn" [routerLink]="['/article/add']">
-    <i class="fa fa-plus" aria-hidden="true"></i>
+    <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+    Ekle
   </button>
 
 </div>
