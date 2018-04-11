@@ -18,6 +18,6 @@ export class HelpersService {
   }
 
   navigate(link: Array<any>, options?: any) {
-    return this.router.navigate(link, options || null);
+    return this.router.navigate(link, options || {});
   }
 }

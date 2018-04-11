@@ -1,5 +1,8 @@
-import { Component, OnInit, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+
 import { NgForm } from '@angular/forms';
 
 import * as tinymce from 'tinymce/tinymce';
@@ -21,25 +24,33 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
 
   add_categories: Array<any> = [];
 
+  editor: any;
+
   languages: any;
 
   categories: any;
 
+  keywords: Array<string> = [];
+
   image_name: string;
+
+  separatorKeysCodes = [ENTER, COMMA];
 
   subs = new Subscription();
 
   @Input() elementId = 'tinymce-textarea';
 
-  @Output() onEditorKeyup = new EventEmitter<any>();
+  @Output() editorKeyup = new EventEmitter<any>();
 
-  editor: any;
-
-  @ViewChild('tiny') set tiny(tiny:ElementRef)
-  {
-    if (this.languages && this.categories) {
+  @ViewChild('tiny') set tiny(tiny: any) {
+    if (this.isPageReady) {
       setTimeout(() => this.runTinymce(), 0);
     }
+  }
+
+  get isPageReady() {
+
+    return this.languages && this.categories;
   }
 
   constructor(
@@ -47,17 +58,16 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
     private cacheService: CacheService,
     private helpersService: HelpersService,
     private dialog: MatDialog
-  )
-  {
+  ) {
     this.cacheService.get('languages', this.articleRequestService.makeGetRequest('admin.languages'))
-                      .subscribe( response => this.languages = response);
+      .subscribe(response => this.languages = response);
 
     this.cacheService.get('categories', this.articleRequestService.makeGetRequest('admin.categories'))
-                      .subscribe( response => this.categories = response);
+      .subscribe(response => this.categories = response);
 
   }
 
-  ngOnInit()  {
+  ngOnInit() {
   }
 
   ngOnDestroy() {
@@ -66,9 +76,9 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  runTinymce()
-  {
+  runTinymce() {
     tinymce.init({
+      height: '420',
       selector: '#' + this.elementId,
       plugins: ['link', 'paste', 'table', 'image'],
       toolbar: 'image',
@@ -80,37 +90,43 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
         editor.on('keyup', () => {
 
           const content = editor.getContent();
-          this.onEditorKeyup.emit(content);
+          this.editorKeyup.emit(content);
         });
 
         editor.addMenuItem('myitem', {
-              text: 'Add Image',
-              context: 'tools',
-              onclick: function() {
-                const ImageSelectDialog = dialog.open(ImageSelectComponent);
-
-                const rq1 = ImageSelectDialog.afterClosed().subscribe( response => {
-                  editor.insertContent(`<img src="${response.image_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`)
-
-                  rq1.unsubscribe();
-                });
+          text: 'Add Image',
+          context: 'tools',
+          onclick: function () {
+            const ImageSelectDialog = dialog.open(ImageSelectComponent, {
+              data: {
+                image_request: this.articleRequestService.makeGetRequest('image.images'),
+                thumb_image_url: this.articleRequestService.makeUrl('image.image')
               }
             });
+
+            const rq1 = ImageSelectDialog.afterClosed().subscribe(response => {
+              editor.insertContent(
+                `<img src="${response.thumb_url}" alt="${response.alt}" width="${response.width}" height="${response.height}" />`
+              );
+
+              rq1.unsubscribe();
+            });
+          }
+        });
 
         this.editor = editor;
       },
     });
   }
 
-  addArticle(f: NgForm)
-  {
-    const categories = this.add_categories.map( category => category.id);
+  addArticle(f: NgForm) {
+    const categories = this.add_categories.map(category => category.id);
 
     const rq1 = this.articleRequestService.putArticle({
       title: f.value.title,
       sub_title: f.value.sub_title,
       body: tinymce.activeEditor.getContent(),
-      keywords: f.value.keywords,
+      keywords: this.keywords,
       published: f.value.published ? 1 : 0,
       language_id: f.value.language_id,
       slug: f.value.slug,
@@ -121,26 +137,25 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
     this.subs.add(rq1);
   }
 
-  addCategory(item: any)
-  {
-    if (typeof item.selected.value == 'undefined' || item.selected.value == null) return;
+  addCategory(item: any) {
+    if (typeof item.selected.value === 'undefined' || item.selected.value == null) {
+      return;
+    }
 
-    const index = this.categories.findIndex( obj => obj.id === item.selected.value);
+    const index = this.categories.findIndex(obj => obj.id === item.selected.value);
 
     this.add_categories.push(this.categories[index]);
 
     this.categories.splice(index, 1);
   }
 
-  deleteCategory(item: any)
-  {
+  deleteCategory(item: any) {
     this.categories.push(this.categories[item]);
 
     this.add_categories.splice(item, 1);
   }
 
-  openImageSelect()
-  {
+  openImageSelect() {
     const dialogRef = this.dialog.open(ImageSelectComponent, {
       data: {
         image_request: this.articleRequestService.makeGetRequest('image.images'),
@@ -148,7 +163,7 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
       }
     });
 
-    const rq2 = dialogRef.afterClosed().subscribe( response => {
+    const rq2 = dialogRef.afterClosed().subscribe(response => {
 
       const el = document.getElementById('img');
 
@@ -158,5 +173,27 @@ export class ArticleAddComponent implements OnInit, OnDestroy {
 
       rq2.unsubscribe();
     });
+  }
+
+  addKeyword(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    // Add our keyword
+    if ((value || '').trim()) {
+      this.keywords.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeKeyword(keyword: any): void {
+    const index = this.keywords.indexOf(keyword);
+
+    if (index >= 0) {
+      this.keywords.splice(index, 1);
+    }
   }
 }

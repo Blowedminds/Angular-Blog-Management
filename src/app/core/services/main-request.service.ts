@@ -13,15 +13,14 @@ export class MainRequestService {
 
   public MAIN_URI: string = environment.apiUrl;
 
-  get options()
-  {
-    this._options.params.token = this.helpersService.getToken()
+  get options() {
+    this._options.params.token = this.helpersService.getToken();
 
     return this._options;
   }
 
   private _options: any = {
-    headers:  new HttpHeaders({
+    headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       // 'X-Socket-ID': ''
@@ -37,24 +36,21 @@ export class MainRequestService {
     protected routingListService: RoutingListService
   ) { }
 
-  makeGetRequest(key: string)
-  {
+  makeGetRequest(key: string) {
     const url = this.makeUrl(key);
 
     return this.http
-                .get(url, this.options)
-                .pipe(catchError(error => this.handleError(error)));
+      .get(url, this.options)
+      .pipe(catchError(error => this.handleError(error)));
   }
 
-  makeUrl(key: string, url?: string): string
-  {
+  makeUrl(key: string, url?: string): string {
     const route = this.routingListService.getUrl(key);
 
     return this.MAIN_URI + route + (url || '');
   }
 
-  protected getToken(): string
-  {
+  protected getToken(): string {
     return this.helpersService.getToken();
   }
 
