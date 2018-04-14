@@ -13,116 +13,71 @@ export class AdminRequestService extends MainRequestService {
     http: HttpClient,
     helpersService: HelpersService,
     routingListService: RoutingListService
-  )
-  {
+  ) {
     super(http, helpersService, routingListService);
   }
 
-  getMenus(): Observable<any>
-  {
-    const url = this.makeUrl('admin.menus');
-
-    return this.http
-                  .get(url, this.options)
-                  .pipe(catchError(error => this.handleError(error)));
+  getUsers(): Observable<any> {
+    return this.makeGetRequest('admin.users');
   }
 
-  postMenu(data: any): Observable<any>
-  {
-    const url = this.makeUrl('admin.menus');
-
-    return this.http
-                    .post(url, JSON.stringify(data), this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  postUser(data: any, id: number): Observable<any> {
+    return this.makePostRequest('admin.users', data, `${id}`);
   }
 
-  putMenu(data: any): Observable<any>
-  {
-    const url = this.makeUrl('admin.menus');
-
-    return this.http
-                    .put(url, JSON.stringify(data), this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  putUser(data: any): Observable<any> {
+    return this.makePutRequest('admin.users', data);
   }
 
-  deleteMenu(id: number): Observable<any>
-  {
-    const url = this.makeUrl('admin.menus', `${id}`);
-
-    return this.http
-                    .delete(url, this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  deleteUser(id: number): Observable<any> {
+    return this.makeDeleteRequest('admin.users', `${id}`);
   }
 
-  getLanguages(): Observable<any>
-  {
-    const url = this.makeUrl('admin.languages');
-
-    return this.http
-                    .get(url, this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  getMenus(): Observable<any> {
+    return this.makeGetRequest('admin.menus');
   }
 
-  postLanguage(data: any): Observable<any>
-  {
-    const url = this.makeUrl('admin.languages');
-
-    return this.http
-                    .post(url, JSON.stringify(data), this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  postMenu(data: any): Observable<any> {
+    return this.makePostRequest('admin.menus', data);
   }
 
-  putLanguage(data: any): Observable<any>
-  {
-    const url = this.makeUrl('admin.languages');
-
-    return this.http
-                    .put(url, JSON.stringify(data), this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  putMenu(data: any): Observable<any> {
+    return this.makePutRequest('admin.menus', data);
   }
 
-  deleteLanguage(id: number): Observable<any>
-  {
-    const url = this.makeUrl('admin.languages', `${id}`);
-
-    return this.http
-                    .delete(url, this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  deleteMenu(id: number): Observable<any> {
+    return this.makeDeleteRequest('admin.menus', `${id}`);
   }
 
-  getCategories(): Observable<any>
-  {
-    const url = this.makeUrl('admin.categories');
-
-    return this.http
-                  .get(url, this.options)
-                  .pipe(catchError(error => this.handleError(error)));
+  getLanguages(): Observable<any> {
+    return this.makeGetRequest('admin.languages');
   }
 
-  postCategory(data: any, id: number): Observable<any>
-  {
-    const url = this.makeUrl('admin.categories', `${id}`);
-
-    return this.http
-                    .post(url, JSON.stringify(data), this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  postLanguage(data: any): Observable<any> {
+    return this.makePostRequest('admin.languages', data);
   }
 
-  putCategory(data: any): Observable<any>
-  {
-    const url = this.makeUrl('admin.categories');
-
-    return this.http
-                    .put(url, JSON.stringify(data), this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  putLanguage(data: any): Observable<any> {
+    return this.makePutRequest('admin.languages', data);
   }
 
-  deleteCategory(id: number): Observable<any>
-  {
-    const url = this.makeUrl('admin.categories', `${id}`);
+  deleteLanguage(id: number): Observable<any> {
+    return this.makeDeleteRequest('admin.languages', `${id}`);
+  }
 
-    return this.http
-                    .delete(url, this.options)
-                    .pipe(catchError(error => this.handleError(error)));
+  getCategories(): Observable<any> {
+    return this.makeGetRequest('admin.categories');
+  }
+
+  postCategory(data: any, id: number): Observable<any> {
+    return this.makePostRequest('admin.categories', data, `${id}`);
+  }
+
+  putCategory(data: any): Observable<any> {
+    return this.makePutRequest('admin.categories', data);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.makeDeleteRequest('admin.categories', `${id}`);
   }
 }

@@ -37,9 +37,8 @@ export class AdminMenusComponent implements OnInit, OnDestroy {
     roles: []
   };
 
-  get isPageReady()
-  {
-    return this.menus && this.languages;
+  get isPageReady() {
+    return this.menus && this.languages && this.roles;
   }
 
   constructor(
@@ -48,49 +47,46 @@ export class AdminMenusComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    const rq1 = this.adminRequestService.getMenus().subscribe( response => {
-      this.menus = response.menus;
-      this.roles = response.roles;
-    });
+    const rq1 = this.adminRequestService.getMenus().subscribe(response => this.menus = response);
 
     const rq2 = this.cacheService.get('languages', this.adminRequestService.makeGetRequest('admin.languages'))
-              .subscribe(response => {
-                this.languages = response;
+      .subscribe(response => {
+        this.languages = response;
 
-                for (const one of this.languages) {
-                  this.default_menu.name[one] = null;
-                  this.default_menu.tooltip[one] = null;
-                }
+        for (const one of this.languages) {
+          this.default_menu.name[one] = null;
+          this.default_menu.tooltip[one] = null;
+        }
 
-              });
+      });
+
+    const rq3 = this.cacheService.get('roles', this.adminRequestService.makeGetRequest('admin.roles'))
+      .subscribe(response => this.roles = response);
 
     // this.subs.add(rq1).add(rq2);
   }
 
-  ngOnDestroy()
-  {
+  ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  submitForm(f: NgForm)
-  {
+  submitForm(f: NgForm) {
     const menu = {
-            id: f.value.id,
-            name: this.edit_menu.name,
-            tooltip: this.edit_menu.tooltip,
-            url: f.value.url,
-            weight: f.value.weight,
-            parent: f.value.parent,
-            roles: this.has_roles
-          }
+      id: f.value.id,
+      name: this.edit_menu.name,
+      tooltip: this.edit_menu.tooltip,
+      url: f.value.url,
+      weight: f.value.weight,
+      parent: f.value.parent,
+      roles: this.has_roles
+    };
 
     let rq1;
 
     if (menu.id) {
 
       rq1 = this.adminRequestService.postMenu(menu).subscribe(response => this.refreshComponent());
-    }
-    else {
+    } else {
 
       rq1 = this.adminRequestService.putMenu(menu).subscribe(response => this.refreshComponent());
     }
@@ -98,43 +94,39 @@ export class AdminMenusComponent implements OnInit, OnDestroy {
     this.subs.add(rq1);
   }
 
-  deleteMenu(id: number)
-  {
-    const rq4 = this.adminRequestService.deleteMenu(id).subscribe(response =>  this.refreshComponent());
+  deleteMenu(id: number) {
+    const rq4 = this.adminRequestService.deleteMenu(id).subscribe(response => this.refreshComponent());
 
     this.subs.add(rq4);
   }
 
-  refreshComponent()
-  {
+  refreshComponent() {
     this.menus = null;
 
     this.roles = null;
 
     this.edit_menu = null;
 
-    const rq1 = this.adminRequestService.getMenus().subscribe( response => {
+    const rq1 = this.adminRequestService.getMenus().subscribe(response => {
       this.menus = response.menus;
       this.roles = response.roles;
-    })
+    });
 
     this.subs.add(rq1);
   }
 
-  selectMenu(menu: any)
-  {
+  selectMenu(menu: any) {
     this.edit_menu = menu;
     console.log(this.edit_menu);
     this.filterRoles(menu.roles);
   }
 
-  filterRoles(roles)
-  {
+  filterRoles(roles) {
     this.has_roles = [];
 
     this.not_has_roles = [];
 
-    this.has_roles = this.roles.filter( role => {
+    this.has_roles = this.roles.filter(role => {
 
       role.changed = false;
 
@@ -154,18 +146,15 @@ export class AdminMenusComponent implements OnInit, OnDestroy {
     this.sortRoles();
   }
 
-  addRole(id: number)
-  {
+  addRole(id: number) {
     this.changeRole(id, this.has_roles, this.not_has_roles);
   }
 
-  discardRole(id: number)
-  {
+  discardRole(id: number) {
     this.changeRole(id, this.not_has_roles, this.has_roles);
   }
 
-  changeRole(id: number, add: any, sub: any)
-  {
+  changeRole(id: number, add: any, sub: any) {
     const index = sub.findIndex(role => role.id === id);
 
     sub[index].changed = !sub[index].changed;
@@ -177,10 +166,9 @@ export class AdminMenusComponent implements OnInit, OnDestroy {
     this.sortRoles();
   }
 
-  sortRoles()
-  {
-    this.has_roles.sort( (a, b) => a.id - b.id);
+  sortRoles() {
+    this.has_roles.sort((a, b) => a.id - b.id);
 
-    this.not_has_roles.sort( (a, b) => a.id - b.id);
+    this.not_has_roles.sort((a, b) => a.id - b.id);
   }
 }

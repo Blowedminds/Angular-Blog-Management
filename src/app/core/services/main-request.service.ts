@@ -44,6 +44,30 @@ export class MainRequestService {
       .pipe(catchError(error => this.handleError(error)));
   }
 
+  makePostRequest(key: string, data: any, id?: string) {
+    const url = this.makeUrl(key, id || '');
+
+    return this.http
+      .post(url, JSON.stringify(data), this.options)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  makePutRequest(key: string, data: any) {
+    const url = this.makeUrl(key);
+
+    return this.http
+      .put(url, JSON.stringify(data), this.options)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  makeDeleteRequest(key: string, id: string) {
+    const url = this.makeUrl(key, id);
+
+    return this.http
+      .delete(url, this.options)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
   makeUrl(key: string, url?: string): string {
     const route = this.routingListService.getUrl(key);
 

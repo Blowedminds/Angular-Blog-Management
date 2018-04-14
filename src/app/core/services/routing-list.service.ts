@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable }     from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class RoutingListService {
   routes: any = {
-    auth: { url: 'auth/',
+    auth: {
+      url: 'auth/',
       'register': { url: 'register/' },
       'is-authenticated': { url: 'is-authenticated/' },
       'login': { url: 'login/' },
       'logout': { url: 'logout/' }
     },
-    article: { url: 'editor/',
-      'article': { url: 'article/',
+    article: {
+      url: 'editor/',
+      'article': {
+        url: 'article/',
         'content': { url: 'content/' },
         'restore': { url: 'restore/' },
         'force-delete': { url: 'force-delete/' },
@@ -22,27 +25,34 @@ export class RoutingListService {
       'articles': { url: 'articles/' },
       'trash': { url: 'trashed-articles/' },
     },
-    admin: { url: 'editor/panel/',
+    admin: {
+      url: 'editor/panel/',
       'languages': { url: 'languages/' },
       'categories': { url: 'categories/' },
-      'menus': { url: 'menus/' }
+      'menus': { url: 'menus/' },
+      'users': { url: 'users/' },
+      'roles': { url: 'roles/' },
     },
-    image: { url: 'image/',
+    image: {
+      url: 'image/',
       'image': { url: 'image/' },
       'thumb': { url: 'thumb/' },
       'images': { url: 'images/' },
-      'edit': { url: 'edit/'}
+      'edit': { url: 'edit/' }
     },
-    user: { url: 'user/',
+    user: {
+      url: 'user/',
       'info': { url: 'info/' },
       'menus': { url: 'menus/en/' },
-      'dashboard': { url: 'dashboard/'},
-      'management': { url: 'management/'},
-      'profile-image': { url: 'profile-image/'},
-      'profile': { url: 'profile/'}
+      'dashboard': { url: 'dashboard/' },
+      'management': { url: 'management/' },
+      'profile-image': { url: 'profile-image/' },
+      'profile': { url: 'profile/' }
     },
-    public: { url: '',
-      'image': { url: 'images/',
+    public: {
+      url: '',
+      'image': {
+        url: 'images/',
         'author': { url: 'author/' }
       }
     }
@@ -50,15 +60,14 @@ export class RoutingListService {
 
   constructor() { }
 
-  getUrl(key: string): string
-  {
-    let parsedKey = this.parseKey(key);
+  getUrl(key: string): string {
+    const parsedKey = this.parseKey(key);
 
     let route = this.routes;
 
-    let url: string = '';
+    let url = '';
 
-    for(let i = 0; i < parsedKey.length; i++) {
+    for (let i = 0; i < parsedKey.length; i++) {
 
       url += route[parsedKey[i]].url;
 
@@ -68,21 +77,19 @@ export class RoutingListService {
     return url;
   }
 
-  private parseKey(key: string): Array<string>
-  {
-    let parsedKey = [];
+  private parseKey(key: string): Array<string> {
+    const parsedKey = [];
 
-    for(let i = 0; i < key.length; i++) {
+    for (let i = 0; i < key.length; i++) {
 
-      let index = key.indexOf('.');
+      const index = key.indexOf('.');
 
-      if(index === -1) {
+      if (index === -1) {
 
         parsedKey.push(key);
 
         break;
-      }
-      else if(index != 0) {
+      } else if (index !== 0) {
 
         parsedKey.push(key.slice(0, index));
       }

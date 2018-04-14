@@ -34,7 +34,7 @@ export class AdminCategoriesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    const rq1 = this.adminRequestService.getCategories().subscribe(response => this.categories = response)
+    const rq1 = this.adminRequestService.getCategories().subscribe(response => this.categories = response);
 
     this.subs.add(rq1);
   }
@@ -48,15 +48,14 @@ export class AdminCategoriesComponent implements OnInit, OnDestroy {
       name: f.value.name,
       slug: f.value.slug,
       description: f.value.description,
-    }
+    };
 
     let rq1;
 
     if (f.value.id) {
 
       rq1 = this.adminRequestService.postCategory(category, f.value.id).subscribe(response => this.refreshComponent());
-    }
-    else {
+    } else {
 
       rq1 = this.adminRequestService.putCategory(category).subscribe(response => this.refreshComponent());
     }

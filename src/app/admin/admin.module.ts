@@ -14,6 +14,9 @@ import { AdminRequestService } from './services/admin-request.service';
 import { AdminService } from './services/admin.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AdminLanguagesComponent } from './components/admin-languages/admin-languages.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminUserAddComponent } from './components/admin-user-add/admin-user-add.component';
+import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-edit.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { AdminLanguagesComponent } from './components/admin-languages/admin-lang
     AdminCategoriesComponent,
     AdminMenusComponent,
     NavigationComponent,
-    AdminLanguagesComponent
+    AdminLanguagesComponent,
+    AdminUsersComponent,
+    AdminUserAddComponent,
+    AdminUserEditComponent
   ],
   imports: [
     CommonModule,
