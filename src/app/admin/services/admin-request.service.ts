@@ -26,7 +26,7 @@ export class AdminRequestService extends MainRequestService {
   }
 
   postUser(data: any, id: number): Observable<any> {
-    return this.makePostRequest('admin.users', data, `${id}`);
+    return this.makePostRequest('admin.user', data, `${id}`);
   }
 
   putUser(data: any): Observable<any> {
