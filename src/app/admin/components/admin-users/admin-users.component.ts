@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -13,15 +12,6 @@ import { AdminRequestService } from '../../services/admin-request.service';
 export class AdminUsersComponent implements OnInit, OnDestroy {
 
   users: any;
-
-  edit_user: any;
-
-  default_user: any = {
-    id: null,
-    name: null,
-    slug: null,
-    description: null
-  };
 
   subs = new Subscription();
 

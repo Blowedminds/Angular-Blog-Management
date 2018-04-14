@@ -21,16 +21,20 @@ export class AdminRequestService extends MainRequestService {
     return this.makeGetRequest('admin.users');
   }
 
+  getUser(user_id: string): Observable<any> {
+    return this.makeGetRequest('admin.user', user_id);
+  }
+
   postUser(data: any, id: number): Observable<any> {
     return this.makePostRequest('admin.users', data, `${id}`);
   }
 
   putUser(data: any): Observable<any> {
-    return this.makePutRequest('admin.users', data);
+    return this.makePutRequest('auth.register', data);
   }
 
-  deleteUser(id: number): Observable<any> {
-    return this.makeDeleteRequest('admin.users', `${id}`);
+  deleteUser(user_id: string): Observable<any> {
+    return this.makeDeleteRequest('admin.user', user_id);
   }
 
   getMenus(): Observable<any> {

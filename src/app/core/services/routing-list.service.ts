@@ -32,6 +32,7 @@ export class RoutingListService {
       'menus': { url: 'menus/' },
       'users': { url: 'users/' },
       'roles': { url: 'roles/' },
+      'user': { url: 'user/'},
     },
     image: {
       url: 'image/',
