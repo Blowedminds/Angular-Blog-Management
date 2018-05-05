@@ -1,3 +1,6 @@
 [submodule "Angular-Module-Auth"]
 	path = src/app/auth
 	url = https://github.com/Blowedminds/Angular-Module-Auth
+[submodule "src/app/auth"]
+	path = src/app/auth
+	url = https://github.com/Blowedminds/Angular-Module-Auth
