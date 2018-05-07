@@ -4,3 +4,9 @@
 [submodule "src/app/article"]
 	path = src/app/article
 	url = https://github.com/Blowedminds/Angular-Module-Article
+[submodule "src/app/admin"]
+	path = src/app/admin
+	url = https://github.com/Blowedminds/Angular-Module-Admin
+[submodule "src/app/image"]
+	path = src/app/image
+	url = https://github.com/Blowedminds/Angular-Module-Image
