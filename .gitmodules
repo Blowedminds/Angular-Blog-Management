@@ -13,3 +13,6 @@
 [submodule "src/app/user"]
 	path = src/app/user
 	url = https://github.com/Blowedminds/Angular-Module-User
+[submodule "src/app/core"]
+	path = src/app/core
+	url = https://github.com/Blowedminds/Angular-Module-Core
