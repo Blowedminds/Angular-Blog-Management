@@ -10,3 +10,6 @@
 [submodule "src/app/image"]
 	path = src/app/image
 	url = https://github.com/Blowedminds/Angular-Module-Image
+[submodule "src/app/user"]
+	path = src/app/user
+	url = https://github.com/Blowedminds/Angular-Module-User
