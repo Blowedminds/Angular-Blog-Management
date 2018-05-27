@@ -7,19 +7,16 @@ export const routes: any = {
       'logout': { url: 'logout/' }
     },
     article: {
-      url: 'editor/',
-      'article': {
-        url: 'article/',
-        'content': { url: 'content/' },
-        'restore': { url: 'restore/' },
-        'force-delete': { url: 'force-delete/' },
-        'permission': { url: 'permission/' }
-      },
+      url: 'article/',
+      'content': { url: 'content/' },
+      'restore': { url: 'restore/' },
+      'force-delete': { url: 'force-delete/' },
+      'permission': { url: 'permission/' },
       'articles': { url: 'articles/' },
       'trash': { url: 'trashed-articles/' },
     },
     admin: {
-      url: 'editor/panel/',
+      url: 'admin/',
       'languages': { url: 'languages/' },
       'categories': { url: 'categories/' },
       'menus': { url: 'menus/' },
