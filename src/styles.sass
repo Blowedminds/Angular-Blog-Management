@@ -1,5 +1,5 @@
+@import themes/dark/theme
 @import node_modules/bulma/bulma
-@import themes/dark/dark
 
 h1, h2, h3, h4, h5, h6, p, li, span, a
   font-weight: 300
@@ -20,6 +20,8 @@ h1, h2, h3, h4, h5, h6, p, li, span, a
 html
   width: 100%
   height: 100%
+  overflow: auto
+
 body
   width: 100%
   height: 100%
@@ -27,121 +29,36 @@ body
   font-family: 'Open Sans', sans-serif
   background-color: $body-background-color
 
-a
-  color: $menu-a-color
-a:hover
-  color: orange
+a, p, li, h1, h2, h3, h4, h5, h6, 
+  color: $main-text-color
 
 .loading
   position: absolute !important
   top: 40%
   left: 45%
-.header-text
-  text-align: center
-  width: 100%
-.cs-container
-  padding: 2em
+
 #main-sidenav-container
   width: 100%
   height: 100%
+
 #main-sidenav
   width: 350px
   background: green
+
 #main-menu
-  a
-    color: $menu-a-color
-  a:hover
-    text-decoration: none
+  a button
+    color: $main-text-color
   mat-toolbar-row
     justify-content: flex-end
 
 .mat-sidenav-container, .mat-sidenav-content, .mat-drawer-content
     transform: none !important
 
-.mat-dialog-title
-  margin: -24px -24px 15px -24px !important
-  padding: 15px
-  background: rgba(0, 0, 0, 0.10)
-  h3
-    margin: 0
-mat-dialog-actions
-  display: flex
-  justify-content: center
-  align-items: center
-  margin: 15px -24px -24px -24px
-  padding: 15px
-  background: rgba(0, 0, 0, 0.10)
-
-  button
-    margin: 0 1em !important
-
-.one-page
-  color: white
-  width: 100%
-  height: 100%
-
-  .cs-container
-    display: flex
-    justify-content: center
-    align-items: center
-
-    .one-page-form
-      width: 30%
-      display: block
-      margin: auto
-
-      h2
-        text-align: center
-
-      .form-group, mat-card
-        width: 100%
-        margin: 2em 0
-
-        mat-form-field
-          display: block
-
-        mat-select
-          display: block
-      button
-        display: block
-        margin: auto
 /*BUTTON*/
 .add-btn
   position: fixed !important
   right: 3%
   bottom: 5%
-
-.group-container
-  width: 100%
-
-.centered
-  display: flex
-  justify-content: center
-  align-items: center
-  padding: 3px
-  margin: 3px
-/*FORM*/
-.form-group
-  padding: .5em 0
-  width: 100%
-  height: auto
-  margin: 1em 0
-  display: block
-/*ALBUMS*/
-.image-col
-  width: 180px
-  height: 130px
-  display: block
-  float: left
-  margin: .5em
-
-  mat-card
-    padding: 15px
-    height: 100%
-    width: 100%
-    display: flex
-    justify-content: center
-    align-items: center
 
 //Bulma Ext
 .is-12
