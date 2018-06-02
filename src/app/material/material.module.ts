@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CdkTableModule } from "@angular/cdk/table"
+import { CdkTableModule } from '@angular/cdk/table';
 
 import {
   MatDialogModule,
@@ -24,7 +24,7 @@ import {
   MatSelectModule,
   MatTooltipModule,
   MatSnackBarModule,
-} from "@angular/material"
+} from '@angular/material';
 
 @NgModule({
   imports: [
