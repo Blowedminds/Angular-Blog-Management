@@ -8,6 +8,7 @@ export const routes: any = {
     },
     article: {
       url: 'article/',
+      'article': { url: 'article/' },
       'content': { url: 'content/' },
       'restore': { url: 'restore/' },
       'force-delete': { url: 'force-delete/' },
@@ -21,8 +22,11 @@ export const routes: any = {
       'categories': { url: 'categories/' },
       'menus': { url: 'menus/' },
       'users': { url: 'users/' },
-      'roles': { url: 'roles/' },
       'user': { url: 'user/'},
+      'roles': { url: 'roles/' },
+      'role': { url: 'role/' },
+      'permissions': { url: 'permissions/' },
+      'permission': { url: 'permission/' }
     },
     image: {
       url: 'image/',
