@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://blog-api.test/'
+  apiUrl: 'http://dk-api.test/'
 };

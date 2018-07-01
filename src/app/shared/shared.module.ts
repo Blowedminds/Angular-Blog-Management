@@ -8,11 +8,20 @@ import { MaterialModule } from '../material/material.module';
 
 import { ImageSelectComponent } from './dialogs/images/image-select/image-select.component';
 import { MainNavigationComponent } from './components/main-navigation/main-navigation.component';
+import { SidebarComponent } from './components/main-navigation/sidebar/sidebar.component';
+import { HeaderComponent } from './components/main-navigation/header/header.component';
+
+import { UrlPipe } from './pipes/url.pipe';
+import { EnvironmentUrlPipe } from './pipes/environment-url.pipe';
 
 @NgModule({
   declarations: [
     ImageSelectComponent,
-    MainNavigationComponent
+    HeaderComponent,
+    SidebarComponent,
+    MainNavigationComponent,
+    UrlPipe,
+    EnvironmentUrlPipe
   ],
   imports: [
     CommonModule,
@@ -24,7 +33,11 @@ import { MainNavigationComponent } from './components/main-navigation/main-navig
   exports: [
     MaterialModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    HeaderComponent,
+    SidebarComponent,
+    UrlPipe,
+    EnvironmentUrlPipe
   ],
   entryComponents: [
     ImageSelectComponent

@@ -1,0 +1,14 @@
+<!-- ============================================================== -->
+<!-- Profile - style you can find in header.scss -->
+<!-- ============================================================== -->
+<button mat-button color="warn" [matMenuTriggerFor]="menu">{{user.name}}</button>
+
+<mat-menu #menu="matMenu">
+
+    <a routerLink="/profile">
+        <button mat-menu-item>Profile</button>
+    </a>
+    <a routerLink="/logout">
+        <button mat-menu-item>Çıkış</button>
+    </a>
+</mat-menu>

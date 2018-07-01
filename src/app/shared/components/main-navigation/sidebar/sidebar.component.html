@@ -1,0 +1,36 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+ <div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
+    <!-- User profile image -->
+    <div class="profile-img"> 
+        <img src="{{user.user_data.profile_image | environmentUrl : 'author'}}" alt="user"> 
+    </div>
+    <!-- User profile text-->
+    <!-- ============================================================== -->
+    <!-- Profile - style you can find in header.scss -->
+    <!-- ============================================================== -->
+    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> {{user.name}} <i class="ti-angle-down font-12 m-l-5"></i></a></div>
+    <mat-menu #sdprofile="matMenu" class="mymegamenu">
+        <a routerLink="/profile">
+            <button mat-menu-item>Profile</button>
+        </a>
+        <a routerLink="/logout">
+            <button mat-menu-item>Çıkış</button>
+        </a>
+    </mat-menu>
+</div>
+<mat-nav-list appAccordion>
+        <!-- group="{{menu.state}}" -->
+    <mat-list-item appAccordionLink *ngFor="let menu of menus" routerLinkActive="selected" >
+        <a class="" appAccordionToggle [routerLink]="[menu.url]">
+            <!-- <mat-icon>{{ menu.icon }}</mat-icon>  -->
+            <span>{{ menu.name }}</span> 
+            <span fxFlex></span> 
+            <!-- <span class="label label-{{ badge.type }}" *ngFor="let badge of menu.badge">{{ badge.value }}</span>  -->
+        </a>
+
+        
+    </mat-list-item>
+
+</mat-nav-list>
