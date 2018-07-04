@@ -67,8 +67,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-blog-management:build",
-            "disableHostCheck": true
+            "browserTarget": "angular-blog-management:build"
           },
           "configurations": {
             "production": {

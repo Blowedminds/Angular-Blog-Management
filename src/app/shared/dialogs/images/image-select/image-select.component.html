@@ -1,9 +1,12 @@
-
 <div class="" *ngIf="isPageReady">
-  <div class="image-col" *ngFor="let image of images.public">
-    <div (click)="selectImage(image)">
-      <p>{{image.name}}</p>
-      <img src="{{THUMB_IMAGE_URL + image.u_id}}" [alt]="image.alt">
+  <div class="gallery-images">
+    <div class="gallery-image" *ngFor="let image of images.public">
+      <div (click)="selectImage(image)">
+        <figure class="image is-128x128">
+          <img [src]="THUMB_IMAGE_URL + image.u_id" [alt]=image.alt>
+          <span class="image-text">{{image.name}}</span>
+        </figure>
+      </div>
     </div>
   </div>
 </div>
