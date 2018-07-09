@@ -9,6 +9,7 @@ body {
 html {
     position: relative;
     height: 100%;
+    overflow-y: auto !important
 }
 /* Mat card*/
 .mat-card{

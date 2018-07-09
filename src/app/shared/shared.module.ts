@@ -13,6 +13,7 @@ import { HeaderComponent } from './components/main-navigation/header/header.comp
 
 import { UrlPipe } from './pipes/url.pipe';
 import { EnvironmentUrlPipe } from './pipes/environment-url.pipe';
+import { DropdownMenuComponent } from './components/main-navigation/sidebar/dropdown-menu/dropdown-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { EnvironmentUrlPipe } from './pipes/environment-url.pipe';
     SidebarComponent,
     MainNavigationComponent,
     UrlPipe,
-    EnvironmentUrlPipe
+    EnvironmentUrlPipe,
+    DropdownMenuComponent
   ],
   imports: [
     CommonModule,

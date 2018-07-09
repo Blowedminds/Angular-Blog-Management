@@ -1,49 +1,29 @@
 <mat-spinner *ngIf="!isPageReady" class="loading"></mat-spinner>
 
 <div class="main-container" *ngIf="isPageReady"> 
-  <!-- ============================================================== -->
-  <!-- Topbar - style you can find in header.scss -->
-  <!-- ============================================================== -->
+  
   <mat-toolbar class="topbar telative">
-      <!-- ============================================================== -->
-      <!-- Logo - style you can find in header.scss -->
-      <!-- ============================================================== -->
+     
       <div class="navbar-header">
           <a class="navbar-brand" routerLink="/">GO HOME</a>
       </div>
-      <!-- ============================================================== -->
-      <!-- sidebar toggle -->
-      <!-- ============================================================== -->
-      
+
       <button mat-icon-button (click)="snav.toggle()" value="sidebarclosed">
         <span>-_|_-</span>
       </button>
       <span fxFlex></span>
-      <!-- ============================================================== -->
-      <!-- app header component - style you can find in header.scss / header.component.ts-->
-      <!-- ============================================================== -->
+
       <app-header [user]="user"></app-header>
   </mat-toolbar>
-  <!-- ============================================================== -->
-  <!-- End Topbar - style you can find in pages.scss -->
-  <!-- ============================================================== -->
+
   <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="0">
-      <!-- ============================================================== -->
-      <!-- Sidebar - style you can find in sidebar.scss -->
-      <!-- ============================================================== -->
+
       <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" mode="side" opened="true" fixedTopGap="0">
           
               <app-sidebar [menus]="menus" [user]="user"></app-sidebar>
              
-          
       </mat-sidenav>
-      <!-- ============================================================== -->
-      <!-- Sidebar - style you can find in sidebar.scss -->
-      <!-- ============================================================== -->
-      
-      <!-- ============================================================== -->
-      <!-- Page container - style you can find in pages.scss -->
-      <!-- ============================================================== -->
+
       <mat-sidenav-content class="page-wrapper">
                
               <div class="page-content">
@@ -53,8 +33,6 @@
               </div>    
              
       </mat-sidenav-content>
-      <!-- ============================================================== -->
-      <!-- Page container - style you can find in pages.scss -->
-      <!-- ============================================================== -->
+
   </mat-sidenav-container>
 </div>

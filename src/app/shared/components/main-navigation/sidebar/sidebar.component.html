@@ -20,17 +20,5 @@
         </a>
     </mat-menu>
 </div>
-<mat-nav-list appAccordion>
-        <!-- group="{{menu.state}}" -->
-    <mat-list-item appAccordionLink *ngFor="let menu of menus" routerLinkActive="selected" >
-        <a class="" appAccordionToggle [routerLink]="[menu.url]">
-            <!-- <mat-icon>{{ menu.icon }}</mat-icon>  -->
-            <span>{{ menu.name }}</span> 
-            <span fxFlex></span> 
-            <!-- <span class="label label-{{ badge.type }}" *ngFor="let badge of menu.badge">{{ badge.value }}</span>  -->
-        </a>
 
-        
-    </mat-list-item>
-
-</mat-nav-list>
+<dropdown-menu [menus]="menus"></dropdown-menu>

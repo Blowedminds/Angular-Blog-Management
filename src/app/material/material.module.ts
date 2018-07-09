@@ -25,7 +25,9 @@ import {
   MatTooltipModule,
   MatSnackBarModule,
   MatIconModule,
+  MatExpansionModule
 } from '@angular/material';
+
 
 @NgModule({
   imports: [
@@ -53,6 +55,7 @@ import {
     MatSnackBarModule,
     CdkTableModule,
     MatIconModule,
+    MatExpansionModule
   ],
   exports: [
     MatDialogModule,
@@ -79,6 +82,7 @@ import {
     MatSnackBarModule,
     CdkTableModule,
     MatIconModule,
+    MatExpansionModule
   ]
 })
 

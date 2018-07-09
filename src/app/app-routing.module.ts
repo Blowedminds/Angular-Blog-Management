@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-
-
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: "", redirectTo: "articles", pathMatch: "full"}
+  { path: '', redirectTo: 'articles', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -4,11 +4,13 @@ import { MediaMatcher } from '@angular/cdk/layout';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: []
+  styleUrls: ['./sidebar.component.sass']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
+
   @Input() menus;
   @Input() user;
+
   mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
@@ -25,4 +27,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
+
+  // changeDetectionCatch() {
+  //   console.log('CHANGEDETECTION CATCHED');
+  // }
 }
