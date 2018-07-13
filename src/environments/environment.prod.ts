@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://ruzgardeniz.com/'
+  apiUrl: 'http://api.ruzgardeniz.com/',
+  discussUrl: '/'
 };

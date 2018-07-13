@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://dkblog.com/',
-  discussUrl: 'http://discuss.dkblog.com/'
+  apiUrl: 'http://localhost:8000/',
+  discussUrl: '/'
 };
