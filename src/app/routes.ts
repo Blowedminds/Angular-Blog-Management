@@ -2,6 +2,7 @@ export const routes: any = {
     auth: {
       url: 'auth/',
       'register': { url: 'register/' },
+      'reset-password': { url: 'reset-password/'},
       'is-authenticated': { url: 'is-authenticated/' },
       'login': { url: 'login/' },
       'logout': { url: 'logout/' }
