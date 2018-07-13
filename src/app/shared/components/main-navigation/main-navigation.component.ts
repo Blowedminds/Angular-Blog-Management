@@ -13,11 +13,9 @@ export class MainNavigationComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  get isPageReady()
-  {
+  get isPageReady() {
     return this.menus && this.user;
   }
 

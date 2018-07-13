@@ -2,12 +2,14 @@ export const routes: any = {
     auth: {
       url: 'auth/',
       'register': { url: 'register/' },
+      'reset-password': { url: 'reset-password/'},
       'is-authenticated': { url: 'is-authenticated/' },
       'login': { url: 'login/' },
       'logout': { url: 'logout/' }
     },
     article: {
       url: 'article/',
+      'article': { url: 'article/' },
       'content': { url: 'content/' },
       'restore': { url: 'restore/' },
       'force-delete': { url: 'force-delete/' },
@@ -21,8 +23,11 @@ export const routes: any = {
       'categories': { url: 'categories/' },
       'menus': { url: 'menus/' },
       'users': { url: 'users/' },
-      'roles': { url: 'roles/' },
       'user': { url: 'user/'},
+      'roles': { url: 'roles/' },
+      'role': { url: 'role/' },
+      'permissions': { url: 'permissions/' },
+      'permission': { url: 'permission/' }
     },
     image: {
       url: 'image/',

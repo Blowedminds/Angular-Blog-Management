@@ -1,0 +1,27 @@
+<mat-accordion>
+  <mat-expansion-panel class="is-shadowless	is-marginless" *ngFor="let menu of menus" [disabled]="menu.children.length === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+   
+        <div *ngIf="menu.children.length === 0; then linkBlock else accordionBlock"></div>
+
+        <ng-template #linkBlock>
+          <a [routerLink]="[menu.url]">
+            {{menu.name}}
+          </a>
+        </ng-template>
+
+        <ng-template #accordionBlock>
+          <span class="has-text-link">{{menu.name}}</span>
+        </ng-template> 
+
+      </mat-panel-title>
+          <!-- <mat-panel-description>
+          Type your name and age
+        </mat-panel-description> -->
+    </mat-expansion-panel-header>
+
+    <dropdown-menu *ngIf="menu.children.length > 0" [menus]="menu.children"></dropdown-menu>
+
+  </mat-expansion-panel>
+</mat-accordion>

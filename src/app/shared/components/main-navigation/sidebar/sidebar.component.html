@@ -1,0 +1,24 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+ <div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
+    <!-- User profile image -->
+    <div class="profile-img"> 
+        <img src="{{user.user_data.profile_image | environmentUrl : 'author'}}" alt="user"> 
+    </div>
+    <!-- User profile text-->
+    <!-- ============================================================== -->
+    <!-- Profile - style you can find in header.scss -->
+    <!-- ============================================================== -->
+    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> {{user.name}} <i class="ti-angle-down font-12 m-l-5"></i></a></div>
+    <mat-menu #sdprofile="matMenu" class="mymegamenu">
+        <a routerLink="/profile">
+            <button mat-menu-item>Profile</button>
+        </a>
+        <a routerLink="/logout">
+            <button mat-menu-item>Çıkış</button>
+        </a>
+    </mat-menu>
+</div>
+
+<dropdown-menu [menus]="menus"></dropdown-menu>

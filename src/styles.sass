@@ -1,65 +1,22 @@
+@import styles/style
 @import themes/dark/theme
-@import node_modules/bulma/bulma
-
-h1, h2, h3, h4, h5, h6, p, li, span, a
-  font-weight: 300
-
-::-webkit-scrollbar
-    background: rgba(66,66,66,.27)
-    width: 6px
-
-::-webkit-scrollbar-thumb
-  border-radius: 2px
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.1)
-  background: rgba(0, 0, 0,.41)
-
-::-webkit-scrollbar-track
-  -webkit-box-shadow: inset 0 0 6px hsla(0,0%,100%,.3)
-  border-radius: 2px
-
-html
-  width: 100%
-  height: 100%
-  overflow: auto
-
-body
-  width: 100%
-  height: 100%
-  margin: 0
-  font-family: 'Open Sans', sans-serif
-  background-color: $body-background-color
-
-a, p, li, h1, h2, h3, h4, h5, h6, 
-  color: $main-text-color
+@import bulma
 
 .loading
   position: absolute !important
   top: 40%
   left: 45%
 
-#main-sidenav-container
-  width: 100%
-  height: 100%
-
-#main-sidenav
-  width: 350px
-  background: green
-
-#main-menu
-  a button
-    color: $main-text-color
-  mat-toolbar-row
-    justify-content: flex-end
-
-.mat-sidenav-container, .mat-sidenav-content, .mat-drawer-content
-    transform: none !important
-
 /*BUTTON*/
 .add-btn
   position: fixed !important
   right: 3%
   bottom: 5%
+  z-index: 10
 
 //Bulma Ext
 .is-12
+  width: 100%
+
+mat-form-field
   width: 100%
